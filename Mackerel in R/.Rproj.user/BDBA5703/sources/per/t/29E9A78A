@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1502373103059.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4156777668",
+    "id" : "29E9A78A",
+    "lastKnownWriteTime" : 1502373127,
+    "last_content_update" : 1502373127218,
+    "path" : "~/Desktop/Local/Mackerel/Mackerel_Data/SA_graphs.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "4,41",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
