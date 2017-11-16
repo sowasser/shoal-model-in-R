@@ -3,6 +3,7 @@
 setwd("~/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R")
 
 library(ggplot2)
+source("multiplot.R")
 
 columns <- c('step', 'nnd', 'polar')  # create new column names
 
