@@ -1,11 +1,11 @@
 # Script for building graphs for sensitivity analysis of the shoal model.
 
-setwd("~/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R")
+setwd("~/Desktop/Local/Mackerel/Mackerel_Data")
 
 library(ggplot2)
-source("multiplot.R")
+source("~/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R/multiplot.R")
 
-columns <- c('step', 'nnd', 'polar')  # create new column names
+columns <- c('step', 'nnd', 'polar', 'area')  # create new column names
 
 num_100 <- read.csv("shoal_data_100.csv")
 colnames(num_100) <- columns
