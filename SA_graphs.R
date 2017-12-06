@@ -153,6 +153,9 @@ area200 <- ggplot() +
   theme(plot.title = element_text(size = 12, face = 'bold')) +  # title formatting
   theme(text = element_text(colour = '#1B4460', size = 12, face = 'bold'))  # label text
 
+# Blank graph for multiplot
+blank <- ggplot() + theme_classic()
+
 # Call multiplot function - located in separate file. Orders plot column by column
-multiplot(area50, area100, area200, cols=1)
+multiplot(area50, blank, area100, area200, cols=2)
 
