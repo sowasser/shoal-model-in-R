@@ -48,7 +48,11 @@ nnd50 <- ggplot() +
   xlab("step") + ylab("Nearest Neighbour Distance") +  # axis labels
   ggtitle("n = 50") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold'))  # label text
+  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
+  theme(
+    panel.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent")
+  )
 
 nnd100 <- ggplot() + 
   theme_classic() + 
@@ -60,7 +64,11 @@ nnd100 <- ggplot() +
   xlab("step") + ylab("Nearest Neighbour Distance") +  # axis labels
   ggtitle("n = 100") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold'))  # label text
+  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
+  theme(
+    panel.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent")
+  )
 
 nnd200 <- ggplot() + 
   theme_classic() + 
@@ -72,7 +80,11 @@ nnd200 <- ggplot() +
   xlab("step") + ylab("Nearest Neighbour Distance") +  # axis labels
   ggtitle("n = 200") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold'))  # label text
+  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
+  theme(
+    panel.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent")
+  )
 
 
 
@@ -86,7 +98,11 @@ polar50 <- ggplot() +
   xlab("step") + ylab("Polarization") +  # axis labels
   ggtitle("n = 50") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold'))  # label text
+  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
+  theme(
+    panel.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent")
+  )
 
 polar100 <- ggplot() + 
   theme_classic() + 
@@ -98,7 +114,11 @@ polar100 <- ggplot() +
   xlab("step") + ylab("Polarization") +  # axis labels
   ggtitle("n = 100") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold'))  # label text
+  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
+  theme(
+    panel.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent")
+  )
 
 polar200 <- ggplot() + 
   theme_classic() + 
@@ -110,11 +130,15 @@ polar200 <- ggplot() +
   xlab("step") + ylab("Polarization") +  # axis labels
   ggtitle("n = 200") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold'))  # label text
+  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
+  theme(
+    panel.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent")
+  )
 
 # Call multiplot function - located in separate file. Orders plot column by column
 # Save plot to desktop
-png("~/Desktop/nnd_polar.png", width = 26.87, height = 26.87, units = 'cm', res = 300)
+png("~/Desktop/nnd_polar_transparent.png", width = 26.87, height = 26.87, units = 'cm', bg = 'transparent', res = 300)
 multiplot(nnd50, nnd100, nnd200, polar50, polar100, polar200, cols=2)
 dev.off()
 
@@ -131,7 +155,11 @@ area50 <- ggplot() +
   xlab("step") + ylab("Shoal Area") +  # axis labels
   ggtitle("n = 50") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold'))  # label text
+  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
+  theme(
+    panel.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent")
+  )
 
 area100 <- ggplot() + 
   theme_classic() + 
@@ -143,7 +171,11 @@ area100 <- ggplot() +
   xlab("step") + ylab("Shoal Area") +  # axis labels
   ggtitle("n = 100") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold'))  # label text
+  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
+  theme(
+    panel.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent")
+  )
 
 area200 <- ggplot() + 
   theme_classic() + 
@@ -155,13 +187,17 @@ area200 <- ggplot() +
   xlab("step") + ylab("Shoal Area") +  # axis labels
   ggtitle("n = 200") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold'))  # label text
+  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
+  theme(
+    panel.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent")
+  )
 
 # Blank graph for multiplot
 blank <- ggplot() + theme_classic()
 
 # Call multiplot function - located in separate file. Orders plot column by column
 # Save plot to desktop
-png("~/Desktop/area.png", width = 26.87, height = 17.9, units = 'cm', res = 300)
+png("~/Desktop/area_transparent.png", width = 26.87, height = 17.9, units = 'cm', bg = 'transparent', res = 300)
 multiplot(area50, area100, area200, blank, cols=2)
 dev.off()
