@@ -194,7 +194,11 @@ area200 <- ggplot() +
   )
 
 # Blank graph for multiplot
-blank <- ggplot() + theme_classic()
+blank <- ggplot() + theme_classic() +
+  theme(
+    panel.background = element_rect(fill = "transparent"),
+    plot.background = element_rect(fill = "transparent")
+  )
 
 # Call multiplot function - located in separate file. Orders plot column by column
 # Save plot to desktop
