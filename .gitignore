@@ -1,8 +1,10 @@
+# Ignore files created by R/RStudio
 .Rproj.user
+.Rproj
 .Rhistory
 .RData
 .Ruserdata
+
+# Ignore images created and data files
 .png
-
-
-Mackerel in R/
+.csv
