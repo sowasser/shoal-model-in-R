@@ -1,9 +1,12 @@
 # Script for building graphs for sensitivity analysis of the shoal model.
-
-setwd("~/Desktop/Local/Mackerel/Mackerel_Data")
+# Current data outputs from the model are:
+  # 1. Nearest Neighbour Distance
+  # 2. Polarization (median absolute deviation in heading)
+  # 3. Area (convex hull)
+# Current variations are by agent number: 50, 100, 200.
 
 library(ggplot2)
-source("~/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R/multiplot.R")
+library(here)
 
 columns <- c('step', 'nnd', 'polar', 'area')  # create new column names
 
@@ -13,12 +16,6 @@ num_100 <- read.csv("shoal_data_100.csv")
 colnames(num_100) <- columns
 num_200 <- read.csv("shoal_data_200.csv")
 colnames(num_200) <- columns
-
-# Colors for BES poster
-# Cream: #FEF9F3
-# Dark blue: #1B4460
-# Light blue: #0A7794
-# Burgundy: #6F115D
 
 # Find overall ranges so each graph has axes of the same scale
 max_nnd <- c(max(num_50$nnd), max(num_100$nnd), max(num_200$nnd))
@@ -40,105 +37,81 @@ min_area <- min(min_area)
 # variation of agent number (50, 100, 200).
 nnd50 <- ggplot() + 
   theme_classic() + 
-  geom_line(data=num_50, aes(x=step, y=nnd), colour="#0A7794", size = 1) +  # line
-  theme(axis.text.y = element_text(size = 14, color = "#1B4460"),  # axis text size & color
-        axis.text.x = element_text(size = 14, color = "#1B4460")) + 
+  geom_line(data=num_50, aes(x=step, y=nnd), colour="purple4", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
   scale_y_continuous(limits = c(min_nnd, max_nnd)) +  # y-axis scale
-  theme(axis.line = element_line(color="#1B4460", size = 1)) +
+  theme(axis.line = element_line(color="black", size = 1)) +
   xlab("step") + ylab("Nearest Neighbour Distance") +  # axis labels
   ggtitle("n = 50") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
-  theme(
-    panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent")
-  )
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
 
 nnd100 <- ggplot() + 
   theme_classic() + 
-  geom_line(data=num_100, aes(x=step, y=nnd), colour="#0A7794", size = 1) +  # line
-  theme(axis.text.y = element_text(size = 14, color = "#1B4460"),  # axis text size & color
-        axis.text.x = element_text(size = 14, color = "#1B4460")) + 
+  geom_line(data=num_100, aes(x=step, y=nnd), colour="purple4", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
   scale_y_continuous(limits = c(min_nnd, max_nnd)) +  # y-axis scale
-  theme(axis.line = element_line(color="#1B4460", size = 1)) +
+  theme(axis.line = element_line(color="black", size = 1)) +
   xlab("step") + ylab("Nearest Neighbour Distance") +  # axis labels
   ggtitle("n = 100") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
-  theme(
-    panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent")
-  )
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
 
 nnd200 <- ggplot() + 
   theme_classic() + 
-  geom_line(data=num_200, aes(x=step, y=nnd), colour="#0A7794", size = 1) +  # line
-  theme(axis.text.y = element_text(size = 14, color = "#1B4460"),  # axis text size & color
-        axis.text.x = element_text(size = 14, color = "#1B4460")) + 
+  geom_line(data=num_200, aes(x=step, y=nnd), colour="purple4", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
   scale_y_continuous(limits = c(min_nnd, max_nnd)) +  # y-axis scale
-  theme(axis.line = element_line(color="#1B4460", size = 1)) +
+  theme(axis.line = element_line(color="black", size = 1)) +
   xlab("step") + ylab("Nearest Neighbour Distance") +  # axis labels
   ggtitle("n = 200") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
-  theme(
-    panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent")
-  )
-
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
 
 
 polar50 <- ggplot() + 
   theme_classic() + 
-  geom_line(data=num_50, aes(x=step, y=polar), colour="#6F115D", size = 1) +  # line
-  theme(axis.text.y = element_text(size = 14, color = "#1B4460"),  # axis text size & color
-        axis.text.x = element_text(size = 14, color = "#1B4460")) + 
+  geom_line(data=num_50, aes(x=step, y=polar), colour="chartreuse2", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
   scale_y_continuous(limits = c(min_polar, max_polar)) +  # y-axis scale
-  theme(axis.line = element_line(color="#1B4460", size = 1)) +
+  theme(axis.line = element_line(color="black", size = 1)) +
   xlab("step") + ylab("Polarization") +  # axis labels
   ggtitle("n = 50") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
-  theme(
-    panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent")
-  )
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
 
 polar100 <- ggplot() + 
   theme_classic() + 
-  geom_line(data=num_100, aes(x=step, y=polar), colour="#6F115D", size = 1) +  # line
-  theme(axis.text.y = element_text(size = 14, color = "#1B4460"),  # axis text size & color
-        axis.text.x = element_text(size = 14, color = "#1B4460")) + 
+  geom_line(data=num_100, aes(x=step, y=polar), colour="chartreuse2", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
   scale_y_continuous(limits = c(min_polar, max_polar)) +  # y-axis scale
-  theme(axis.line = element_line(color="#1B4460", size = 1)) +
+  theme(axis.line = element_line(color="black", size = 1)) +
   xlab("step") + ylab("Polarization") +  # axis labels
   ggtitle("n = 100") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
-  theme(
-    panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent")
-  )
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
 
 polar200 <- ggplot() + 
   theme_classic() + 
-  geom_line(data=num_200, aes(x=step, y=polar), colour="#6F115D", size = 1) +  # line
-  theme(axis.text.y = element_text(size = 14, color = "#1B4460"),  # axis text size & color
-        axis.text.x = element_text(size = 14, color = "#1B4460")) + 
+  geom_line(data=num_200, aes(x=step, y=polar), colour="chartreuse2", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
   scale_y_continuous(limits = c(min_polar, max_polar)) +  # y-axis scale
-  theme(axis.line = element_line(color="#1B4460", size = 1)) +
+  theme(axis.line = element_line(color="black", size = 1)) +
   xlab("step") + ylab("Polarization") +  # axis labels
   ggtitle("n = 200") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
-  theme(
-    panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent")
-  )
-
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
+  
+  
 # Call multiplot function - located in separate file. Orders plot column by column
 # Save plot to desktop
-png("~/Desktop/nnd_polar_transparent.png", width = 26.87, height = 26.87, units = 'cm', bg = 'transparent', res = 300)
+png("nnd_polar.png", width = 26.87, height = 26.87, units = 'cm', res = 300)
 multiplot(nnd50, nnd100, nnd200, polar50, polar100, polar200, cols=2)
 dev.off()
 
@@ -147,61 +120,46 @@ dev.off()
 # Create graphs for shoal area (convex hull)
 area50 <- ggplot() + 
   theme_classic() + 
-  geom_line(data=num_50, aes(x=step, y=area), colour="#6F115D", size = 1) +  # line
-  theme(axis.text.y = element_text(size = 14, color = "#1B4460"),  # axis text size & color
-        axis.text.x = element_text(size = 14, color = "#1B4460")) + 
+  geom_line(data=num_50, aes(x=step, y=area), colour="purple4", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
   scale_y_continuous(limits = c(min_area, max_area)) +  # y-axis scale
-  theme(axis.line = element_line(color="#1B4460", size = 1)) +
+  theme(axis.line = element_line(color="black", size = 1)) +
   xlab("step") + ylab("Shoal Area") +  # axis labels
   ggtitle("n = 50") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
-  theme(
-    panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent")
-  )
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
+
 
 area100 <- ggplot() + 
   theme_classic() + 
-  geom_line(data=num_100, aes(x=step, y=area), colour="#6F115D", size = 1) +  # line
-  theme(axis.text.y = element_text(size = 14, color = "#1B4460"),  # axis text size & color
-        axis.text.x = element_text(size = 14, color = "#1B4460")) + 
+  geom_line(data=num_100, aes(x=step, y=area), colour="purple4", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
   scale_y_continuous(limits = c(min_area, max_area)) +  # y-axis scale
-  theme(axis.line = element_line(color="#1B4460", size = 1)) +
+  theme(axis.line = element_line(color="black", size = 1)) +
   xlab("step") + ylab("Shoal Area") +  # axis labels
   ggtitle("n = 100") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
-  theme(
-    panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent")
-  )
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
 
 area200 <- ggplot() + 
   theme_classic() + 
-  geom_line(data=num_200, aes(x=step, y=area), colour="#6F115D", size = 1) +  # line
-  theme(axis.text.y = element_text(size = 14, color = "#1B4460"),  # axis text size & color
-        axis.text.x = element_text(size = 14, color = "#1B4460")) + 
+  geom_line(data=num_200, aes(x=step, y=area), colour="purple4", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
   scale_y_continuous(limits = c(min_area, max_area)) +  # y-axis scale
-  theme(axis.line = element_line(color="#1B4460", size = 1)) +
+  theme(axis.line = element_line(color="black", size = 1)) +
   xlab("step") + ylab("Shoal Area") +  # axis labels
   ggtitle("n = 200") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
-  theme(text = element_text(colour = '#1B4460', size = 16, face = 'bold')) +  # label text
-  theme(
-    panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent")
-  )
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
 
 # Blank graph for multiplot
-blank <- ggplot() + theme_classic() +
-  theme(
-    panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent")
-  )
+blank <- ggplot() + theme_classic()
 
 # Call multiplot function - located in separate file. Orders plot column by column
 # Save plot to desktop
-png("~/Desktop/area_transparent.png", width = 26.87, height = 17.9, units = 'cm', bg = 'transparent', res = 300)
+png("area.png", width = 26.87, height = 17.9, units = 'cm', res = 300)
 multiplot(area50, area100, area200, blank, cols=2)
 dev.off()
