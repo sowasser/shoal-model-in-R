@@ -5,6 +5,13 @@
 .RData
 .Ruserdata
 
+Mackerel in R/
+
+*.Rproj
+
 # Ignore images created and data files
 .png
 .csv
+
+*.png
+*.csv
