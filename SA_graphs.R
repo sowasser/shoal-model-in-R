@@ -8,6 +8,8 @@
 library(ggplot2)
 library(here)
 
+source("multiplot.R")  # function for multiple plots on one page.
+
 columns <- c('step', 'nnd', 'polar', 'area')  # create new column names
 
 num_50 <- read.csv("shoal_data_50.csv")
