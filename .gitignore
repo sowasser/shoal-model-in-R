@@ -15,3 +15,5 @@ Mackerel in R/
 
 *.png
 *.csv
+
+\.DS_Store
