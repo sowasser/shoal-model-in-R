@@ -1,9 +1,11 @@
 # Script for building graphs for sensitivity analysis of the shoal model.
 # Current data outputs from the model are:
-  # 1. Nearest Neighbour Distance
-  # 2. Polarization (median absolute deviation in heading)
-  # 3. Area (convex hull)
-# Current variations are by agent number: 50, 100, 200.
+# 1. Nearest Neighbour Distance
+# 2. Polarization (median absolute deviation in heading)
+# 3. Shoal Area (convex hull)
+# 4. Mean distance from centroid
+# Current variations are by agent number: 50, 100, 200, with the model run over
+# 500 steps.
 
 library(ggplot2)
 library(here)
@@ -34,6 +36,11 @@ max_area <- c(max(num_50$area), max(num_100$area), max(num_200$area))
 max_area <- max(max_area)
 min_area <- c(min(num_50$area), min(num_100$area), min(num_200$area))
 min_area <- min(min_area)
+
+max_mean_dist <- c(max(num_50$mean_dist), max(num_100$mean_dist), max(num_200$mean_dist))
+max_mean_dist <- max(max_mean_dist)
+min_mean_dist <- c(min(num_50$mean_dist), min(num_100$mean_dist), min(num_200$mean_dist))
+min_mean_dist <- min(min_mean_dist)
 
 # Create graphs for nearest neighbour distance and polarization for each
 # variation of agent number (50, 100, 200).
@@ -109,10 +116,9 @@ polar200 <- ggplot() +
   ggtitle("n = 200") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
   theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
-  
-  
-# Call multiplot function - located in separate file. Orders plot column by column
-# Save plot to desktop
+
+
+# Call multiplot function - located in separate file. Orders plot column by column.
 png("nnd_polar.png", width = 26.87, height = 26.87, units = 'cm', res = 300)
 multiplot(nnd50, nnd100, nnd200, polar50, polar100, polar200, cols=2)
 dev.off()
@@ -131,7 +137,6 @@ area50 <- ggplot() +
   ggtitle("n = 50") +  # chart title text, left justified
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
   theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
-
 
 area100 <- ggplot() + 
   theme_classic() + 
@@ -157,11 +162,54 @@ area200 <- ggplot() +
   theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
   theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
 
+
 # Blank graph for multiplot
 blank <- ggplot() + theme_classic()
 
-# Call multiplot function - located in separate file. Orders plot column by column
-# Save plot to desktop
+# Call multiplot function for area graphs
 png("area.png", width = 26.87, height = 17.9, units = 'cm', res = 300)
 multiplot(area50, area100, area200, blank, cols=2)
+dev.off()
+
+
+# Create graphs for mean distance from centroid
+mean_dist50 <- ggplot() + 
+  theme_classic() + 
+  geom_line(data=num_50, aes(x=step, y=mean_dist), colour="purple4", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
+  scale_y_continuous(limits = c(min_mean_dist, max_mean_dist)) +  # y-axis scale
+  theme(axis.line = element_line(color="black", size = 1)) +
+  xlab("step") + ylab("Mean Distance from Centroid") +  # axis labels
+  ggtitle("n = 50") +  # chart title text, left justified
+  theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
+
+mean_dist100 <- ggplot() + 
+  theme_classic() + 
+  geom_line(data=num_100, aes(x=step, y=mean_dist), colour="purple4", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
+  scale_y_continuous(limits = c(min_mean_dist, max_mean_dist)) +  # y-axis scale
+  theme(axis.line = element_line(color="black", size = 1)) +
+  xlab("step") + ylab("Mean Distance from Centroid") +  # axis labels
+  ggtitle("n = 100") +  # chart title text, left justified
+  theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
+
+mean_dist200 <- ggplot() + 
+  theme_classic() + 
+  geom_line(data=num_200, aes(x=step, y=mean_dist), colour="purple4", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
+  scale_y_continuous(limits = c(min_mean_dist, max_mean_dist)) +  # y-axis scale
+  theme(axis.line = element_line(color="black", size = 1)) +
+  xlab("step") + ylab("Mean Distance from Centroid") +  # axis labels
+  ggtitle("n = 200") +  # chart title text, left justified
+  theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
+
+# Call multiplot function for mean_dist graphs
+png("mean_dist.png", width = 26.87, height = 17.9, units = 'cm', res = 300)
+multiplot(mean_dist50, mean_dist100, mean_dist200, blank, cols=2)
 dev.off()
