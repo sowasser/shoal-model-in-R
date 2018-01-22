@@ -38,4 +38,9 @@ dist2_4 = foreach(i = 1:nrow(pos2), .combine = c) %do% dist(pos2[i,],pos4[i,])
 dist3_4 = foreach(i = 1:nrow(pos3), .combine = c) %do% dist(pos3[i,],pos4[i,])
 
 # Combine into one dataframe. Maybe not necessary?
-distances <- cbind(pos[1], dist1_2, dist1_3, dist1_4, dist2_3, dist2_4, dist3_4)
+distance <- cbind(pos[1], dist1_2, dist1_3, dist1_4, dist2_3, dist2_4, dist3_4)
+
+# Calculate mean distance at each step
+mean <- function(d1, d2, d3, d4, d5, d6) mean(d1, d2, d3, d4, d5, d6)
+mean_dist <- foreach(i = 1:nrow(dist1_2)) %do% 
+  mean(dist1_2[i,],dist1_3[i,],dist1_4[i,],dist2_3[i,],dist2_4[i,],dist3_4[i,])
