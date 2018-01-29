@@ -3,7 +3,7 @@
 # iteratively, it's only really suited for working with small datasets.
 
 # LoggerPro exports a .csv file with x,y position for each individual and the
-# x,y velocity for each. In this script, the data is imported and cleaned.
+# x,y velocity for each. In this script, the data are imported and cleaned.
 # Then, the mean distance between individuals is calculated for each step of
 # the model. This mean distance is then plotted.
 
