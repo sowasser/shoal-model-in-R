@@ -7,6 +7,7 @@
 # Then, the mean distance between individuals is calculated for each step of
 # the model. This mean distance is then plotted two ways.
 
+library(foreach)
 library(ggplot2)
 
 track <- read.csv("tracking_fast_trial_17Nov.csv") 
