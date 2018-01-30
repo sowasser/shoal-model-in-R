@@ -5,9 +5,9 @@
 # LoggerPro exports a .csv file with x,y position for each individual and the
 # x,y velocity for each. In this script, the data are imported and cleaned.
 # Then, the mean distance between individuals is calculated for each step of
-# the model. This mean distance is then plotted.
+# the model. This mean distance is then plotted two ways.
 
-library(foreach)
+library(ggplot2)
 
 track <- read.csv("tracking_fast_trial_17Nov.csv") 
 
@@ -42,5 +42,18 @@ dist2_4 = foreach(i = 1:nrow(pos2), .combine = c) %do% dist(pos2[i,],pos4[i,])
 dist3_4 = foreach(i = 1:nrow(pos3), .combine = c) %do% dist(pos3[i,],pos4[i,])
 
 distance <- cbind(position[1], dist1_2, dist1_3, dist1_4, dist2_3, dist2_4, dist3_4)
-mean_dist <- rowMeans(distance[,-1])  # calculate means, excluding time
-mean_dist <- cbind(position[1], mean_dist)  # re-bind with time
+mean_d <- rowMeans(distance[,-1])  # calculate means, excluding time
+mean_dist <- cbind(position[1], mean_d)  # re-bind with time
+
+plot(x=mean_dist$time, y=mean_dist$mean_d, type="l")
+
+# Nicer graph using ggplot
+ggplot() + 
+  theme_classic() + 
+  geom_line(data=mean_dist, aes(x=time, y=mean_d), colour="blue", size = 1) +  # line
+  theme(axis.text.y = element_text(size = 14, color = "black"),  # axis text size & color
+        axis.text.x = element_text(size = 14, color = "black")) + 
+  theme(axis.line = element_line(color="black", size = 1)) +
+  xlab("time (min)") + ylab("Mean Distance (cm)") +  # axis labels
+  theme(plot.title = element_text(size = 16, face = 'bold')) +  # title formatting
+  theme(text = element_text(colour = 'black', size = 16, face = 'bold'))  # label text
