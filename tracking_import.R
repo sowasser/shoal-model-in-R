@@ -33,7 +33,7 @@ pos4 <- position[c(8, 9)]
 
 dist <- function(p1, p2) sqrt(sum((p1 - p2) ^ 2))  # function for Euclidean dist
 
-# Distance between each different combination of fish. Blerg.
+# Distance between each different combination of fish. Better way?
 dist1_2 = foreach(i = 1:nrow(pos1), .combine = c) %do% dist(pos1[i,],pos2[i,])
 dist1_3 = foreach(i = 1:nrow(pos1), .combine = c) %do% dist(pos1[i,],pos3[i,])
 dist1_4 = foreach(i = 1:nrow(pos1), .combine = c) %do% dist(pos1[i,],pos4[i,])
@@ -41,12 +41,6 @@ dist2_3 = foreach(i = 1:nrow(pos2), .combine = c) %do% dist(pos2[i,],pos3[i,])
 dist2_4 = foreach(i = 1:nrow(pos2), .combine = c) %do% dist(pos2[i,],pos4[i,])
 dist3_4 = foreach(i = 1:nrow(pos3), .combine = c) %do% dist(pos3[i,],pos4[i,])
 
-# Combine into one dataframe. Maybe not necessary?
-distance <- cbind(pos[1], dist1_2, dist1_3, dist1_4, dist2_3, dist2_4, dist3_4)
-
-# Calculate mean distance at each step
-mean <- function(d1, d2, d3, d4, d5, d6) mean(d1, d2, d3, d4, d5, d6)
-mean_dist <- foreach(i = 1:nrow(dist1_2)) %do% 
-  mean(dist1_2[i,],dist1_3[i,],dist1_4[i,],dist2_3[i,],dist2_4[i,],dist3_4[i,])
-
-# This isn't working. Foreach documentation: https://cran.r-project.org/web/packages/foreach/vignettes/foreach.pdf
+distance <- cbind(position[1], dist1_2, dist1_3, dist1_4, dist2_3, dist2_4, dist3_4)
+mean_dist <- rowMeans(distance[,-1])  # calculate means, excluding time
+mean_dist <- cbind(position[1], mean_dist)  # re-bind with time
