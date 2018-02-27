@@ -15,6 +15,8 @@ library(ggplot2)
 
 track <- read.csv("fish_30-6s_f7-2.csv") 
 
+track <- read.table("file.csv", header=FALSE, sep=",")
+
 # track <- track[c(1, 4:19)]  # Remove empty columns from mistakes while digitizing
 
 # rename columns. Is there a better way to do this?
@@ -55,6 +57,8 @@ distance <- cbind(position[1], dist1_2, dist1_3, dist1_4, dist2_3, dist2_4, dist
 mean_d <- rowMeans(distance[,-1])  # calculate means, excluding time
 overall_mean <- mean(mean_d)
 mean_dist <- cbind(position[1], mean_d)  # re-bind with time
+
+write.csv(mean_dist, file = "mean_dist.csv")  # write .csv file of mean distance & time
 
 # Plot mean distancce against time
 plot(x=mean_dist$time, y=mean_dist$mean_d, type="l")
