@@ -63,7 +63,7 @@ area_graph <- ggplot() +
   theme_classic() + 
   geom_line(data=area, aes(x=step, y=area), colour="#D97219", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "#80807F"),  # axis text size & color
-        axis.text.x = element_text(size = 14, color = "black")) + 
+        axis.text.x = element_text(size = 14, color = "#80807F")) + 
   xlab("step") + ylab("Shoal Area (mm2)") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "#A6B7C8", size = 16, face = "bold"))  + # label text
