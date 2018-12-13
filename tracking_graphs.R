@@ -14,7 +14,7 @@ library(foreach)
 library(ggplot2)
 
 cent_dist <- read.csv("step1_cent_dist.csv")
-colnames(cent_dist) <- c("step", "dist")
+colnames(cent_dist) <- c("step", "cent")
 
 nnd <- read.csv("step1_nnd.csv")
 colnames(nnd) <- c("step", "nnd")
@@ -28,7 +28,7 @@ colnames(polar) <- c("step", "polar")
 
 cent_dist_graph <- ggplot() + 
   theme_classic() + 
-  geom_line(data=cent_dist, aes(x=step, y=dist), colour="#D97219", size = 1) +  # line
+  geom_line(data=cent_dist, aes(x=step, y=cent), colour="#D97219", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "#737373"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "#737373")) + 
   xlab("step") + ylab("Mean Distance from Centroid (mm)") +  # axis labels
@@ -39,7 +39,7 @@ cent_dist_graph <- ggplot() +
   theme(panel.background = element_rect(fill = "transparent"),  # transparent background & no outline
         plot.background = element_rect(fill = "transparent", size = 0))
 cent_dist_graph
-ggsave(cent_dist_graph, filename = "step1_cent_dist.png", width = 17.09, height = 11.76, units = "cm", 
+ggsave(cent_dist_graph, filename = "step1_cent.png", width = 17.09, height = 11.76, units = "cm", 
        dpi = 300, bg = "transparent")
 
 

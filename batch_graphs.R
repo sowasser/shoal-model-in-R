@@ -10,28 +10,23 @@ setwd("~/Desktop/Local/Mackerel/Mackerel Data")
 
 library(ggplot2)
 
-steps = c(1:99)
   
 polar_mean <- read.csv("polar_mean.csv")
-polar_mean <- cbind(steps, polar_mean)
-colnames(polar_mean) <- c("step", "Polarization")
+colnames(polar_mean) <- c("step", "polar")
 
 nnd_mean <- read.csv("nnd_mean.csv")
-nnd_mean <- cbind(steps, nnd_mean)
-colnames(nnd_mean) <- c("step", "Nearest Neighbour Distance")
+colnames(nnd_mean) <- c("step", "nnd")
 
 area_mean <- read.csv("area_mean.csv")
-area_mean <- cbind(steps, area_mean)
-colnames(area_mean) <- c("step", "Shoal Area")
+colnames(area_mean) <- c("step", "area")
 
 cent_mean <- read.csv("cent_mean.csv")
-cent_mean <- cbind(steps, cent_mean)
-colnames(cent_mean) <- c("step", "Mean Distance from Centroid")
+colnames(cent_mean) <- c("step", "cent")
 
 
 polar_mean_graph <- ggplot() + 
   theme_classic() + 
-  geom_line(data=polar, aes(x=step, y=polar), colour="#FFC348", size = 1) +  # line
+  geom_line(data=polar_mean, aes(x=step, y=polar), colour="#FFC348", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "#737373"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "#737373")) + 
   xlab("step") + ylab("Mean Polarisation") +  # axis labels
@@ -47,7 +42,7 @@ ggsave(polar_mean_graph, filename = "polar_mean.png", width = 17.09, height = 11
 
 nnd_mean_graph <- ggplot() + 
   theme_classic() + 
-  geom_line(data=nnd, aes(x=step, y=nnd), colour="#FFC348", size = 1) +  # line
+  geom_line(data=nnd_mean, aes(x=step, y=nnd), colour="#FFC348", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "#737373"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "#737373")) + 
   xlab("step") + ylab("Mean Nearest Neighbour Distance (mm)") +  # axis labels
@@ -63,7 +58,7 @@ ggsave(nnd_mean_graph, filename = "nnd_mean.png", width = 17.09, height = 11.76,
 
 area_mean_graph <- ggplot() + 
   theme_classic() + 
-  geom_line(data=area, aes(x=step, y=area), colour="#FFC348", size = 1) +  # line
+  geom_line(data=area_mean, aes(x=step, y=area), colour="#FFC348", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "#737373"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "#737373")) + 
   xlab("step") + ylab("Mean Shoal Area (mm2)") +  # axis labels
@@ -79,7 +74,7 @@ ggsave(area_mean_graph, filename = "area_mean.png", width = 17.09, height = 11.7
 
 cent_mean_graph <- ggplot() + 
   theme_classic() + 
-  geom_line(data=cent_dist, aes(x=step, y=dist), colour="#FFC348", size = 1) +  # line
+  geom_line(data=cent_mean, aes(x=step, y=cent), colour="#FFC348", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "#737373"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "#737373")) + 
   xlab("step") + ylab("Mean Distance from Centroid (mm)") +  # axis labels
