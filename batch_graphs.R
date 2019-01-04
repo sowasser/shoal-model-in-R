@@ -29,7 +29,7 @@ polar_mean_graph <- ggplot() +
   geom_line(data=polar_mean, aes(x=step, y=polar), colour="#DA7318", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "#737373"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "#737373")) + 
-  xlab("step") + ylab("Mean Polarisation") +  # axis labels
+  xlab("step") + ylab("Mean Polarization") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "#A6B7C8", size = 16, face = "bold"))  + # label text
   theme(axis.line = element_line(color="#737373", size = 1),  # axis line & tick color
