@@ -20,18 +20,25 @@
 library(EasyABC)
 
 # tutorial here: https://www.r-bloggers.com/the-easyabc-package-for-approximate-bayesian-computation-in-r/
+
+data <- rnorm(10, mean = 5.3, sd = 2.7)
   
-data <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/single_run.csv")
+nnd <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/nnd_batch.csv")
+polar <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/polar_batch.csv")
+area <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/area_batch.csv")
+cent <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/cent_batch.csv")
+
+single_run <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/cent_batch.csv")
 
 # we want to use ABC to infer the parameters that were used.
 # we sample from the same model and use mean and variance
 # as summary statstitics for the model and the data.
 
 # observed summary statistics
-summary_nnd <- c(mean(data$nnd), sd(data$nnd))
-summary_polar <- c(mean(data$polar), sd(data$polar))
-summary_area <- c(mean(data$polar), sd(data$polar))
-summary_centroid <- c(mean(data$centroid), sd(data$centroid))
+summary_nnd <- c(mean(single_run$nnd), sd(single_run$nnd))
+summary_polar <- c(mean(single_run$polar), sd(single_run$polar))
+summary_area <- c(mean(single_run$polar), sd(single_run$polar))
+summary_centroid <- c(mean(single_run$centroid), sd(single_run$centroid))
 
 model <- function(par){
   
