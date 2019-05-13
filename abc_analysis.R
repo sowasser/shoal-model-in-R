@@ -56,10 +56,10 @@ priorlist <- list(2:15)
 # call EasyABC
 ABC_Marjoram_original <- ABC_mcmc(method = "Marjoram_original", 
                                   model = model, 
-                                  prior = priorlist, 
+                                  prior = priorlist,  # TODO: figure out issue with priors
                                   n_obs = 10000, 
                                   n_between_sampling = 1, 
-                                  summary_stat_target = summarydata, 
+                                  summary_stat_target = summary_nnd, 
                                   dist_max = 1, 
                                   proposal_range = c(1, 1),
                                   tab_normalization = tabnormalization, use_seed = F)
@@ -69,4 +69,3 @@ str(ABC_Marjoram_original)
 par(mfrow = c(2, 1))
 hist(ABC_Marjoram_original$param[5000:10000, 1], main = "Posterior for slope")
 hist(ABC_Marjoram_original$param[5000:10000, 2], main = "Posterior for intercept")
-
