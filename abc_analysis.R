@@ -20,15 +20,13 @@
 library(EasyABC)
 
 # tutorial here: https://www.r-bloggers.com/the-easyabc-package-for-approximate-bayesian-computation-in-r/
-
-data <- rnorm(10, mean = 5.3, sd = 2.7)
   
 nnd <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/nnd_batch.csv")
 polar <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/polar_batch.csv")
 area <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/area_batch.csv")
 cent <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/cent_batch.csv")
 
-single_run <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/cent_batch.csv")
+single_run <- read.csv("~/Desktop/Local/Mackerel/Mackerel Data/single_run.csv")
 
 # we want to use ABC to infer the parameters that were used.
 # we sample from the same model and use mean and variance
