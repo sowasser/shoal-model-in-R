@@ -51,12 +51,12 @@ model <- function(par){
 tabnormalization <- c(1, 1)
 
 # definition of the (flat priors)
-priorlist <- list(2:15)
+priormatrix = cbind(c(-15, 2), c(15, 4))
 
 # call EasyABC
 ABC_Marjoram_original <- ABC_mcmc(method = "Marjoram_original", 
                                   model = model, 
-                                  prior = priorlist,  # TODO: figure out issue with priors
+                                  prior = priormatrix,  # TODO: figure out issue with priors
                                   n_obs = 10000, 
                                   n_between_sampling = 1, 
                                   summary_stat_target = summary_nnd, 
