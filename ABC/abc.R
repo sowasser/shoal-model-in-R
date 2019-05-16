@@ -7,6 +7,11 @@
 #   3. a matrix of the simulated parameter values, where each row corrresponds
 #      to a parameter.
 
+# More documentation about abc:
+# https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2011.00179.x
+# https://cran.r-project.org/web/packages/abc/abc.pdf
+
+
 library(abc)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
