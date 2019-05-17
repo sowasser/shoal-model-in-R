@@ -37,7 +37,7 @@ model_params <- read.csv(paste0(path, ""))
 shoaling.abc <- abc(target = ____,   # observed summary statistics
                     param = ____,  # simulated parameter values, i.e. dependent variable(s)
                     sumstat = ____,  # simulated summary statistics / independent variables
-                    tol = 0.1, method = "rejection")  # proportion of funs to accept; type of ABC to use
+                    tol = 0.1, method = "rejection")  # proportion of runs to accept; type of ABC to use
 
 summary(shoaling.abc)
 
