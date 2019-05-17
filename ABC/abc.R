@@ -14,14 +14,21 @@
 
 library(abc)
 
-path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
+# path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
+path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
 
 
 # import observed summary statistics - from tracking data
-tracking_summary <- read.csv(paste0(path, ""))
+tp <- read.csv(paste0(path, "step1_polar.csv"))
+tn <- read.csv(paste0(path, "step1_nnd.csv"))
+tc <- read.csv(paste0(path, "step1_cent_dist.csv"))
+ta <- read.csv(paste0(path, "step1_shoal_area.csv"))
+
+tracking_summary <- as.data.frame(cbind(tp[, 2], tn[, 2], tc[, 2], ta[, 2]))
+colnames(tracking_summary) <- c("polar", "nnd", "cent", "area")
 
 # import matrix of simulated summary statistics - from model
-model_summary <- read.csv(paste0(path, ""))
+model_summary <- read.csv(paste0(path, "single_run.csv"))
 
 # import matrix of simulated parameter values - from model
 model_params <- read.csv(paste0(path, ""))
