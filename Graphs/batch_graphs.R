@@ -35,8 +35,8 @@ polar_runs <- ggplot() +
   theme(text = element_text(colour = "white", size = 16, face = "bold"))  + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
         axis.ticks = element_line(color="white")) +
-  theme(panel.background = element_rect(fill = "#27292F"),  # plot & background colors, no outline
-        plot.background = element_rect(fill = "#27292F", size = 0))
+  theme(panel.background = element_rect(fill = "#27282E"),  # plot & background colors, no outline
+        plot.background = element_rect(fill = "#27282E", size = 0))
 
 nnd_runs <- ggplot() + 
   theme_classic() + 
@@ -48,8 +48,8 @@ nnd_runs <- ggplot() +
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1), # axis line & tick color
         axis.ticks = element_line(color="white")) +
-  theme(panel.background = element_rect(fill = "#27292F"),  # plot & background colors, no outline
-        plot.background = element_rect(fill = "#27292F", size = 0))
+  theme(panel.background = element_rect(fill = "#27282E"),  # plot & background colors, no outline
+        plot.background = element_rect(fill = "#27282E", size = 0))
 
 area_runs <- ggplot() + 
   theme_classic() + 
@@ -61,8 +61,8 @@ area_runs <- ggplot() +
   theme(text = element_text(colour = "white", size = 16, face = "bold"))  + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
         axis.ticks = element_line(color="white")) +
-  theme(panel.background = element_rect(fill = "#27292F"),  # plot & background colors, no outline
-        plot.background = element_rect(fill = "#27292F", size = 0))
+  theme(panel.background = element_rect(fill = "#27282E"),  # plot & background colors, no outline
+        plot.background = element_rect(fill = "#27282E", size = 0))
 
 cent_runs <- ggplot() + 
   theme_classic() + 
@@ -74,8 +74,8 @@ cent_runs <- ggplot() +
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
         axis.ticks = element_line(color="white")) +
-  theme(panel.background = element_rect(fill = "#27292F"),  # plot & background colors, no outline
-        plot.background = element_rect(fill = "#27292F", size = 0))
+  theme(panel.background = element_rect(fill = "#27282E"),  # plot & background colors, no outline
+        plot.background = element_rect(fill = "#27282E", size = 0))
 
 
 
@@ -83,7 +83,7 @@ cent_runs <- ggplot() +
 
 polar_steps <- ggplot() + 
   theme_classic() + 
-  geom_line(data=step_means, aes(x=X, y=polar), colour="#856ED8", size = 1) +  # line
+  geom_line(data=step_means, aes(x=X, y=polar), colour="#8971E1", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
   xlab("run") + ylab("Mean Polarization") +  # axis labels
@@ -91,12 +91,12 @@ polar_steps <- ggplot() +
   theme(text = element_text(colour = "white", size = 16, face = "bold"))  + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
         axis.ticks = element_line(color="white")) +
-  theme(panel.background = element_rect(fill = "#27292F"),  # plot & background colors, no outline
-        plot.background = element_rect(fill = "#27292F", size = 0))
+  theme(panel.background = element_rect(fill = "#27282E"),  # plot & background colors, no outline
+        plot.background = element_rect(fill = "#27282E", size = 0))
 
 nnd_steps <- ggplot() + 
   theme_classic() + 
-  geom_line(data=step_means, aes(x=X, y=nnd), colour="#856ED8", size = 1) +  # line
+  geom_line(data=step_means, aes(x=X, y=nnd), colour="#8971E1", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
   xlab("run") + ylab("Mean Nearest Neighbour Distance") +  # axis labels
@@ -104,12 +104,12 @@ nnd_steps <- ggplot() +
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1), # axis line & tick color
         axis.ticks = element_line(color="white")) +
-  theme(panel.background = element_rect(fill = "#27292F"),  # plot & background colors, no outline
-        plot.background = element_rect(fill = "#27292F", size = 0))
+  theme(panel.background = element_rect(fill = "#27282E"),  # plot & background colors, no outline
+        plot.background = element_rect(fill = "#27282E", size = 0))
 
 area_steps <- ggplot() + 
   theme_classic() + 
-  geom_line(data=step_means, aes(x=X, y=area), colour="#856ED8", size = 1) +  # line
+  geom_line(data=step_means, aes(x=X, y=area), colour="#8971E1", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
   xlab("run") + ylab("Mean Shoal Area") +  # axis labels
@@ -117,12 +117,12 @@ area_steps <- ggplot() +
   theme(text = element_text(colour = "white", size = 16, face = "bold"))  + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
         axis.ticks = element_line(color="white")) +
-  theme(panel.background = element_rect(fill = "#27292F"),  # plot & background colors, no outline
-        plot.background = element_rect(fill = "#27292F", size = 0))
+  theme(panel.background = element_rect(fill = "#27282E"),  # plot & background colors, no outline
+        plot.background = element_rect(fill = "#27282E", size = 0))
 
 cent_steps <- ggplot() + 
   theme_classic() + 
-  geom_line(data=step_means, aes(x=X, y=centroid), colour="#856ED8", size = 1) +  # line
+  geom_line(data=step_means, aes(x=X, y=centroid), colour="#8971E1", size = 1) +  # line
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
   xlab("run") + ylab("Mean Distance from Centroid") +  # axis labels
@@ -130,8 +130,8 @@ cent_steps <- ggplot() +
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
         axis.ticks = element_line(color="white")) +
-  theme(panel.background = element_rect(fill = "#27292F"),  # plot & background colors, no outline
-        plot.background = element_rect(fill = "#27292F", size = 0))
+  theme(panel.background = element_rect(fill = "#27282E"),  # plot & background colors, no outline
+        plot.background = element_rect(fill = "#27282E", size = 0))
 
 
 # Call multiplot function to combine graphs -----------------------------------
