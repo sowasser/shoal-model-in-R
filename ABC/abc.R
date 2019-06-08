@@ -18,15 +18,31 @@ library(abc)
 path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
 
 
-# import observed summary statistics - from tracking data
-tp <- read.csv(paste0(path, "step1_polar.csv"))
-tn <- read.csv(paste0(path, "step1_nnd.csv"))
-tc <- read.csv(paste0(path, "step1_cent_dist.csv"))
-ta <- read.csv(paste0(path, "step1_shoal_area.csv"))
+# Read in data & calculate means ----------------------------------------------
 
-tracking_summary <- as.data.frame(cbind(tp[, 2], tn[, 2], tc[, 2], ta[, 2]))
-colnames(tracking_summary) <- c("polar", "nnd", "cent", "area")
+# Mean of all runs, calculated for every step of the model
+run_means <- read.csv(paste0(path,"batch_means_runs.csv"))
+# Mean of all steps, calculated for every run of the model
+step_means <- read.csv(paste0(path,"batch_means_steps.csv"))
 
+# Calculate overall means for each data collector
+# overall_means <- data.frame(colMeans(run_means))
+polar_model_mean <- mean(run_means$polar)
+nnd_model_mean <- mean(run_means$nnd)
+area_model_mean <- mean(run_means$area)
+cent_model_mean <- mean(run_means$centroid)
+
+# Data from video tracking
+tracking <- read.csv(paste0(path, "stepwise_data.csv"))
+
+# Means from tracking data
+polar_track_mean <- mean(tracking$polar)
+nnd_track_mean <- mean(tracking$nnd)
+area_track_mean <- mean(tracking$area)
+cent_track_mean <- mean(tracking$centroid)
+
+
+# Run ABC ---------------------------------------------------------------------
 # import matrix of simulated summary statistics - from model
 model_summary <- read.csv(paste0(path, "single_run.csv"))
 
