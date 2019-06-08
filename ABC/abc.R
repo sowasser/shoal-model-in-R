@@ -13,6 +13,7 @@
 
 
 library(abc)
+library(ggplot2)
 
 # path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
@@ -40,6 +41,11 @@ polar_track_mean <- mean(tracking$polar)
 nnd_track_mean <- mean(tracking$nnd)
 area_track_mean <- mean(tracking$area)
 cent_track_mean <- mean(tracking$centroid)
+
+
+# Check summary statistics ----------------------------------------------------
+# boxplots
+
 
 
 # Run ABC ---------------------------------------------------------------------
