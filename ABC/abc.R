@@ -64,16 +64,18 @@ cent_plot <- ggplot(data = model_means, aes(x=var, y=centroid, group=var)) +
 cent_plot
 
 # Run ABC ---------------------------------------------------------------------
-# import matrix of simulated summary statistics - from model
-model_summary <- read.csv(paste0(path, "single_run.csv"))
+# import matrix of simulated summary statistics, where each row corresponds to 
+# a simulation and each column corresponds to a summary statistic.
+model_summary <- model_means[, 2:5]
 
-# import matrix of simulated parameter values - from model
-model_params <- read.csv(paste0(path, ""))
+# import matrix of simulated parameter values, where each row corresponds to a
+# simulation and each column correponds to a parameter.
+model_params <- model_means[, 6]
 
 # Use 'abc' to accept top 1% of runs as approximate posteriors
-shoaling.abc <- abc(target = ____,   # observed summary statistics
-                    param = ____,  # simulated parameter values, i.e. dependent variable(s)
-                    sumstat = ____,  # simulated summary statistics / independent variables
+shoaling.abc <- abc(target = tracking[, 2:5],   # observed summary statistics
+                    param = model_params,  # simulated parameter values, i.e. dependent variable(s)
+                    sumstat = model_summary,  # simulated summary statistics / independent variables
                     tol = 0.1, method = "rejection")  # proportion of runs to accept; type of ABC to use
 
 summary(shoaling.abc)
