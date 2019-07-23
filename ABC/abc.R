@@ -15,8 +15,8 @@
 library(abc)
 library(ggplot2)
 
-path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
-# path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
+# path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
+path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
 
 
 # Read in data & calculate means ----------------------------------------------
