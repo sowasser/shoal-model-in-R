@@ -15,8 +15,8 @@
 library(abc)
 library(ggplot2)
 
-# path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
-path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
+path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
+# path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
 
 
 # Read in data & calculate means ----------------------------------------------
@@ -24,21 +24,8 @@ path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
 # Mean of all runs, calculated for every step of the model & changes in a variable
 model_means <- read.csv(paste0(path,"means_var-speed.csv"))
 
-# Calculate overall means for each data collector
-# overall_means <- data.frame(colMeans(model_means))
-polar_model_mean <- mean(model_means$polar)
-nnd_model_mean <- mean(model_means$nnd)
-area_model_mean <- mean(model_means$area)
-cent_model_mean <- mean(model_means$centroid)
-
 # Data from video tracking
 tracking <- read.csv(paste0(path, "stepwise_data.csv"))
-
-# Means from tracking data
-polar_track_mean <- mean(tracking$polar)
-nnd_track_mean <- mean(tracking$nnd)
-area_track_mean <- mean(tracking$area)
-cent_track_mean <- mean(tracking$centroid)
 
 
 # Check summary statistics ----------------------------------------------------
@@ -63,19 +50,24 @@ cent_plot <- ggplot(data = model_means, aes(x=var, y=centroid, group=var)) +
   geom_boxplot()
 cent_plot
 
-# Run ABC ---------------------------------------------------------------------
-# import matrix of simulated summary statistics, where each row corresponds to 
-# a simulation and each column corresponds to a summary statistic.
-model_summary <- model_means[, 2:5]
+# Adjust data inputs and run ABC ----------------------------------------------
+# matrix of observed summary statistics, in same order as from the model:
+# polar, nnd, area, centroid
+target <- tracking[, c(5, 3, 4, 2)]
 
-# import matrix of simulated parameter values, where each row corresponds to a
+# matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
-model_params <- model_means[, 6]
+param <- model_means[, 6]
+
+# matrix of simulated summary statistics, where each row corresponds to  a 
+# simulation and each column corresponds to a summary statistic.
+sumstat <- model_means[, 2:5]
+
 
 # Use 'abc' to accept top 1% of runs as approximate posteriors
-shoaling.abc <- abc(target = tracking[, 2:5],   # observed summary statistics
-                    param = model_params,  # simulated parameter values, i.e. dependent variable(s)
-                    sumstat = model_summary,  # simulated summary statistics / independent variables
+shoaling.abc <- abc(target,   # observed summary statistics
+                    param,  # simulated parameter values, i.e. dependent variable(s)
+                    sumstat,  # simulated summary statistics / independent variables
                     tol = 0.1, method = "rejection")  # proportion of runs to accept; type of ABC to use
 
 summary(shoaling.abc)
