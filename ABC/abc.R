@@ -53,7 +53,8 @@ cent_plot
 # Adjust data inputs and run ABC ----------------------------------------------
 # matrix of observed summary statistics, in same order as from the model:
 # polar, nnd, area, centroid
-target <- tracking[, c(5, 3, 4, 2)]
+tracking_means <- t(colMeans(tracking, na.rm = FALSE, dims = 1))
+target <- tracking_means[, c(5, 3, 4, 2)]
 
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
