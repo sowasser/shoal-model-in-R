@@ -15,14 +15,18 @@
 library(abc)
 library(ggplot2)
 
-path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
-# path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
+# path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
+path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
 
 
-# Read in data & calculate means ----------------------------------------------
+# Read in data ----------------------------------------------------------------
 
 # Mean of all runs, calculated for every step of the model & changes in a variable
-model_means <- read.csv(paste0(path,"means_var-speed.csv"))
+speed <- read.csv(paste0(path,"means_var-speed.csv"))
+vision <- read.csv(paste0(path,"means_var-vision.csv"))
+separation <- read.csv(paste0(path,"means_var-sep.csv"))
+
+# Todo: combine above dataframes into one matrix for ABC.
 
 # Data from video tracking
 tracking <- read.csv(paste0(path, "stepwise_data.csv"))
@@ -30,22 +34,22 @@ tracking <- read.csv(paste0(path, "stepwise_data.csv"))
 
 # Check summary statistics ----------------------------------------------------
 # boxplots
-polar_plot <- ggplot(data = model_means, aes(x=var, y=polar, group=var)) + 
+polar_plot <- ggplot(data = model_means, aes(x=var, y=polar, group=speed)) + 
   theme_classic() +
   geom_boxplot()
 polar_plot
 
-nnd_plot <- ggplot(data = model_means, aes(x=var, y=nnd, group=var)) + 
+nnd_plot <- ggplot(data = model_means, aes(x=var, y=nnd, group=speed)) + 
   theme_classic() +
   geom_boxplot()
 nnd_plot
 
-area_plot <- ggplot(data = model_means, aes(x=var, y=area, group=var)) + 
+area_plot <- ggplot(data = model_means, aes(x=var, y=area, group=speed)) + 
   theme_classic() +
   geom_boxplot()
 area_plot
 
-cent_plot <- ggplot(data = model_means, aes(x=var, y=centroid, group=var)) + 
+cent_plot <- ggplot(data = model_means, aes(x=var, y=centroid, group=speed)) + 
   theme_classic() +
   geom_boxplot()
 cent_plot
@@ -58,7 +62,7 @@ target <- tracking_means[, c(5, 3, 4, 2)]
 
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
-param <- model_means[, 6]
+param <- model_means[, 6:8]
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.
