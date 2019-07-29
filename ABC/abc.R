@@ -18,7 +18,6 @@ library(ggplot2)
 # path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
 
-
 # Read in data ----------------------------------------------------------------
 
 # Mean of all runs, calculated for every step of the model & changes in a variable
@@ -26,33 +25,21 @@ speed <- read.csv(paste0(path,"means_var-speed.csv"))
 vision <- read.csv(paste0(path,"means_var-vision.csv"))
 separation <- read.csv(paste0(path,"means_var-sep.csv"))
 
-# Todo: combine above dataframes into one matrix for ABC.
+model <- rbind(speed, vision, separation)
+
 
 # Data from video tracking
 tracking <- read.csv(paste0(path, "stepwise_data.csv"))
 
 
 # Check summary statistics ----------------------------------------------------
-# boxplots
-polar_plot <- ggplot(data = model_means, aes(x=var, y=polar, group=speed)) + 
+# set "x" and "group" to the parameter you're looking at
+# set "y" to the summary statistic you're looking at
+boxplot <- ggplot(data = model, aes(x=vision, y=polar, group=vision)) + 
   theme_classic() +
   geom_boxplot()
-polar_plot
+boxplot
 
-nnd_plot <- ggplot(data = model_means, aes(x=var, y=nnd, group=speed)) + 
-  theme_classic() +
-  geom_boxplot()
-nnd_plot
-
-area_plot <- ggplot(data = model_means, aes(x=var, y=area, group=speed)) + 
-  theme_classic() +
-  geom_boxplot()
-area_plot
-
-cent_plot <- ggplot(data = model_means, aes(x=var, y=centroid, group=speed)) + 
-  theme_classic() +
-  geom_boxplot()
-cent_plot
 
 # Adjust data inputs and run ABC ----------------------------------------------
 # matrix of observed summary statistics, in same order as from the model:
@@ -62,11 +49,11 @@ target <- tracking_means[, c(5, 3, 4, 2)]
 
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
-param <- model_means[, 6:8]
+param <- model[, 6:8]
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.
-sumstat <- model_means[, 2:5]
+sumstat <- model[, 2:5]
 
 
 # Use 'abc' to accept top 1% of runs as approximate posteriors
