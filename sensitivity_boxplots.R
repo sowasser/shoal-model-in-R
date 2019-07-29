@@ -15,14 +15,14 @@ multi_path <- "~/Desktop/Local/Mackerel/shoal-model-in-R/"  # Path for multiplot
 source(paste0(multi_path,"multiplot.R"))
 
 # Read in data ----------------------------------------------------------------
-var_speed <- read.csv(paste0(path,"means_var-speed.csv"))
-var_sep <- read.csv(paste0(path,"means_var-sep.csv"))
-var_vision <- read.csv(paste0(path,"means_var-vision.csv"))
+speed <- read.csv(paste0(path,"means_var-speed.csv"))
+separation <- read.csv(paste0(path,"means_var-sep.csv"))
+vision <- read.csv(paste0(path,"means_var-vision.csv"))
 
 # Boxplots for varying speed over all steps & runs ----------------------------
 polar_speed <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_speed, aes(x=var, y=polar, group=var), # boxplot
+  geom_boxplot(data = speed, aes(x=speed, y=polar, group=speed), # boxplot
                colour="white",  fill="#C830CC", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -36,7 +36,7 @@ polar_speed <- ggplot() +
 
 nnd_speed <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_speed, aes(x=var, y=nnd, group=var), # boxplot
+  geom_boxplot(data = speed, aes(x=speed, y=nnd, group=speed), # boxplot
                colour="white",  fill="#C830CC", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -50,7 +50,7 @@ nnd_speed <- ggplot() +
 
 area_speed <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_speed, aes(x=var, y=area, group=var), # boxplot
+  geom_boxplot(data = speed, aes(x=speed, y=area, group=speed), # boxplot
                colour="white",  fill="#C830CC", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -64,7 +64,7 @@ area_speed <- ggplot() +
 
 cent_speed <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_speed, aes(x=var, y=centroid, group=var), # boxplot
+  geom_boxplot(data = speed, aes(x=speed, y=centroid, group=speed), # boxplot
                colour="white",  fill="#C830CC", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -80,7 +80,7 @@ cent_speed <- ggplot() +
 # Boxplots for varying separation distance over all steps & runs --------------
 polar_sep <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_sep, aes(x=var, y=polar, group=var), # boxplot
+  geom_boxplot(data = separation, aes(x=separation, y=polar, group=separation), # boxplot
                colour="white",  fill="#8971E1", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -94,7 +94,7 @@ polar_sep <- ggplot() +
 
 nnd_sep <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_sep, aes(x=var, y=nnd, group=var), # boxplot
+  geom_boxplot(data = separation, aes(x=separation, y=nnd, group=separation), # boxplot
                colour="white",  fill="#8971E1", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -108,7 +108,7 @@ nnd_sep <- ggplot() +
 
 area_sep <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_sep, aes(x=var, y=area, group=var), # boxplot
+  geom_boxplot(data = separation, aes(x=separation, y=area, group=separation), # boxplot
                colour="white",  fill="#8971E1", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -122,7 +122,7 @@ area_sep <- ggplot() +
 
 cent_sep <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_sep, aes(x=var, y=centroid, group=var), # boxplot
+  geom_boxplot(data = separation, aes(x=separation, y=centroid, group=separation), # boxplot
                colour="white",  fill="#8971E1", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -138,7 +138,7 @@ cent_sep <- ggplot() +
 # Boxplots for varying vision radius over all steps & runs --------------------
 polar_vision <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_vision, aes(x=var, y=polar, group=var), # boxplot
+  geom_boxplot(data = vision, aes(x=vision, y=polar, group=vision), # boxplot
                colour="white",  fill="#92D050", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -152,7 +152,7 @@ polar_vision <- ggplot() +
 
 nnd_vision <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_vision, aes(x=var, y=nnd, group=var), # boxplot
+  geom_boxplot(data = vision, aes(x=vision, y=nnd, group=vision), # boxplot
                colour="white",  fill="#92D050", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -166,7 +166,7 @@ nnd_vision <- ggplot() +
 
 area_vision <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_vision, aes(x=var, y=area, group=var), # boxplot
+  geom_boxplot(data = vision, aes(x=vision, y=area, group=vision), # boxplot
                colour="white",  fill="#92D050", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
@@ -180,7 +180,7 @@ area_vision <- ggplot() +
 
 cent_vision <- ggplot() + 
   theme_classic() +
-  geom_boxplot(data = var_vision, aes(x=var, y=centroid, group=var), # boxplot
+  geom_boxplot(data = vision, aes(x=vision, y=centroid, group=vision), # boxplot
                colour="white",  fill="#92D050", width=4) +  # line & box fill colors; box width
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
