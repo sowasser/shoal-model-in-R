@@ -60,7 +60,7 @@ sumstat <- model[, 2:5]
 shoaling.abc <- abc(target,   # observed summary statistics
                     param,  # simulated parameter values, i.e. dependent variable(s)
                     sumstat,  # simulated summary statistics / independent variables
-                    tol = 0.1, method = "rejection")  # proportion of runs to accept; type of ABC to use
+                    tol = 0.1, method = "loclinear")  # proportion of runs to accept; type of ABC to use
 
 summary(shoaling.abc)
 
