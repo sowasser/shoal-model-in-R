@@ -21,12 +21,12 @@ path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
 # Read in data ----------------------------------------------------------------
 
 # Mean of all runs, calculated for every step of the model & changes in a variable
-speed <- read.csv(paste0(path,"means_var-speed.csv"))
-vision <- read.csv(paste0(path,"means_var-vision.csv"))
-separation <- read.csv(paste0(path,"means_var-sep.csv"))
+speed <- read.csv(paste0(path,"var-speed.csv"))
+vision <- read.csv(paste0(path,"var-vision.csv"))
+separation <- read.csv(paste0(path,"var-sep.csv"))
 
 model <- rbind(speed, vision, separation)
-
+colnames(model) <- c("run", "polar", "nnd", "area", "centroid", "speed", "vision", "separation")
 
 # Data from video tracking
 tracking <- read.csv(paste0(path, "stepwise_data.csv"))
@@ -35,10 +35,11 @@ tracking <- read.csv(paste0(path, "stepwise_data.csv"))
 # Check summary statistics ----------------------------------------------------
 # set "x" and "group" to the parameter you're looking at
 # set "y" to the summary statistic you're looking at
-boxplot <- ggplot(data = model, aes(x=vision, y=polar, group=vision)) + 
-  theme_classic() +
-  geom_boxplot()
-boxplot
+# Todo: change this to something that works better for a lognormal distribution.
+# boxplot <- ggplot(data = model, aes(x=vision, y=polar, group=vision)) + 
+#   theme_classic() +
+#   geom_boxplot()
+# boxplot
 
 
 # Adjust data inputs and run ABC ----------------------------------------------
