@@ -8,9 +8,12 @@
 # Background: "#27282E
 
 
-# path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
-path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
-multi_path <- "~/Desktop/Local/Mackerel/shoal-model-in-R/"  # Path for multiplot function on desktop
+path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
+# path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
+
+multi_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # Path for multiplot function on laptop
+# multi_path <- "~/Desktop/Local/Mackerel/shoal-model-in-R/"  # Path for multiplot function on desktop
+
 
 source(paste0(multi_path,"multiplot.R"))
 
