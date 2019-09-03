@@ -7,6 +7,7 @@
 # Green: "#92D050"
 # Background: "#27282E
 
+library(ggplot2)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
@@ -18,9 +19,15 @@ multi_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # Path for
 source(paste0(multi_path,"multiplot.R"))
 
 # Read in data ----------------------------------------------------------------
-speed <- read.csv(paste0(path,"means_var-speed.csv"))
-separation <- read.csv(paste0(path,"means_var-sep.csv"))
-vision <- read.csv(paste0(path,"means_var-vision.csv"))
+speed <- read.csv(paste0(path,"var-speed.csv"))
+separation <- read.csv(paste0(path,"var-sep.csv"))
+vision <- read.csv(paste0(path,"var-vision.csv"))
+
+columns <- c("x", "centroid", "nnd", "polar", "area", "speed", "vision", "separation")
+
+colnames(speed) <- columns
+colnames(separation) <- columns
+colnames(vision) <- columns
 
 # Boxplots for varying speed over all steps & runs ----------------------------
 polar_speed <- ggplot() + 
