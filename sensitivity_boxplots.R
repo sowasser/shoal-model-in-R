@@ -56,7 +56,7 @@ nnd_speed <- ggplot() +
                colour="white",  fill=c1) +  # line & box fill colors
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
-  ylab("Mean Nearest Neighbour Distance") +  # axis labels
+  xlab("speed") + ylab("Mean Nearest Neighbour Distance") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
@@ -70,7 +70,7 @@ area_speed <- ggplot() +
                colour="white",  fill=c1) +  # line & box fill colors
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
-  ylab("Mean Shoal Area") +  # axis labels
+  xlab("speed") + ylab("Mean Shoal Area") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
@@ -84,7 +84,7 @@ cent_speed <- ggplot() +
                colour="white",  fill=c1) +  # line & box fill colors
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
-  ylab("Mean Distance from Centroid") +  # axis labels
+  xlab("speed") + ylab("Mean Distance from Centroid") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
@@ -100,7 +100,7 @@ polar_sep <- ggplot() +
                colour="white",  fill=c2) +  # line & box fill colors
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
-  ylab("Mean Polarization") +  # axis labels
+  xlab("separation") + ylab("Mean Polarization") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
@@ -114,7 +114,7 @@ nnd_sep <- ggplot() +
                colour="white",  fill=c2) +  # line & box fill colors
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
-  ylab("Mean Nearest Neighbour Distance") +  # axis labels
+  xlab("separation") + ylab("Mean Nearest Neighbour Distance") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
@@ -128,7 +128,7 @@ area_sep <- ggplot() +
                colour="white",  fill=c2) +  # line & box fill colors
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
-  ylab("Mean Shoal Area") +  # axis labels
+  xlab("separation") + ylab("Mean Shoal Area") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
@@ -142,7 +142,7 @@ cent_sep <- ggplot() +
                colour="white",  fill=c2) +  # line & box fill colors
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
-  ylab("Mean Distance from Centroid") +  # axis labels
+  xlab("separation") + ylab("Mean Distance from Centroid") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
@@ -172,7 +172,7 @@ nnd_vision <- ggplot() +
                colour="white",  fill=c3) +  # line & box fill colors
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
-  ylab("Mean Nearest Neighbour Distance") +  # axis labels
+  xlab("vision") + ylab("Mean Nearest Neighbour Distance") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
@@ -186,7 +186,7 @@ area_vision <- ggplot() +
                colour="white",  fill=c3) +  # line & box fill colors
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
-  ylab("Mean Shoal Area") +  # axis labels
+  xlab("vision") + ylab("Mean Shoal Area") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
@@ -200,7 +200,7 @@ cent_vision <- ggplot() +
                colour="white",  fill=c3) +  # line & box fill colors
   theme(axis.text.y = element_text(size = 14, color = "white"),  # axis text size & color
         axis.text.x = element_text(size = 14, color = "white")) + 
-  ylab("Mean Distance from Centroid") +  # axis labels
+  xlab("vision") + ylab("Mean Distance from Centroid") +  # axis labels
   theme(plot.title = element_text(size = 16, face = "bold")) +  # title formatting
   theme(text = element_text(colour = "white", size = 16, face = "bold")) + # label text
   theme(axis.line = element_line(color="white", size = 1),  # axis line & tick color
