@@ -29,7 +29,7 @@ speed <- read.csv(paste0(path,"var-speed.csv"))
 separation <- read.csv(paste0(path,"var-sep.csv"))
 vision <- read.csv(paste0(path,"var-vision.csv"))
 
-columns <- c("x", "centroid", "nnd", "polar", "area", "speed", "vision", "separation")
+columns <- c("polar", "nnd", "area", "centroid", "speed", "vision", "separation")
 
 colnames(speed) <- columns
 colnames(separation) <- columns
