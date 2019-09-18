@@ -26,7 +26,7 @@ vision <- read.csv(paste0(path,"var-vision.csv"))
 separation <- read.csv(paste0(path,"var-sep.csv"))
 
 model <- rbind(speed, vision, separation)
-colnames(model) <- c("run", "polar", "nnd", "area", "centroid", "speed", "vision", "separation")
+colnames(model) <- c("polar", "nnd", "area", "centroid", "speed", "vision", "separation")
 
 # Data from video tracking
 tracking <- read.csv(paste0(path, "stepwise_data.csv"))
@@ -46,15 +46,15 @@ tracking <- read.csv(paste0(path, "stepwise_data.csv"))
 # matrix of observed summary statistics, in same order as from the model:
 # polar, nnd, area, centroid
 tracking_means <- t(colMeans(tracking, na.rm = FALSE, dims = 1))
-target <- tracking_means[, c(5, 3, 4, 2)]
+target <- tracking_means[, c(4, 3, 2, 1)]
 
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
-param <- model[, 6:8]
+param <- model[, 5:7]
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.
-sumstat <- model[, 2:5]
+sumstat <- model[, 1:4]
 
 
 # Use 'abc' to accept top 1% of runs as approximate posteriors
