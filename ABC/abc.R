@@ -35,11 +35,10 @@ tracking <- read.csv(paste0(path, "stepwise_data.csv"))
 # Check summary statistics ----------------------------------------------------
 # set "x" and "group" to the parameter you're looking at
 # set "y" to the summary statistic you're looking at
-# Todo: change this to something that works better for a lognormal distribution.
-# boxplot <- ggplot(data = model, aes(x=vision, y=polar, group=vision)) + 
-#   theme_classic() +
-#   geom_boxplot()
-# boxplot
+# Todo: change this to something that works better
+ggplot(data = model, aes(x=vision, y=polar, group=vision)) + 
+  theme_classic() +
+  geom_boxplot()
 
 
 # Adjust data inputs and run ABC ----------------------------------------------
