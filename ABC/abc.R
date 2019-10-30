@@ -36,9 +36,8 @@ tracking <- read.csv(paste0(path, "stepwise_data.csv"))
 # set "x" and "group" to the parameter you're looking at
 # set "y" to the summary statistic you're looking at
 # Todo: change this to something that works better
-ggplot(data = model, aes(x=vision, y=polar, group=vision)) + 
-  theme_classic() +
-  geom_boxplot()
+ggplot(data = model, aes(x=vision, y=polar)) + 
+  theme_classic() + geom_point()
 
 
 # Adjust data inputs and run ABC ----------------------------------------------
