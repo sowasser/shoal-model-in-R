@@ -36,9 +36,10 @@ tracking <- read.csv(paste0(path, "stepwise_data.csv"))
 # set "x" and "group" to the parameter you're looking at
 # set "y" to the summary statistic you're looking at
 # Todo: change this to something that works better
-ggplot(data = model, aes(x=vision, y=polar)) + 
+ggplot(data = model, aes(x=speed, y=polar)) + 
   theme_classic() + geom_point()
 
+pairs(model[,], pch = 19, lower.panel = NULL)
 
 # Adjust data inputs and run ABC ----------------------------------------------
 # matrix of observed summary statistics, in same order as from the model:
