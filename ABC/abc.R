@@ -33,12 +33,14 @@ colnames(model) <- c("polar", "nnd", "area", "centroid", "speed", "vision", "sep
 tracking <- read.csv(paste0(path, "stepwise_data.csv"))
 
 
-# Check summary statistics ----------------------------------------------------
+# Check summary statistics 
 # set "x" and "group" to the parameter you're looking at
 # set "y" to the summary statistic you're looking at
-# TODO: change this to something that works better - look up facets!
+# TODO: change this to something that works better - maybe facets?
 
 require(gridExtra)
+
+# Graphs --------------------------------------------------------------------
 speed_polar <- ggplot(data = model, aes(x=speed, y=polar)) + 
   theme_classic() + geom_point()
 speed_nnd <- ggplot(data = model, aes(x=speed, y=nnd)) + 
@@ -66,7 +68,7 @@ sep_area <- ggplot(data = model, aes(x=separation, y=area)) +
 sep_cent <- ggplot(data = model, aes(x=separation, y=centroid)) + 
   theme_classic() + geom_point()
 
-# Creates multiple graphs in page, row by row
+# Create multiple graphs in page, row by row ----------------------------------
 grid.arrange(speed_polar, vision_polar, sep_polar,
              speed_nnd, vision_nnd, sep_nnd,
              speed_area, vision_area, sep_area,
