@@ -66,13 +66,12 @@ sep_area <- ggplot(data = model, aes(x=separation, y=area)) +
 sep_cent <- ggplot(data = model, aes(x=separation, y=centroid)) + 
   theme_classic() + geom_point()
 
-# TODO: deterime fill order!
-grid.arrange(speed_polar, speed_nnd, speed_area, speed_cent,
-             vision_polar, vision_nnd, vision_area, vision_cent,
-             sep_polar, sep_nnd, sep_area, sep_cent, ncol=3)
+# Creates multiple graphs in page, row by row
+grid.arrange(speed_polar, vision_polar, sep_polar,
+             speed_nnd, vision_nnd, sep_nnd,
+             speed_area, vision_area, sep_area,
+             speed_cent, vision_cent, sep_cent, ncol=3)
 
-
-pairs(model[,], pch = 19, lower.panel = NULL)
 
 # Adjust data inputs and run ABC ----------------------------------------------
 # matrix of observed summary statistics, in same order as from the model:
