@@ -31,16 +31,33 @@ colnames(model) <- c("polar", "nnd", "area", "centroid", "speed", "vision", "sep
 
 # Data from video tracking
 tracking <- read.csv(paste0(path, "stepwise_data.csv"))
+colnames(tracking) <- c("step", "centroid", "nnd", "area", "polar")
 
 
 # Check summary statistics 
+# Tracking Graphs -------------------------------------------------------------
+require(gridExtra)
+track_cent <- ggplot(data = tracking, aes(x=step, y=centroid)) +
+  theme_classic() + geom_point() + geom_line()
+track_nnd <- ggplot(data = tracking, aes(x=step, y=nnd)) +
+  theme_classic() + geom_point() + geom_line()
+track_area <- ggplot(data = tracking, aes(x=step, y=area)) +
+  theme_classic() + geom_point() + geom_line()
+track_polar <- ggplot(data = tracking, aes(x=step, y=polar)) +
+  theme_classic() + geom_point() + geom_line()
+
+# Create multiple graphs in page, row by row ----------------------------------
+grid.arrange(track_polar,
+             track_nnd,
+             track_area,
+             track_cent, ncol=1)
+
+
+# Model Graphs ----------------------------------------------------------------
+require(gridExtra)
 # set "x" and "group" to the parameter you're looking at
 # set "y" to the summary statistic you're looking at
 # TODO: change this to something that works better - maybe facets?
-
-require(gridExtra)
-
-# Graphs --------------------------------------------------------------------
 speed_polar <- ggplot(data = model, aes(x=speed, y=polar)) + 
   theme_classic() + geom_point()
 speed_nnd <- ggplot(data = model, aes(x=speed, y=nnd)) + 
