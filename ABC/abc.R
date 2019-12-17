@@ -46,12 +46,6 @@ track_area <- ggplot(data = tracking, aes(x=step, y=area)) +
 track_polar <- ggplot(data = tracking, aes(x=step, y=polar)) +
   theme_classic() + geom_point() + geom_line()
 
-# Create multiple graphs in page, row by row ----------------------------------
-grid.arrange(track_polar,
-             track_nnd,
-             track_area,
-             track_cent, ncol=1)
-
 
 # Model Graphs ----------------------------------------------------------------
 require(gridExtra)
@@ -86,10 +80,10 @@ sep_cent <- ggplot(data = model, aes(x=separation, y=centroid)) +
   theme_classic() + geom_point()
 
 # Create multiple graphs in page, row by row ----------------------------------
-grid.arrange(speed_polar, vision_polar, sep_polar,
-             speed_nnd, vision_nnd, sep_nnd,
-             speed_area, vision_area, sep_area,
-             speed_cent, vision_cent, sep_cent, ncol=3)
+grid.arrange(speed_polar, vision_polar, sep_polar, track_polar,
+             speed_nnd, vision_nnd, sep_nnd, track_nnd,
+             speed_area, vision_area, sep_area, track_area,
+             speed_cent, vision_cent, sep_cent, track_cent, ncol=4)
 
 
 # Adjust data inputs and run ABC ----------------------------------------------
