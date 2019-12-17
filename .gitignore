@@ -17,3 +17,5 @@ Mackerel in R/
 *.csv
 
 \.DS_Store
+
+*.icloud
