@@ -5,7 +5,7 @@
 #   2. a matrix of the simulated summary statistics, where each row corresponds
 #      to a simulation and each column corresponds to a summary statistic
 #   3. a matrix of the simulated parameter values, where each row corrresponds
-#      to a parameter.
+#      to a model run.
 
 # More documentation about abc:
 # https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2011.00179.x
