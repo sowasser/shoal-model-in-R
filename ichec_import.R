@@ -9,9 +9,7 @@ library(tidyverse)
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/19Mar2020"  # laptop
 
 # Testing if data import will work with one file ------------------------------
-
 setwd(path)  # laptop
-
 test <- read.table("sep_output0.txt", sep = "")
 
 
@@ -25,4 +23,6 @@ test <- read.table("sep_output0.txt", sep = "")
 
 # TODO: Change end of file path to desired folder
 data <- list.files(path, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
-  
+
+path2 <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC_data_19Mar20.csv"  # laptop
+write.csv(data, path2)
