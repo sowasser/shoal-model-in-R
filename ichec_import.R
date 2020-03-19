@@ -5,10 +5,17 @@
 
 library(tidyverse)
 
+# path <- "~/Desktop/Local/Mackerel/Mackerel Data/ICHEC/27feb2020"  # desktop
+path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/19Mar2020"  # laptop
+
 # Testing if data import will work with one file ------------------------------
 
-setwd("~/Desktop/Local/Mackerel/Mackerel Data/ICHEC/27feb2020")
+setwd(path)  # laptop
+
 test <- read.table("sep_output0.txt", sep = "")
+
+
+# Import all files ------------------------------------------------------------
 
 # Create a list of all of the files in this location, read them as tables,
 # and consolidate them into one. 
@@ -17,7 +24,5 @@ test <- read.table("sep_output0.txt", sep = "")
 # coumn
 
 # TODO: Change end of file path to desired folder
-data <- list.files("~/Desktop/Local/Mackerel/Mackerel Data/ICHEC/27feb2020",
-                  pattern="*.txt") %>%
-  map_df(~read.table(., sep = ""))
+data <- list.files(path, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
   
