@@ -16,25 +16,35 @@ library(abc)
 library(ggplot2)
 library(gridExtra)
 
-# path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
-path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
+path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
+# path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
 
-# Read in data ----------------------------------------------------------------
+# Read in local Python data ---------------------------------------------------
 
 # Mean of all runs, calculated for every step of the model & changes in a variable
-speed <- read.csv(paste0(path,"var-speed.csv"))
-vision <- read.csv(paste0(path,"var-vision.csv"))
-separation <- read.csv(paste0(path,"var-sep.csv"))
+# speed <- read.csv(paste0(path,"var-speed.csv"))
+# vision <- read.csv(paste0(path,"var-vision.csv"))
+# separation <- read.csv(paste0(path,"var-sep.csv"))
 
-model <- rbind(speed, vision, separation)
+# model <- rbind(speed, vision, separation)
+# colnames(model) <- c("polar", "nnd", "area", "centroid", "speed", "vision", "separation")
+
+
+# Read in ICHEC data ----------------------------------------------------------
+
+# Mean of all runs, calculated for every step of the model & changes in a variable
+model <- read.csv(paste0(path,"ICHEC_data_19Mar20.csv"))  # TODO: change this date
 colnames(model) <- c("polar", "nnd", "area", "centroid", "speed", "vision", "separation")
 
-# Data from video tracking
+
+# Data from video tracking ----------------------------------------------------
 tracking <- read.csv(paste0(path, "stepwise_data.csv"))
 colnames(tracking) <- c("step", "centroid", "nnd", "area", "polar")
 
 
 # Check summary statistics 
+
+
 # Tracking Graphs -------------------------------------------------------------
 require(gridExtra)
 track_cent <- ggplot(data = tracking, aes(x=step, y=centroid)) +
