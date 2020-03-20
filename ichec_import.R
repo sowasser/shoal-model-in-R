@@ -9,8 +9,8 @@ library(tidyverse)
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/19Mar2020"  # laptop
 
 # Testing if data import will work with one file ------------------------------
-setwd(path)  # laptop
-test <- read.table("sep_output0.txt", sep = "")
+# setwd(path)  # laptop
+# test <- read.table("sep_output0.txt", sep = "")
 
 
 # Import all files ------------------------------------------------------------
