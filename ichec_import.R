@@ -6,7 +6,7 @@
 library(tidyverse)
 
 # path <- "~/Desktop/Local/Mackerel/Mackerel Data/ICHEC/27feb2020"  # desktop
-path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/19Mar2020"  # laptop
+path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/30Mar2020"  # laptop
 
 # Testing if data import will work with one file ------------------------------
 # setwd(path)  # laptop
@@ -24,5 +24,5 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/19Mar2020"  #
 # TODO: Change end of file path to desired folder
 data <- list.files(path, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
 
-path2 <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC_data_19Mar20.csv"  # laptop
+path2 <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC_data_30Mar20.csv"  # laptop
 write.csv(data, path2)

@@ -11,6 +11,8 @@
 # https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2011.00179.x
 # https://cran.r-project.org/web/packages/abc/abc.pdf
 
+# TODO: Make sure to run ichec_import.R to get the data ready!
+
 
 library(abc)
 library(ggplot2)
@@ -33,7 +35,7 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # Read in ICHEC data ----------------------------------------------------------
 
 # Mean of all runs, calculated for every step of the model & changes in a variable
-model <- read.csv(paste0(path,"ICHEC_data_19Mar20.csv"))  # TODO: change this date
+model <- read.csv(paste0(path,"ICHEC_data_30Mar20.csv"))  # TODO: change this date
 colnames(model) <- c("polar", "nnd", "area", "centroid", "speed", "vision", "separation")
 
 
