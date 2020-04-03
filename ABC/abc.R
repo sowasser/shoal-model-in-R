@@ -102,23 +102,50 @@ grid.arrange(speed_polar, vision_polar, sep_polar, track_polar,
 # matrix of observed summary statistics, in same order as from the model:
 # polar, nnd, area, centroid
 tracking_means <- t(colMeans(tracking, na.rm = FALSE, dims = 1))
-target <- tracking_means[, c(4, 3, 2, 1)]
+real_fish <- tracking_means[, c(4, 3, 2, 1)]
 
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
-param <- model[, 5:7]
+model_params <- model[, 5:7]
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.
-sumstat <- model[, 1:4]
+model_stats <- model[, 1:4]
 
 
 # Use 'abc' to accept top 1% of runs as approximate posteriors
-shoaling.abc <- abc(target,   # observed summary statistics
-                    param,  # simulated parameter values, i.e. dependent variable(s)
-                    sumstat,  # simulated summary statistics / independent variables
+shoaling.abc <- abc(target = real_fish,   # observed summary statistics
+                    param = model_params,  # simulated parameter values, i.e. dependent variable(s)
+                    sumstat = model_stats,  # simulated summary statistics / independent variables
                     tol = 0.1, method = "rejection")  # proportion of runs to accept; type of ABC to use
 
 summary(shoaling.abc)
 
-# then plot
+# then plot posterior distribution
+
+# Better summary statistics ---------------------------------------------------
+
+create.fish.sumstats <- function(fish.stats) {
+  if (is.vector(fish.stats)) {
+    better.sumstats <- c(min(fish.stats[1:60]), max(fish.stats[1:60]),
+                         mean(fish.stats[1:60]), sd(fish.stats[1:60]),
+                         min(fish.stats[61:120]), max(fish.stats[61:120]),
+                         mean(fish.stats[61:120]), sd(fish.stats[61:120]))
+    names(better.sumstats) <- c(paste0(c("min.", "max.", "mean.", "sd."),
+                                       "step.dist"), paste0(c("min.", "max.", "mean.", "sd."), "total.disp"))
+  } else {
+    better.sumstats <- cbind(apply(fish.stats[, 1:60], 1, min),
+                             apply(fish.stats[, 1:60], 1, max),
+                             apply(fish.stats[, 1:60], 1, mean),
+                             apply(fish.stats[, 1:60], 1, sd),
+                             apply(fish.stats[, 61:120], 1, min),
+                             apply(fish.stats[, 61:120], 1, max),
+                             apply(fish.stats[, 61:120], 1, mean),
+                             apply(fish.stats[, 61:120], 1, sd))
+    colnames(better.sumstats) <- c(paste0(c("min.", "max.", "mean.", "sd."),
+                                          "step.dist"), paste0(c("min.", "max.", "mean.", "sd."), "total.disp"))
+  }
+  better.sumstats
+}
+
+fish.data.ss <- create.fish.sumstats()
