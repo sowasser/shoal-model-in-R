@@ -35,13 +35,13 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # Read in ICHEC data ----------------------------------------------------------
 
 # Mean of all runs, calculated for every step of the model & changes in a variable
-model <- read.csv(paste0(path,"ICHEC_data_30Mar20.csv"))  # TODO: change this date
-colnames(model) <- c("polar", "nnd", "area", "centroid", "speed", "vision", "separation")
+model <- read.csv(paste0(path,"ICHEC_data_06Apr20.csv"))  # TODO: change this date
 
 
 # Data from video tracking ----------------------------------------------------
 tracking <- read.csv(paste0(path, "stepwise_data.csv"))
-colnames(tracking) <- c("step", "centroid", "nnd", "area", "polar")
+colnames(tracking) <- c("step", "cent", "nnd", "area", "polar")
+tracking <- tracking[, c("cent", "nnd", "polar", "area")]  # reorder to match other data
 
 
 # Check summary statistics 
@@ -101,16 +101,24 @@ grid.arrange(speed_polar, vision_polar, sep_polar, track_polar,
 # Adjust data inputs and run ABC ----------------------------------------------
 # matrix of observed summary statistics, in same order as from the model:
 # polar, nnd, area, centroid
-tracking_means <- t(colMeans(tracking, na.rm = FALSE, dims = 1))
-real_fish <- tracking_means[, c(4, 3, 2, 1)]
+tmin <- t(apply(tracking, 2, min))
+tmax <- t(apply(tracking, 2, max))
+tmean <- t(colMeans(tracking, na.rm = FALSE, dims = 1))
+tsd <- t(apply(tracking, 2, sd))
+
+real_fish <- c(tmin[1], tmin[2], tmin[3], tmin[4], 
+               tmax[1], tmax[2], tmax[3], tmax[4],
+               tmean[2], tmean[2], tmean[3], tmean[4],
+               tsd[1], tsd[2], tsd[3], tsd[4])
+
 
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
-model_params <- model[, 5:7]
+model_params <- model[, 18:20]
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.
-model_stats <- model[, 1:4]
+model_stats <- model[, 2:17]
 
 
 # Use 'abc' to accept top 1% of runs as approximate posteriors
@@ -122,30 +130,3 @@ shoaling.abc <- abc(target = real_fish,   # observed summary statistics
 summary(shoaling.abc)
 
 # then plot posterior distribution
-
-# Better summary statistics ---------------------------------------------------
-
-create.fish.sumstats <- function(fish.stats) {
-  if (is.vector(fish.stats)) {
-    better.sumstats <- c(min(fish.stats[1:60]), max(fish.stats[1:60]),
-                         mean(fish.stats[1:60]), sd(fish.stats[1:60]),
-                         min(fish.stats[61:120]), max(fish.stats[61:120]),
-                         mean(fish.stats[61:120]), sd(fish.stats[61:120]))
-    names(better.sumstats) <- c(paste0(c("min.", "max.", "mean.", "sd."),
-                                       "step.dist"), paste0(c("min.", "max.", "mean.", "sd."), "total.disp"))
-  } else {
-    better.sumstats <- cbind(apply(fish.stats[, 1:60], 1, min),
-                             apply(fish.stats[, 1:60], 1, max),
-                             apply(fish.stats[, 1:60], 1, mean),
-                             apply(fish.stats[, 1:60], 1, sd),
-                             apply(fish.stats[, 61:120], 1, min),
-                             apply(fish.stats[, 61:120], 1, max),
-                             apply(fish.stats[, 61:120], 1, mean),
-                             apply(fish.stats[, 61:120], 1, sd))
-    colnames(better.sumstats) <- c(paste0(c("min.", "max.", "mean.", "sd."),
-                                          "step.dist"), paste0(c("min.", "max.", "mean.", "sd."), "total.disp"))
-  }
-  better.sumstats
-}
-
-fish.data.ss <- create.fish.sumstats()
