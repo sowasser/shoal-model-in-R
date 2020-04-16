@@ -87,5 +87,10 @@ colnames(posts) <- c("value", "statistic", "distribution")
 
 dists <- rbind(priors, posts)  # Combine everything into one dataframe
 
-priors <- model_params
-posteriors <- shoaling.abc$unadj.values
+dist_boxplot <- ggplot(dists, aes(x = statistic, y = value, fill = distribution)) +
+  geom_boxplot() + 
+  facet_wrap(~statistic, scale="free")
+
+pdf("~/Desktop/dist_boxplot.pdf")
+print(dist_boxplot)
+dev.off()
