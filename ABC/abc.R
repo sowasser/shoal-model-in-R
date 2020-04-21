@@ -32,7 +32,7 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # Read in ICHEC data ----------------------------------------------------------
 
 # Mean of all runs, calculated for every step of the model & changes in a variable
-model <- read.csv(paste0(path,"ICHEC_data_06Apr20.csv"))  # TODO: change this date
+model <- read.csv(paste0(path,"ICHEC_data_17Apr20.csv"))  # TODO: change this date
 
 
 # Data from video tracking ----------------------------------------------------
