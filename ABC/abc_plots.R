@@ -86,6 +86,8 @@ posts <- cbind(posts, cat_posts)
 colnames(posts) <- c("value", "statistic", "distribution")
 
 dists <- rbind(priors, posts)  # Combine everything into one dataframe
+dists$statistic <- as.factor(dists$statistic)
+dists$distribution <- as.factor(dists$distribution)
 
 dist_boxplot <- ggplot(dists, aes(x = statistic, y = value, fill = distribution)) +
   geom_boxplot() + 
