@@ -86,6 +86,7 @@ posts <- cbind(posts, cat_posts)
 colnames(posts) <- c("value", "statistic", "distribution")
 
 dists <- rbind(priors, posts)  # Combine everything into one dataframe
+dists$value <- as.numeric(as.character(dists$value))
 dists$statistic <- as.factor(dists$statistic)
 dists$distribution <- as.factor(dists$distribution)
 
