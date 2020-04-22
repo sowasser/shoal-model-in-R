@@ -86,12 +86,20 @@ posts <- cbind(posts, cat_posts)
 colnames(posts) <- c("value", "statistic", "distribution")
 
 dists <- rbind(priors, posts)  # Combine everything into one dataframe
+
+# Make sure all columns will be regongised appropriately for R/ggplot
 dists$value <- as.numeric(as.character(dists$value))
 dists$statistic <- as.factor(dists$statistic)
 dists$distribution <- as.factor(dists$distribution)
 
 dist_boxplot <- ggplot(dists, aes(x = statistic, y = value, fill = distribution)) +
   geom_boxplot() + 
+  theme_bw() + 
+  xlab(" ") + ylab(" ") +  # axis labels
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
 pdf("~/Desktop/dist_boxplot.pdf")
