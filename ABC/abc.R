@@ -11,11 +11,12 @@
 # https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2011.00179.x
 # https://cran.r-project.org/web/packages/abc/abc.pdf
 
-# TODO: Make sure to run ichec_import.R to get the data ready!
-
 library(abc)
+library(tidyverse)
 
-path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
+date <- "22Apr2020"  # TODO: change date to correct data off of ICHEC.
+
+general_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
 
 # Read in local Python data ---------------------------------------------------
@@ -29,16 +30,26 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # colnames(model) <- c("polar", "nnd", "area", "centroid", "speed", "vision", "separation")
 
 
-# Read in ICHEC data ----------------------------------------------------------
-
-# Mean of all runs, calculated for every step of the model & changes in a variable
-model <- read.csv(paste0(path,"ICHEC_data_17Apr20.csv"))  # TODO: change this date
-
-
-# Data from video tracking ----------------------------------------------------
-tracking <- read.csv(paste0(path, "stepwise_data.csv"))
+# Read in data from video tracking --------------------------------------------
+tracking <- read.csv(paste0(general_path, "stepwise_data.csv"))
 colnames(tracking) <- c("step", "cent", "nnd", "area", "polar")
 tracking <- tracking[, c("cent", "nnd", "polar", "area")]  # reorder to match other data
+
+# Import ICHEC data ----------------------------------------------------------
+# path2 <- "~/Desktop/Local/Mackerel/Mackerel Data/ICHEC/27feb2020"  # desktop
+setwd(paste0("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/", date))  # laptop
+ichec_path <- paste0("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/", date) # laptop
+
+# Testing if data import will work with one file ------------------------------
+# setwd(path)  # laptop
+# test <- read.table("sep_output0.txt", sep = "")
+
+# Create a list of all of the files in this location, read them as tables,
+# and consolidate them into one. 
+model <- list.files(ichec_path, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
+
+# Create .csv file with all the ICHEC data
+write.csv(model, paste0(general_path, "ICHEC_data_", date, ".csv"))
 
 
 # TODO: check summary statistics 
@@ -59,11 +70,11 @@ real_fish <- c(tmin[1], tmin[2], tmin[3], tmin[4],
 
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
-model_params <- model[, 18:20]
+model_params <- model[, 17:19]
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.
-model_stats <- model[, 2:17]
+model_stats <- model[, 1:16]
 
 
 # Use 'abc' to accept top 1% of runs as approximate posteriors

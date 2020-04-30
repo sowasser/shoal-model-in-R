@@ -102,6 +102,6 @@ dist_boxplot <- ggplot(dists, aes(x = statistic, y = value, fill = distribution)
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
-pdf("~/Desktop/dist_boxplot.pdf")
+pdf(paste0("~/Desktop/dist_boxplot_", date, ".pdf"))
 print(dist_boxplot)
 dev.off()
