@@ -54,10 +54,15 @@ sep_cent <- ggplot(data = model, aes(x=sep, y=cent_mean)) +
   theme_classic() + geom_point()
 
 # Create multiple graphs in page, row by row ----------------------------------
-prior_data <- grid.arrange(speed_polar, vision_polar, sep_polar, track_polar,
-             speed_nnd, vision_nnd, sep_nnd, track_nnd,
-             speed_area, vision_area, sep_area, track_area,
-             speed_cent, vision_cent, sep_cent, track_cent, ncol=4)
+prior_plots <- arrangeGrob(speed_polar, vision_polar, sep_polar, track_polar,
+                           speed_nnd, vision_nnd, sep_nnd, track_nnd,
+                           speed_area, vision_area, sep_area, track_area,
+                           speed_cent, vision_cent, sep_cent, track_cent, ncol=4)
+
+# TODO: figure out how to save a smaller file here.
+ggsave(file=paste0("~/Desktop/prior_plots", date, ".pdf"), 
+       plot=prior_plots,
+       width=20, height=20, units="cm", dpi=300, limitsize=TRUE)
 
 
 # Prior/posterior distributions from abc --------------------------------------
