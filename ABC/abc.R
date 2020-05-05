@@ -14,7 +14,7 @@
 library(abc)
 library(tidyverse)
 
-date <- "04May2020"  # TODO: change date to correct data off of ICHEC.
+date <- "05May2020"  # TODO: change date to correct data off of ICHEC.
 
 general_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
