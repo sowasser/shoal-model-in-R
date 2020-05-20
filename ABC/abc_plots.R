@@ -3,7 +3,6 @@
   # 2. prior & posterior distributions for the abc model (from abc.R).
 
 library(ggplot2)
-library(gridExtra)
 
 # Comparison of summary stats from model vs. real fish ------------------------
 # Data needs to be transformed to be one vector of values labeled with which 
@@ -86,7 +85,7 @@ colnames(posts) <- c("value", "parameter", "distribution")
 
 dists <- rbind(priors, posts)  # Combine everything into one dataframe
 
-# Make sure all columns will be regongised appropriately for R/ggplot
+# Make sure all columns will be recongised appropriately for R/ggplot
 dists$value <- as.numeric(as.character(dists$value))
 dists$parameter <- as.factor(dists$parameter)
 dists$distribution <- as.factor(dists$distribution)
