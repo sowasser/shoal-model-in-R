@@ -3,68 +3,6 @@
 library(ggplot2)
 library(gridExtra)
 
-# Tracking Graphs -------------------------------------------------------------
-# New tracking dataframe just for graphs
-track_graphs <- tracking
-
-# Add "step" column
-track_graphs$step <- 1:nrow(track_graphs)
-
-
-require(gridExtra)
-track_cent <- ggplot(data = track_graphs, aes(x=step, y=cent)) +
-  theme_classic() + geom_point() + geom_line()
-track_nnd <- ggplot(data = track_graphs, aes(x=step, y=nnd)) +
-  theme_classic() + geom_point() + geom_line()
-track_area <- ggplot(data = track_graphs, aes(x=step, y=area)) +
-  theme_classic() + geom_point() + geom_line()
-track_polar <- ggplot(data = track_graphs, aes(x=step, y=polar)) +
-  theme_classic() + geom_point() + geom_line()
-
-# Model Graphs ----------------------------------------------------------------
-require(gridExtra)
-# set "x" and "group" to the parameter you're looking at
-# set "y" to the summary statistic you're looking at
-# TODO: change this to something that works better - maybe facets?
-speed_polar <- ggplot(data = model, aes(x=speed, y=polar_mean)) + 
-  theme_classic() + geom_point()
-speed_nnd <- ggplot(data = model, aes(x=speed, y=nnd_mean)) + 
-  theme_classic() + geom_point()
-speed_area <- ggplot(data = model, aes(x=speed, y=area_mean)) + 
-  theme_classic() + geom_point()
-speed_cent <- ggplot(data = model, aes(x=speed, y=cent_mean)) + 
-  theme_classic() + geom_point()
-
-vision_polar <- ggplot(data = model, aes(x=vision, y=polar_mean)) + 
-  theme_classic() + geom_point()
-vision_nnd <- ggplot(data = model, aes(x=vision, y=nnd_mean)) + 
-  theme_classic() + geom_point()
-vision_area <- ggplot(data = model, aes(x=vision, y=area_mean)) + 
-  theme_classic() + geom_point()
-vision_cent <- ggplot(data = model, aes(x=vision, y=cent_mean)) + 
-  theme_classic() + geom_point()
-
-sep_polar <- ggplot(data = model, aes(x=sep, y=polar_mean)) + 
-  theme_classic() + geom_point()
-sep_nnd <- ggplot(data = model, aes(x=sep, y=nnd_mean)) + 
-  theme_classic() + geom_point()
-sep_area <- ggplot(data = model, aes(x=sep, y=area_mean)) + 
-  theme_classic() + geom_point()
-sep_cent <- ggplot(data = model, aes(x=sep, y=cent_mean)) + 
-  theme_classic() + geom_point()
-
-# Create multiple graphs in page, row by row ----------------------------------
-prior_plots <- arrangeGrob(speed_polar, vision_polar, sep_polar, track_polar,
-                           speed_nnd, vision_nnd, sep_nnd, track_nnd,
-                           speed_area, vision_area, sep_area, track_area,
-                           speed_cent, vision_cent, sep_cent, track_cent, ncol=4)
-
-# TODO: figure out how to save a smaller file here.
-ggsave(file=paste0("~/Desktop/prior_plots", date, ".pdf"), 
-       plot=prior_plots,
-       width=20, height=20, units="cm", dpi=300, limitsize=TRUE)
-
-
 # Prior/posterior distributions from abc --------------------------------------
 # Data needs to be transformed to be one vector of values labeled with which
 # statistic it is and which distribution it's from
