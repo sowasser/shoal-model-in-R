@@ -65,21 +65,21 @@ dev.off()
 
 # For prior distribution:
 # Create array with one column for label, one for the parameter
-prior_sd <- cbind(model_params$speed, rep("speed", length(model_params$speed)))
-prior_vs <- cbind(model_params$vision, rep("vision", length(model_params$vision)))
-prior_sp <- cbind(model_params$sep, rep("separation", length(model_params$sep)))
+prior_c <- cbind(model_params$cohere, rep("cohere", length(model_params$cohere)))
+prior_s <- cbind(model_params$separate, rep("separate", length(model_params$separate)))
+prior_m <- cbind(model_params$match, rep("match", length(model_params$match)))
 # Stack all into one dataframe
-priors <- as.data.frame(rbind(prior_sd, prior_vs, prior_sp))
+priors <- as.data.frame(rbind(prior_c, prior_s, prior_m))
 # Combine values and parameter label in one column with distribution label
 priors <- cbind(priors, rep("prior", length(priors$V1)))
 colnames(priors) <- c("value", "parameter", "distribution")
 
 # Repeat for posterior distribution
 post_all <- as.data.frame(shoaling.abc$unadj.values)
-post_sd <- cbind(post_all$speed, rep("speed", length(post_all$speed)))
-post_vs <- cbind(post_all$vision, rep("vision", length(post_all$vision)))
-post_sp <- cbind(post_all$sep, rep("separation", length(post_all$sep)))
-posts <- as.data.frame(rbind(post_sd, post_vs, post_sp))
+post_c <- cbind(post_all$cohere, rep("cohere", length(post_all$cohere)))
+post_s <- cbind(post_all$separate, rep("separate", length(post_all$separate)))
+post_m <- cbind(post_all$match, rep("match", length(post_all$match)))
+posts <- as.data.frame(rbind(post_c, post_s, post_m))
 posts <- cbind(posts, rep("posterior", length(posts$V1)))
 colnames(posts) <- c("value", "parameter", "distribution")
 
