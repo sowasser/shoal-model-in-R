@@ -14,7 +14,7 @@
 library(abc)
 library(tidyverse)
 
-date <- "05May2020"  # TODO: change date to correct data off of ICHEC.
+date <- "02Jun2020"  # TODO: change date to correct data off of ICHEC.
 
 general_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
@@ -70,7 +70,7 @@ real_fish <- c(tmin[1], tmin[2], tmin[3], tmin[4],
 
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
-model_params <- model[, 17:19]
+model_params <- model[, 17:22]
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.

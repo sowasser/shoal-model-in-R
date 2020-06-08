@@ -68,6 +68,10 @@ dev.off()
 prior_sd <- cbind(model_params$speed, rep("speed", length(model_params$speed)))
 prior_vs <- cbind(model_params$vision, rep("vision", length(model_params$vision)))
 prior_sp <- cbind(model_params$sep, rep("separation", length(model_params$sep)))
+prior_co <- cbind(model_params$cohere, rep("cohere", length(model_params$cohere)))
+prior_sep <- cbind(model_params$separate, rep("separate", length(model_parms$separate)))
+prior_mt <- cbind(model_params$match, rep("match", length(model_params$match)))
+
 # Stack all into one dataframe
 priors <- as.data.frame(rbind(prior_sd, prior_vs, prior_sp))
 # Combine values and parameter label in one column with distribution label
