@@ -15,7 +15,7 @@ prior_vs <- cbind(model_params$vision, rep("vision", length(model_params$vision)
 prior_sp <- cbind(model_params$separation, rep("separation", length(model_params$separation)))
 prior_co <- cbind(model_params$cohere, rep("cohere", length(model_params$cohere)))
 prior_sep <- cbind(model_params$separate, rep("separate", length(model_params$separate)))
-prior_mt <- cbind(model_params$match, rep("match", length(model_params$match)))
+prior_mt <- cbind(model_params$match, rep("match",  length(model_params$match)))
 
 # Stack all into one dataframe
 priors <- as.data.frame(rbind(prior_sd, prior_vs, prior_sp, prior_co, prior_sep, prior_mt))
@@ -64,23 +64,24 @@ cv_estim <- as.data.frame(shoaling.cv$estim)
 colnames(cv_estim) <- c("speed", "vision", "separation", "cohere", "separate", "match")
 
 # Combine all true & estimated parameter values into one dataframe w/3 columns
-cv_sd <- cbind(rep("speed", length(cv_true$speed)), as.numeric(cv_true$speed), as.numeric(cv_estim$speed))
-cv_vs <- cbind(rep("vision", length(cv_true$vision)), as.numeric(cv_true$vision), as.numeric(cv_estim$vision))
-cv_sp <- cbind(rep("separation", length(cv_true$separation)), as.numeric(cv_true$separation), as.numeric(cv_estim$separation))
-cv_co <- cbind(rep("cohere", length(cv_true$cohere)), as.numeric(cv_true$cohere), as.numeric(cv_estim$cohere))
-cv_sep <- cbind(rep("separate", length(cv_true$separate)), as.numeric(cv_true$separate), as.numeric(cv_estim$separate))
-cv_mt <- cbind(rep("match", length(cv_true$match)), as.numeric(cv_true$match), as.numeric(cv_estim$match))
+cv_sd <- cbind(rep("speed", length(cv_true$speed)), cv_true$speed, cv_estim$speed)
+cv_vs <- cbind(rep("vision", length(cv_true$vision)), cv_true$vision, cv_estim$vision)
+cv_sp <- cbind(rep("separation", length(cv_true$separation)), cv_true$separation, cv_estim$separation)
+cv_co <- cbind(rep("cohere", length(cv_true$cohere)), cv_true$cohere, cv_estim$cohere)
+cv_sep <- cbind(rep("separate", length(cv_true$separate)), cv_true$separate, cv_estim$separate)
+cv_mt <- cbind(rep("match", length(cv_true$match)), cv_true$match, cv_estim$match)
 
 cv_all <- as.data.frame(rbind(cv_sd, cv_vs, cv_sp, cv_co, cv_sep, cv_mt))
 colnames(cv_all) <- c("parameter", "true", "estimated")
+cv_all$true <- as.numeric(as.character(cv_all$true))
+cv_all$estimated <- as.numeric(as.character(cv_all$estimated))
 
 cv_plots <- ggplot(cv_all, aes(x = true, y = estimated)) + #select data, include color-coding
   theme_bw() +
   geom_point(size=0.5) +
   geom_smooth(method = "lm", se = FALSE) + #trendline and get rid of shaded confidence region, change size
-  xlab("true value") + #x-axis label
-  ylab("estimated value") + #y-axis label
-  theme(axis.text.x=element_blank(), axis.text.y=element_blank()) +
+  xlab("true value") +
+  ylab("estimated value") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~parameter, scale="free")
 
