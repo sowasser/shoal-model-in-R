@@ -13,6 +13,7 @@
 
 library(abc)
 library(tidyverse)
+library(car)
 
 date <- "02Jun2020"  # TODO: change date to correct data off of ICHEC.
 
@@ -81,17 +82,52 @@ model_stats <- model[, 1:16]
 shoaling.abc <- abc(target = real_fish,   # observed summary statistics
                     param = model_params,  # simulated parameter values, i.e. dependent variable(s)
                     sumstat = model_stats,  # simulated summary statistics / independent variables
-                    tol = 0.001, method = "rejection")  # proportion of runs to accept; type of ABC to use
+                    tol = 0.1, method = "rejection")  # proportion of runs to accept; type of ABC to use
 
 summary(shoaling.abc)
+
+
+# Check if any post distribs are significantly different from priors ----------
+# Create array with one column for label, one for the parameter
+sd1 <- cbind(model_params$speed, rep(1, length(model_params$speed)))
+vs1 <- cbind(model_params$vision, rep(1, length(model_params$vision)))
+sp1 <- cbind(model_params$separation, rep(1, length(model_params$separation)))
+co1 <- cbind(model_params$cohere, rep(1, length(model_params$cohere)))
+sep1 <- cbind(model_params$separate, rep(1, length(model_params$separate)))
+mt1 <- cbind(model_params$match, rep(1,  length(model_params$match)))
+
+# Repeat for posterior distribution
+post_all <- as.data.frame(shoaling.abc$unadj.values)
+sd2 <- cbind(post_all$speed, rep(2, length(post_all$speed)))
+vs2 <- cbind(post_all$vision, rep(2, length(post_all$vision)))
+sp2 <- cbind(post_all$separation, rep(2, length(post_all$separation)))
+co2 <- cbind(post_all$cohere, rep(2, length(post_all$cohere)))
+sep2 <- cbind(post_all$separate, rep(2, length(post_all$separate)))
+mt2 <- cbind(post_all$match, rep(2, length(post_all$match)))
+
+# Combine into separate dataframes
+sd_all <- as.data.frame(rbind(sd1, sd2))
+vs_all <- as.data.frame(rbind(vs1, vs2))
+sp_all <- as.data.frame(rbind(sp1, sp2))
+co_all <- as.data.frame(rbind(co1, co2))
+sep_all <- as.data.frame(rbind(sep1, sep2))
+mt_all <- as.data.frame(rbind(mt1, mt2))
+
+# Run Mann Whitney U test
+wilcox.test(V1 ~ V2, sd_all)  # p = 0.0001254
+wilcox.test(V1 ~ V2, vs_all)  # p = 0.02348
+wilcox.test(V1 ~ V2, sp_all)  # p = 0.04401
+wilcox.test(V1 ~ V2, co_all)  # p = 0.7847
+wilcox.test(V1 ~ V2, sep_all)  # p = 0.0008645
+wilcox.test(V1 ~ V2, mt_all)  # p = 0.0005408
+
 
 # Run cross-validation of ABC results -----------------------------------------
 shoaling.cv <- cv4abc(param = model_params,
                       sumstat = model_stats, 
                       abc.out = shoaling.abc, 
-                      nval = 100, tols = 0.01)
+                      nval = 100, tols = 0.01)  # size of cross validation sample; tolerance rate
 
 # Plot relationship between the true & estimated parameter values.
-plot(shoaling.cv)
-
-
+# plot(shoaling.cv)
+ 
