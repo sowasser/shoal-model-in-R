@@ -81,9 +81,17 @@ model_stats <- model[, 1:16]
 shoaling.abc <- abc(target = real_fish,   # observed summary statistics
                     param = model_params,  # simulated parameter values, i.e. dependent variable(s)
                     sumstat = model_stats,  # simulated summary statistics / independent variables
-                    tol = 0.1, method = "rejection")  # proportion of runs to accept; type of ABC to use
+                    tol = 0.001, method = "rejection")  # proportion of runs to accept; type of ABC to use
 
 summary(shoaling.abc)
 
-# TODO: plot posterior distribution
+# Run cross-validation of ABC results -----------------------------------------
+shoaling.cv <- cv4abc(param = model_params,
+                      sumstat = model_stats, 
+                      abc.out = shoaling.abc, 
+                      nval = 100, tols = 0.01)
+
+# Plot relationship between the true & estimated parameter values.
+plot(shoaling.cv)
+
 
