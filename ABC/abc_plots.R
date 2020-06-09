@@ -111,3 +111,35 @@ dist_boxplot <- ggplot(dists, aes(x = parameter, y = value, fill = distribution)
 pdf(paste0("~/Desktop/dist_boxplot_", date, ".pdf"))
 print(dist_boxplot)
 dev.off()
+
+
+# Cross-validation plots of true vs. estimated parameter values ---------------
+cv_true <- as.data.frame(shoaling.cv$true)
+cv_estim <- as.data.frame(shoaling.cv$estim)
+colnames(cv_estim) <- c("speed", "vision", "separation", "cohere", "separate", "match")
+
+# Combine all true & estimated parameter values into one dataframe w/3 columns
+cv_sd <- cbind(rep("speed", length(cv_true$speed)), as.numeric(cv_true$speed), as.numeric(cv_estim$speed))
+cv_vs <- cbind(rep("vision", length(cv_true$vision)), as.numeric(cv_true$vision), as.numeric(cv_estim$vision))
+cv_sp <- cbind(rep("separation", length(cv_true$separation)), as.numeric(cv_true$separation), as.numeric(cv_estim$separation))
+cv_co <- cbind(rep("cohere", length(cv_true$cohere)), as.numeric(cv_true$cohere), as.numeric(cv_estim$cohere))
+cv_sep <- cbind(rep("separate", length(cv_true$separate)), as.numeric(cv_true$separate), as.numeric(cv_estim$separate))
+cv_mt <- cbind(rep("match", length(cv_true$match)), as.numeric(cv_true$match), as.numeric(cv_estim$match))
+
+cv_all <- as.data.frame(rbind(cv_sd, cv_vs, cv_sp, cv_co, cv_sep, cv_mt))
+colnames(cv_all) <- c("parameter", "true", "estimated")
+
+cv_plots <- ggplot(cv_all, aes(x = true, y = estimated)) + #select data, include color-coding
+  theme_bw() +
+  geom_point(size=0.5) +
+  geom_smooth(method = "lm", se = FALSE) + #trendline and get rid of shaded confidence region, change size
+  xlab("true value") + #x-axis label
+  ylab("estimated value") + #y-axis label
+  theme(axis.text.x=element_blank(), axis.text.y=element_blank()) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  facet_wrap(~parameter, scale="free")
+
+pdf(paste0("~/Desktop/cv_plots_", date, ".pdf"))
+print(cv_plots)
+dev.off()
+
