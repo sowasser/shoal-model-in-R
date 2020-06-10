@@ -65,7 +65,7 @@ tsd <- t(apply(tracking, 2, sd))
 
 real_fish <- c(tmin[1], tmin[2], tmin[3], tmin[4], 
                tmax[1], tmax[2], tmax[3], tmax[4],
-               tmean[2], tmean[2], tmean[3], tmean[4],
+               tmean[1], tmean[2], tmean[3], tmean[4],
                tsd[1], tsd[2], tsd[3], tsd[4])
 
 
@@ -128,6 +128,16 @@ shoaling.cv <- cv4abc(param = model_params,
                       abc.out = shoaling.abc, 
                       nval = 100, tols = 0.01)  # size of cross validation sample; tolerance rate
 
-# Plot relationship between the true & estimated parameter values.
-# plot(shoaling.cv)
- 
+# Plots for the relationship between true & estimated values are in abc_plots.R
+
+# Linear models of cross-validation results
+cv_true <- as.data.frame(shoaling.cv$true)
+cv_estim <- as.data.frame(shoaling.cv$estim)
+colnames(cv_estim) <- c("speed", "vision", "separation", "cohere", "separate", "match")
+
+summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.7309
+summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.565
+summary(lm(cv_true$separation ~ cv_estim$separation))  # R2 = 0.2313
+summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.004488
+summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.06292
+summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.05379
