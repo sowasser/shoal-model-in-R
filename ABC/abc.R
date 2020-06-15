@@ -15,7 +15,7 @@ library(abc)
 library(tidyverse)
 library(car)
 
-date <- "02Jun2020"  # TODO: change date to correct data off of ICHEC.
+date <- "12Jun2020"  # TODO: change date to correct data off of ICHEC.
 
 general_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
@@ -82,8 +82,7 @@ model_stats <- model[, 1:16]
 shoaling.abc <- abc(target = real_fish,   # observed summary statistics
                     param = model_params,  # simulated parameter values, i.e. dependent variable(s)
                     sumstat = model_stats,  # simulated summary statistics / independent variables
-                    tol = 0.1, method = "rejection")  # proportion of runs to accept; type of ABC to use
-
+                    tol = 0.001, method = "rejection")  # proportion of runs to accept; type of ABC to use
 summary(shoaling.abc)
 
 
@@ -114,12 +113,12 @@ sep_all <- as.data.frame(rbind(sep1, sep2))
 mt_all <- as.data.frame(rbind(mt1, mt2))
 
 # Run Mann Whitney U test
-wilcox.test(V1 ~ V2, sd_all)  # p = 0.0001254
-wilcox.test(V1 ~ V2, vs_all)  # p = 0.02348
-wilcox.test(V1 ~ V2, sp_all)  # p = 0.04401
-wilcox.test(V1 ~ V2, co_all)  # p = 0.7847
-wilcox.test(V1 ~ V2, sep_all)  # p = 0.0008645
-wilcox.test(V1 ~ V2, mt_all)  # p = 0.0005408
+wilcox.test(V1 ~ V2, sd_all)  # p < 2.2e-16
+wilcox.test(V1 ~ V2, vs_all)  # p = 0.705
+wilcox.test(V1 ~ V2, sp_all)  # p = 5.217e-10
+wilcox.test(V1 ~ V2, co_all)  # p = 0.2953
+wilcox.test(V1 ~ V2, sep_all)  # p = 4.982e-11
+wilcox.test(V1 ~ V2, mt_all)  # p = 2.146e-07
 
 
 # Run cross-validation of ABC results -----------------------------------------
@@ -127,6 +126,7 @@ shoaling.cv <- cv4abc(param = model_params,
                       sumstat = model_stats, 
                       abc.out = shoaling.abc, 
                       nval = 100, tols = 0.01)  # size of cross validation sample; tolerance rate
+summary(shoaling.cv)
 
 # Plots for the relationship between true & estimated values are in abc_plots.R
 
@@ -135,9 +135,9 @@ cv_true <- as.data.frame(shoaling.cv$true)
 cv_estim <- as.data.frame(shoaling.cv$estim)
 colnames(cv_estim) <- c("speed", "vision", "separation", "cohere", "separate", "match")
 
-summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.7309
-summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.565
-summary(lm(cv_true$separation ~ cv_estim$separation))  # R2 = 0.2313
-summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.004488
-summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.06292
-summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.05379
+summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.7039
+summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.6123
+summary(lm(cv_true$separation ~ cv_estim$separation))  # R2 = 0.2969 
+summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.06308
+summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.1157
+summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.08451 
