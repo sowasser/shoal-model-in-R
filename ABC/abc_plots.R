@@ -3,6 +3,7 @@
   # 2. The true vs. estimated values for the parameters following cross-validation
 
 library(ggplot2)
+library(viridis)
 
 # Prior/posterior distributions from abc --------------------------------------
 # Data needs to be transformed to be one vector of values labeled with which
@@ -43,6 +44,7 @@ dists$value <- as.numeric(as.character(dists$value))
 dists$parameter <- as.factor(dists$parameter)
 dists$distribution <- as.factor(dists$distribution)
 
+# Plot distributions as boxplots
 dist_boxplot <- ggplot(dists, aes(x = parameter, y = value, fill = distribution)) +
   geom_boxplot() + 
   theme_bw() + 
@@ -51,10 +53,25 @@ dist_boxplot <- ggplot(dists, aes(x = parameter, y = value, fill = distribution)
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank()) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  # scale_color_viridis(discrete = TRUE, direction = -1) +
+  # scale_fill_viridis(discrete = TRUE, direction = -1) +
   facet_wrap(~parameter, scale="free")
 
 pdf(paste0("~/Desktop/dist_boxplot_", date, ".pdf"))
 print(dist_boxplot)
+dev.off()
+
+# Plot distributions as density plots
+dist_density <- ggplot(dists, aes(x = value, fill = distribution, color = distribution)) +
+  theme_bw() +
+  geom_density(alpha = 0.5) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  # scale_color_viridis(discrete = TRUE, direction = -1) +
+  #scale_fill_viridis(discrete = TRUE, direction = -1) +
+  facet_grid(cols = vars(parameter), scales = "free")
+
+pdf(paste0("~/Desktop/dist_density_", date, ".pdf"), width = 12, height = 4)
+print(dist_density)
 dev.off()
 
 
