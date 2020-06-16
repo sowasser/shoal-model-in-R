@@ -14,6 +14,7 @@
 library(abc)
 library(tidyverse)
 library(car)
+library(abctools)
 
 date <- "12Jun2020"  # TODO: change date to correct data off of ICHEC.
 
@@ -151,3 +152,34 @@ summary(lm(cv_true$separation ~ cv_estim$separation))  # R2 = 0.2969
 summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.06308
 summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.1157
 summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.08451 
+
+
+# Test coverage property of ABC results --------------------------
+testsets <- sample(1:nrow(model_stats), 200)  # Subset of model runs to include
+eps <- exp(seq(log(0.1), log(10), length.out = 15))  # These are epsilon values; 
+# "vector of ABC thresholds to be examined" Don't know how what this is for my data.
+# Potentially, I think this will be different for the 2 groups of parameters.
+
+# Coverage test for parameter estimation
+shoaling.cov <- cov.pi(param = model_params,
+                       sumstat = model_stats,
+                       testsets = testsets,  # the rows of sumstat to be used as pseudo-observed data?
+                       multicore = TRUE,
+                       cores = 4,
+                       tol = seq(0.1, 1, by=0.1),   # proportions of ABC acceptances
+                       diagnostics = "KS")  # Kolmogorov-Smirinov
+diag <- shoaling.cov$diag
+
+# Plot coverage test outcomes
+coverage_plot <- plot <- ggplot() + 
+  theme_bw() + 
+  geom_line(data=diag, aes(x=tol, y=pvalue), colour="blue", size = 0.5) +  # line
+  geom_point(data=diag, aes(x=tol, y=pvalue), colour="black", size = 1) +  # points on the line
+  xlab("tolerance") +
+  ylab("p-value") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  facet_wrap(~parameter, scale="free")
+
+pdf(paste0("~/Desktop/coverage_", date, ".pdf"))
+print(coverage_plot)
+dev.off()
