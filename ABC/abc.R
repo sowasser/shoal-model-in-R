@@ -53,8 +53,9 @@ model <- list.files(ichec_path, pattern="*.txt") %>% map_df(~read.table(., sep =
 # Create .csv file with all the ICHEC data
 write.csv(model, paste0(general_path, "ICHEC_data_", date, ".csv"))
 
+# TODO: run this if collation already completed
+model <- read.csv(paste0(general_path, "ICHEC_data_", date, ".csv"))
 
-# TODO: check summary statistics 
 
 # Adjust data inputs and run ABC ----------------------------------------------
 # matrix of observed summary statistics, in same order as from the model:
@@ -72,11 +73,11 @@ real_fish <- c(tmin[1], tmin[2], tmin[3], tmin[4],
 
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
-model_params <- model[, 17:22]
+model_params <- model[, 18:23]
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.
-model_stats <- model[, 1:16]
+model_stats <- model[, 2:17]
 
 
 # Use 'abc' to accept top 1% of runs as approximate posteriors
