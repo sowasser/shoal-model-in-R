@@ -18,7 +18,7 @@ ta <- cbind(steps, tracking$area, rep("shoal area", length(tracking$area)))
 
 track_all <- cbind(rbind(tp, tn, tc, ta), rep("tracked", length(396)))
 
-mp <- cbind(steps, step_means$polar, rep("polar", length(step_means$polar)))  
+mp <- cbind(steps, step_means$polar, rep("polarization", length(step_means$polar)))  
 mn <- cbind(steps, step_means$nnd, rep("nearest neighbour distance", length(step_means$nnd)))
 mc <- cbind(steps, step_means$centroid, rep("distance from centroid", length(step_means$centroid)))
 ma <- cbind(steps, step_means$area, rep("shoal area", length(step_means$area)))
@@ -28,6 +28,7 @@ model_all <- cbind(rbind(mp, mn, mc, ma), rep("modelled", length(396)))
 timeseries_all <- as.data.frame(rbind(track_all, model_all))
 colnames(timeseries_all) <- c("step", "value", "statistic", "source")
 timeseries_all$value <- as.numeric(as.character(timeseries_all$value))
+timeseries_all$step <- as.numeric(as.character(timeseries_all$step))
 
 # Graphs of timeseries
 time_graphs <- ggplot() + 
