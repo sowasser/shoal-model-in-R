@@ -51,13 +51,13 @@ colnames(SA_move) <- c("input", "parameter", "output", "statistic")
 SA_move$input <- as.numeric(as.character(SA_move$input))
 SA_move$output <- as.numeric(as.character(SA_move$output))
 
-# Conduct some kinda analysis ;)
-
 # Graphs of varying parameter vs. summary statistics
 SA_boid_plots <- ggplot(SA_boid, aes(x = output, y = input, color = parameter)) + #select data, include color-coding
   theme_bw() +
   geom_point(size=0.3) +
-  stat_ellipse() +
+  geom_smooth(method = "lm", se = FALSE) + #trendline without shaded confidence region
+  xlab("statistic output") +
+  ylab("parameter input") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
@@ -68,11 +68,45 @@ dev.off()
 SA_move_plots <- ggplot(SA_move, aes(x = output, y = input, color = parameter)) + #select data, include color-coding
   theme_bw() +
   geom_point(size=0.3) +
-  stat_ellipse() +
+  geom_smooth(method = "lm", se = FALSE) + #trendline without shaded confidence region
+  xlab("statistic output") +
+  ylab("parameter input") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
 pdf("~/Desktop/move_plots.pdf")
 print(SA_move_plots)
 dev.off()
+
+# Linear regression for sensitivity analysis
+summary(lm(var_speed$speed ~ var_speed$Polarization))
+summary(lm(var_speed$speed ~ var_speed$Nearest.Neighbour.Distance))
+summary(lm(var_speed$speed ~ var_speed$Mean.Distance.from.Centroid))
+summary(lm(var_speed$speed ~ var_speed$Shoal.Area))
+
+summary(lm(var_vision$vision ~ var_vision$Polarization))
+summary(lm(var_vision$vision ~ var_vision$Nearest.Neighbour.Distance))
+summary(lm(var_vision$vision ~ var_vision$Mean.Distance.from.Centroid))
+summary(lm(var_vision$vision ~ var_vision$Shoal.Area))
+
+summary(lm(var_sep$sep ~ var_sep$Polarization))
+summary(lm(var_sep$sep ~ var_sep$Nearest.Neighbour.Distance))
+summary(lm(var_sep$sep ~ var_sep$Mean.Distance.from.Centroid))
+summary(lm(var_sep$sep ~ var_sep$Shoal.Area))
+
+summary(lm(var_cohere$cohere ~ var_cohere$Polarization))
+summary(lm(var_cohere$cohere ~ var_cohere$Nearest.Neighbour.Distance))
+summary(lm(var_cohere$cohere ~ var_cohere$Mean.Distance.from.Centroid))
+summary(lm(var_cohere$cohere ~ var_cohere$Shoal.Area))
+
+summary(lm(var_separate$separate ~ var_separate$Polarization))
+summary(lm(var_separate$separate ~ var_separate$Nearest.Neighbour.Distance))
+summary(lm(var_separate$separate ~ var_separate$Mean.Distance.from.Centroid))
+summary(lm(var_separate$separate ~ var_separate$Shoal.Area))
+
+summary(lm(var_match$match ~ var_match$Polarization))
+summary(lm(var_match$match ~ var_match$Nearest.Neighbour.Distance))
+summary(lm(var_match$match ~ var_match$Mean.Distance.from.Centroid))
+summary(lm(var_match$match ~ var_match$Shoal.Area))
+
 
