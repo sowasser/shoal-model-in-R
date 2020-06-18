@@ -3,25 +3,25 @@
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
-tracking <- read.csv(paste0(path, "stepwise_data.csv"))
+tracking <- read.csv(paste0(path, "stepwise_data_scaled.csv"))
 
-step_means <- read.csv(paste0(path, "step_means_17June.csv"))
-step_means <- step_means[1:99,]  # only keep first 99 steps so same length as tracking
+model_run <- read.csv(paste0(path, "single_run.csv"))
+model_run <- model_run[100:198,]  # only keep 99 steps so same length as tracking
 
 steps <- c(1:99)  
 
 # Reformat and stack to make graphs
 tp <- cbind(steps, tracking$polar, rep("polarization", length(tracking$polar)))
 tn <- cbind(steps, tracking$nnd, rep("nearest neighbour distance", length(tracking$nnd)))
-tc <- cbind(steps, tracking$centroid, rep("distance from centroid", length(tracking$centroid)))
+tc <- cbind(steps, tracking$cent, rep("distance from centroid", length(tracking$cent)))
 ta <- cbind(steps, tracking$area, rep("shoal area", length(tracking$area)))
 
 track_all <- cbind(rbind(tp, tn, tc, ta), rep("tracked", length(396)))
 
-mp <- cbind(steps, step_means$polar, rep("polarization", length(step_means$polar)))  
-mn <- cbind(steps, step_means$nnd, rep("nearest neighbour distance", length(step_means$nnd)))
-mc <- cbind(steps, step_means$centroid, rep("distance from centroid", length(step_means$centroid)))
-ma <- cbind(steps, step_means$area, rep("shoal area", length(step_means$area)))
+mp <- cbind(steps, model_run$polar, rep("polarization", length(model_run$polar)))  
+mn <- cbind(steps, model_run$nnd, rep("nearest neighbour distance", length(model_run$nnd)))
+mc <- cbind(steps, model_run$cent, rep("distance from centroid", length(model_run$cent)))
+ma <- cbind(steps, model_run$area, rep("shoal area", length(model_run$area)))
 
 model_all <- cbind(rbind(mp, mn, mc, ma), rep("modelled", length(396)))
 

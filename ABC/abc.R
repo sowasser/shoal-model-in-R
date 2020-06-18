@@ -33,7 +33,7 @@ general_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for la
 
 
 # Read in data from video tracking --------------------------------------------
-tracking <- read.csv(paste0(general_path, "stepwise_data.csv"))
+tracking <- read.csv(paste0(general_path, "stepwise_data_scaled.csv"))
 colnames(tracking) <- c("step", "cent", "nnd", "area", "polar")
 tracking <- tracking[, c("cent", "nnd", "polar", "area")]  # reorder to match other data
 
