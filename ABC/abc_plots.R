@@ -68,9 +68,9 @@ dist_density <- ggplot(dists, aes(x = value, fill = distribution, color = distri
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   # scale_color_viridis(discrete = TRUE, direction = -1) +
   #scale_fill_viridis(discrete = TRUE, direction = -1) +
-  facet_grid(cols = vars(parameter), scales = "free")
+  facet_wrap(~parameter, scale="free")
 
-pdf(paste0("~/Desktop/dist_density_", date, ".pdf"), width = 12, height = 4)
+pdf(paste0("~/Desktop/dist_density_", date, ".pdf"))
 print(dist_density)
 dev.off()
 

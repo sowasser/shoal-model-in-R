@@ -8,12 +8,12 @@ library(viridis)
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
 # Read in data from the model running with only one parameter varying
-var_speed <- read.csv(paste0(path, "var-speed.csv"))
-var_vision <- read.csv(paste0(path, "var-vision.csv"))
-var_sep <- read.csv(paste0(path, "var-sep.csv"))
-var_cohere <- read.csv(paste0(path, "var-cohere.csv"))
-var_separate <- read.csv(paste0(path, "var-separate.csv"))
-var_match <- read.csv(paste0(path, "var-match.csv"))
+var_speed <- read.csv(paste0(path, "var-speed100.csv"))
+var_vision <- read.csv(paste0(path, "var-vision100.csv"))
+var_sep <- read.csv(paste0(path, "var-sep100.csv"))
+var_cohere <- read.csv(paste0(path, "var-cohere100.csv"))
+var_separate <- read.csv(paste0(path, "var-separate100.csv"))
+var_match <- read.csv(paste0(path, "var-match100.csv"))
 
 # Isolate data columns & add a factor label
 speed <- as.data.frame(cbind(var_speed$speed, rep("speed", length(var_speed$speed))))

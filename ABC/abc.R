@@ -16,7 +16,7 @@ library(tidyverse)
 library(car)
 library(abctools)
 
-date <- "12Jun2020"  # TODO: change date to correct data off of ICHEC.
+date <- "18Jun2020"  # TODO: change date to correct data off of ICHEC.
 
 general_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
@@ -54,7 +54,7 @@ model <- list.files(ichec_path, pattern="*.txt") %>% map_df(~read.table(., sep =
 write.csv(model, paste0(general_path, "ICHEC_data_", date, ".csv"))
 
 # TODO: run this if collation already completed
-model <- read.csv(paste0(general_path, "ICHEC_data_", date, ".csv"))
+# model <- read.csv(paste0(general_path, "ICHEC_data_", date, ".csv"))
 
 
 # Adjust data inputs and run ABC ----------------------------------------------
@@ -73,11 +73,11 @@ real_fish <- c(tmin[1], tmin[2], tmin[3], tmin[4],
 
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
-model_params <- model[, 18:23]
+model_params <- model[, 17:22]
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.
-model_stats <- model[, 2:17]
+model_stats <- model[, 1:16]
 
 
 # Use 'abc' to accept top 1% of runs as approximate posteriors
@@ -147,12 +147,12 @@ cv_true <- as.data.frame(shoaling.cv$true)
 cv_estim <- as.data.frame(shoaling.cv$estim)
 colnames(cv_estim) <- c("speed", "vision", "separation", "cohere", "separate", "match")
 
-summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.7039
-summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.6123
-summary(lm(cv_true$separation ~ cv_estim$separation))  # R2 = 0.2969 
-summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.06308
-summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.1157
-summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.08451 
+summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.781
+summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.6666
+summary(lm(cv_true$separation ~ cv_estim$separation))  # R2 = 0.2326  
+summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.1582
+summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.2252 
+summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.07035 
 
 
 # Test coverage property of ABC results --------------------------
