@@ -1,6 +1,10 @@
 # Script for timeseries analysis of ideal model (with parameter inputs gleaned
 # from ABC) and real fish.
 
+library(ggplot2)
+
+color2_2 <- c("#440154", "#29788E")
+
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
 tracking <- read.csv(paste0(path, "stepwise_data_scaled.csv"))
@@ -33,6 +37,7 @@ timeseries_all$step <- as.numeric(as.character(timeseries_all$step))
 # Graphs of timeseries
 time_graphs <- ggplot() + 
   theme_bw() + 
+  scale_color_manual(values = color2_2) +
   geom_line(data=timeseries_all, aes(x=step, y=value, color = source), size = 0.5) +  # line
   xlab("step") +
   ylab("statistic") +

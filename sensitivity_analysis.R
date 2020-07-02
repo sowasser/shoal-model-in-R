@@ -3,7 +3,8 @@
 # script in fish-shoaling-model
 
 library(ggplot2)
-library(viridis)
+
+color3 <- c("#440154", "#29788E", "#79D151")
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
@@ -54,6 +55,7 @@ SA_move$output <- as.numeric(as.character(SA_move$output))
 # Graphs of varying parameter vs. summary statistics
 SA_boid_plots <- ggplot(SA_boid, aes(x = output, y = input, color = parameter)) + #select data, include color-coding
   theme_bw() +
+  scale_color_manual(values = color3) +
   geom_point(size=0.3) +
   geom_smooth(method = "lm", se = FALSE) + #trendline without shaded confidence region
   xlab("statistic output") +
@@ -67,6 +69,7 @@ dev.off()
 
 SA_move_plots <- ggplot(SA_move, aes(x = output, y = input, color = parameter)) + #select data, include color-coding
   theme_bw() +
+  scale_color_manual(values = color3) +
   geom_point(size=0.3) +
   geom_smooth(method = "lm", se = FALSE) + #trendline without shaded confidence region
   xlab("statistic output") +
