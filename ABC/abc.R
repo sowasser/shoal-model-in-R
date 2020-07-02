@@ -54,7 +54,8 @@ model <- list.files(ichec_path, pattern="*.txt") %>% map_df(~read.table(., sep =
 write.csv(model, paste0(general_path, "ICHEC_data_", date, ".csv"))
 
 # TODO: run this if collation already completed
-# model <- read.csv(paste0(general_path, "ICHEC_data_", date, ".csv"))
+model_saved <- read.csv(paste0(general_path, "ICHEC_data_", date, ".csv"))
+model <- model_saved[,-1]  # Remove 1st column, generated when data was written to .csv
 
 
 # Adjust data inputs and run ABC ----------------------------------------------
