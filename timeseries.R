@@ -2,6 +2,7 @@
 # from ABC) and real fish.
 
 library(ggplot2)
+library(ggcorrplot)
 
 color2_2 <- c("#440154", "#29788E")
 
@@ -9,8 +10,11 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
 tracking <- read.csv(paste0(path, "stepwise_data_scaled.csv"))
 
-model_run <- read.csv(paste0(path, "single_run.csv"))
-model_run <- model_run[100:198,]  # only keep 99 steps so same length as tracking
+model_run_all <- read.csv(paste0(path, "single_run.csv"))
+
+
+# Timeseries ------------------------------------------------------------------
+model_run <- model_run_all[100:198,]  # only keep 99 steps so same length as tracking
 
 steps <- c(1:99)  
 
@@ -47,3 +51,9 @@ time_graphs <- ggplot() +
 pdf("~/Desktop/timeseries_graphs.pdf")
 print(time_graphs)
 dev.off()
+
+
+# Correlations ----------------------------------------------------------------
+stats <- model_run_all[, -1]
+model_cor <- cor(stats)
+ggcorrplot(model_cor, type = "lower", lab = TRUE, colors = c("#79D151", "white", "#29788E"))

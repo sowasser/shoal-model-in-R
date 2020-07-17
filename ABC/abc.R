@@ -15,6 +15,7 @@ library(abc)
 library(tidyverse)
 library(car)
 library(abctools)
+library(ggcorrplot)
 
 date <- "18Jun2020"  # TODO: change date to correct data off of ICHEC.
 
@@ -71,7 +72,6 @@ real_fish <- c(tmin[1], tmin[2], tmin[3], tmin[4],
                tmean[1], tmean[2], tmean[3], tmean[4],
                tsd[1], tsd[2], tsd[3], tsd[4])
 
-
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
 model_params <- model[, 17:22]
@@ -80,6 +80,13 @@ model_params <- model[, 17:22]
 # simulation and each column corresponds to a summary statistic.
 model_stats <- model[, 1:16]
 
+# Correlations ----------------------------------------------------------------
+model_stats2 <- model_stats[, 1:12]
+model_stats_cor <- cor(model_stats2)
+ggcorrplot(model_stats_cor, type = "lower", lab = TRUE, colors = c("#79D151", "white", "#29788E"))
+
+
+# Run ABC ---------------------------------------------------------------------
 
 # Use 'abc' to accept top 1% of runs as approximate posteriors
 shoaling.abc <- abc(target = real_fish,   # observed summary statistics
