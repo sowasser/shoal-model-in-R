@@ -86,42 +86,42 @@ summary(lm(match ~ Shoal.Area, data = var_match))
 
 
 # GAM for sensitivity analysis ------------------------------------------------
-summary(gam(Polarization ~ s(speed), data = var_speed))  # R2 = 0.336
-summary(gam(Nearest.Neighbour.Distance ~ s(speed), data = var_speed))  # 0.0855 
-summary(gam(Mean.Distance.from.Centroid ~ s(speed), data = var_speed))  # 0.402 
-summary(gam(Shoal.Area ~ s(speed), data = var_speed))  # 0.1
+summary(gam(Polarization ~ s(speed, bs = "tp"), data = var_speed))  # R2 = 0.336
+summary(gam(Nearest.Neighbour.Distance ~ s(speed, bs = "tp"), data = var_speed))  # 0.0855 
+summary(gam(Mean.Distance.from.Centroid ~ s(speed, bs = "tp"), data = var_speed))  # 0.402 
+summary(gam(Shoal.Area ~ s(speed, bs = "tp"), data = var_speed))  # 0.1
 
-summary(gam(Polarization ~ s(vision), data = var_vision))  # R2 = 0.189
-summary(gam(Nearest.Neighbour.Distance ~ s(vision), data = var_vision))  # 0.97
-summary(gam(Mean.Distance.from.Centroid ~ s(vision), data = var_vision))  # 0.713
-summary(gam(Shoal.Area ~ s(vision), data = var_vision))  # 0.904
+summary(gam(Polarization ~ s(vision, bs = "tp"), data = var_vision))  # R2 = 0.189
+summary(gam(Nearest.Neighbour.Distance ~ s(vision, bs = "tp"), data = var_vision))  # 0.97
+summary(gam(Mean.Distance.from.Centroid ~ s(vision, bs = "tp"), data = var_vision))  # 0.713
+summary(gam(Shoal.Area ~ s(vision, bs = "tp"), data = var_vision))  # 0.904
 
-summary(gam(Polarization ~ s(separation), data = var_sep))  # R2 = 0.543
-summary(gam(Nearest.Neighbour.Distance ~ s(separation), data = var_sep))  # 0.97
-summary(gam(Mean.Distance.from.Centroid ~ s(separation), data = var_sep))  # 0.72
-summary(gam(Shoal.Area ~ s(separation), data = var_sep))  # 0.922
+summary(gam(Polarization ~ s(separation, bs = "tp"), data = var_sep))  # R2 = 0.543
+summary(gam(Nearest.Neighbour.Distance ~ s(separation, bs = "tp"), data = var_sep))  # 0.97
+summary(gam(Mean.Distance.from.Centroid ~ s(separation, bs = "tp"), data = var_sep))  # 0.72
+summary(gam(Shoal.Area ~ s(separation, bs = "tp"), data = var_sep))  # 0.922
 
-summary(gam(Polarization ~ s(cohere), data = var_cohere))  # R2 = 0.0706
-summary(gam(Nearest.Neighbour.Distance ~ s(cohere), data = var_cohere))  # 0.902
-summary(gam(Mean.Distance.from.Centroid ~ s(cohere), data = var_cohere))  # 0.3
-summary(gam(Shoal.Area ~ s(cohere), data = var_cohere))  # 0.798
+summary(gam(Polarization ~ s(cohere, bs = "tp"), data = var_cohere))  # R2 = 0.0706
+summary(gam(Nearest.Neighbour.Distance ~ s(cohere, bs = "tp"), data = var_cohere))  # 0.902
+summary(gam(Mean.Distance.from.Centroid ~ s(cohere, bs = "tp"), data = var_cohere))  # 0.3
+summary(gam(Shoal.Area ~ s(cohere, bs = "tp"), data = var_cohere))  # 0.798
 
-summary(gam(Polarization ~ s(separate), data = var_separate))  # R2 = 0.364
-summary(gam(Nearest.Neighbour.Distance ~ s(separate), data = var_separate))  # 0.965
-summary(gam(Mean.Distance.from.Centroid ~ s(separate), data = var_separate))  # 0.611
-summary(gam(Shoal.Area ~ s(separate), data = var_separate))  # 0.897
+summary(gam(Polarization ~ s(separate, bs = "tp"), data = var_separate))  # R2 = 0.364
+summary(gam(Nearest.Neighbour.Distance ~ s(separate, bs = "tp"), data = var_separate))  # 0.965
+summary(gam(Mean.Distance.from.Centroid ~ s(separate, bs = "tp"), data = var_separate))  # 0.611
+summary(gam(Shoal.Area ~ s(separate, bs = "tp"), data = var_separate))  # 0.897
 
-summary(gam(Polarization ~ s(match), data = var_match))  # R2 = 0.54
-summary(gam(Nearest.Neighbour.Distance ~ s(match), data = var_match))  # 0.777
-summary(gam(Mean.Distance.from.Centroid ~ s(match), data = var_match))  # 0.611
-summary(gam(Shoal.Area ~ s(match), data = var_match))  # 0.61
+summary(gam(Polarization ~ s(match, bs = "tp"), data = var_match))  # R2 = 0.54
+summary(gam(Nearest.Neighbour.Distance ~ s(match, bs = "tp"), data = var_match))  # 0.777
+summary(gam(Mean.Distance.from.Centroid ~ s(match, bs = "tp"), data = var_match))  # 0.611
+summary(gam(Shoal.Area ~ s(match, bs = "tp"), data = var_match))  # 0.61
 
 # Graphs of varying parameter vs. summary statistics --------------------------
 SA_boid_plots <- ggplot(SA_boid, aes(x = input, y = output, color = parameter)) + #select data, include color-coding
   theme_bw() +
   scale_color_manual(values = color3) +
   geom_point(size=0.3) +
-  geom_smooth(method = "gam", formula = y ~ s(x), se = FALSE) + #trendline without shaded confidence region
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "tp"), se = FALSE) + #trendline without shaded confidence region
   xlab("parameter input") +
   ylab("statistic output") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
@@ -135,7 +135,7 @@ SA_move_plots <- ggplot(SA_move, aes(x = input, y = output, color = parameter)) 
   theme_bw() +
   scale_color_manual(values = color3) +
   geom_point(size=0.3) +
-  geom_smooth(method = "gam", formula = y ~ s(x), se = FALSE) + #trendline without shaded confidence region
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "tp"), se = FALSE) + #trendline without shaded confidence region
   xlab("parameter input") +
   ylab("statistic output") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
