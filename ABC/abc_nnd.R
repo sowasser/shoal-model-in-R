@@ -15,6 +15,8 @@ library(abc)
 library(tidyverse)
 library(car)
 library(abctools)
+library(ggplot2)
+library(reshape2)
 
 date_nnd <- "02Jul2020_nnd"  # TODO: change date to correct data off of ICHEC.
 
@@ -141,9 +143,78 @@ cv_true_nnd <- as.data.frame(shoaling.cv.nnd$true)
 cv_estim_nnd <- as.data.frame(shoaling.cv.nnd$estim)
 colnames(cv_estim_nnd) <- c("speed", "vision", "separation", "cohere", "separate", "match")
 
-summary(lm(cv_true_nnd$speed ~ cv_estim_nnd$speed))  # R2 = 0.6153
-summary(lm(cv_true_nnd$vision ~ cv_estim_nnd$vision))  # R2 = 0.4328
-summary(lm(cv_true_nnd$separation ~ cv_estim_nnd$separation))  # R2 = 0.2265  
-summary(lm(cv_true_nnd$cohere ~ cv_estim_nnd$cohere))  # R2 = 0.08857
-summary(lm(cv_true_nnd$separate ~ cv_estim_nnd$separate))  # R2 = 0.09935
-summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.005946
+summary(lm(cv_true_nnd$speed ~ cv_estim_nnd$speed))  # R2 = 0.5746
+summary(lm(cv_true_nnd$vision ~ cv_estim_nnd$vision))  # R2 = 0.508
+summary(lm(cv_true_nnd$separation ~ cv_estim_nnd$separation))  # R2 = 0.2047 
+summary(lm(cv_true_nnd$cohere ~ cv_estim_nnd$cohere))  # R2 = 0.1009
+summary(lm(cv_true_nnd$separate ~ cv_estim_nnd$separate))  # R2 = 0.1582
+summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.008139
+
+
+# T-tests to compare general ABC and NND-only ABC -----------------------------
+# Must run general ABC script first
+
+
+
+# Plotting --------------------------------------------------------------------
+# custom_color <- c("#463682", "#287D8E", "#3CBB76", "#DCE41A")
+custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
+color2 <- c("#79D151", "#29788E")
+
+plot_date <- "21Jul2020_NND"
+
+# Data needs to be transformed to be one vector of values labeled with which
+# parameter it is and which distribution it's from.
+
+# Reshape dataframes to fit what's needed for ggplot2
+priors_nnd <- melt(model_params_nnd)  
+priors_nnd <- cbind(priors_nnd, rep("prior", length(priors_nnd$value)))
+colnames(priors_nnd) <- c("parameter", "value", "distribution")
+
+post_all_nnd <- as.data.frame(shoaling.nnd$unadj.values)
+posts_nnd <- melt(post_all_nnd)
+posts_nnd <- cbind(posts_nnd, rep("posterior", length(posts_nnd$value)))
+colnames(posts_nnd) <- c("parameter", "value", "distribution")
+
+dists_nnd <- rbind(priors_nnd, posts_nnd)  # Combine everything into one dataframe
+
+# Make sure all columns will be recongised appropriately for R/ggplot
+dists_nnd$value <- as.numeric(as.character(dists_nnd$value))
+
+# Plot distributions as density plots
+dist_density <- ggplot(dists_nnd, aes(x = value, fill = distribution, color = distribution)) +
+  theme_bw() +
+  scale_fill_manual(values = color2) +
+  scale_color_manual(values = color2) +
+  geom_density(alpha = 0.5) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  facet_wrap(~parameter, scale="free")
+
+pdf(paste0("~/Desktop/dist_density_", plot_date, ".pdf"))
+print(dist_density)
+dev.off()
+
+# Cross-validation plots of true vs. estimated parameter values
+# Data from cross-validation output needs to be reshaped to be plotted with ggplot2
+cv_true_raw_nnd <- as.data.frame(shoaling.cv.nnd$true)
+cv_true_nnd <- melt(cv_true_raw_nnd)
+
+cv_estim_raw_nnd <- as.data.frame(shoaling.cv.nnd$estim)
+colnames(cv_estim_raw_nnd) <- c("speed", "vision", "separation", "cohere", "separate", "match")
+cv_estim_nnd <- melt(cv_estim_raw_nnd)
+
+cv_all_nnd <- cbind(cv_true_nnd, cv_estim_nnd$value)
+colnames(cv_all_nnd) <- c("parameter", "true", "estimated")
+
+cv_plots <- ggplot(cv_all_nnd, aes(x = true, y = estimated)) + #select data, include color-coding
+  theme_bw() +
+  geom_point(size=0.5) +
+  geom_smooth(method = "lm", se = FALSE, color = "#29788E") + #trendline and get rid of shaded confidence region, change size
+  xlab("true value") +
+  ylab("estimated value") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  facet_wrap(~parameter, scale="free")
+
+pdf(paste0("~/Desktop/cv_plots_", plot_date, ".pdf"))
+print(cv_plots)
+dev.off()
