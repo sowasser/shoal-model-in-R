@@ -151,11 +151,6 @@ summary(lm(cv_true_nnd$separate ~ cv_estim_nnd$separate))  # R2 = 0.1582
 summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.008139
 
 
-# T-tests to compare general ABC and NND-only ABC -----------------------------
-# Must run general ABC script first
-
-
-
 # Plotting --------------------------------------------------------------------
 # custom_color <- c("#463682", "#287D8E", "#3CBB76", "#DCE41A")
 custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
@@ -218,3 +213,25 @@ cv_plots <- ggplot(cv_all_nnd, aes(x = true, y = estimated)) + #select data, inc
 pdf(paste0("~/Desktop/cv_plots_", plot_date, ".pdf"))
 print(cv_plots)
 dev.off()
+
+# Mann-Whitney U tests to compare general ABC and NND-only ABC ----------------
+# Must run general ABC script first
+wilcox_sd <- wilcox.test(y = as.numeric(as.character(post_all$speed)), 
+                         as.numeric(as.character(post_all_nnd$speed)))
+wilcox_vs <- wilcox.test(y = as.numeric(as.character(post_all$vision)), 
+                         as.numeric(as.character(post_all_nnd$vision)))
+wilcox_sp <- wilcox.test(y = as.numeric(as.character(post_all$separation)), 
+                         as.numeric(as.character(post_all_nnd$separation)))
+wilcox_co <- wilcox.test(y = as.numeric(as.character(post_all$cohere)), 
+                         as.numeric(as.character(post_all_nnd$cohere)))
+wilcox_sep <- wilcox.test(y = as.numeric(as.character(post_all$separate)), 
+                          as.numeric(as.character(post_all_nnd$separate)))
+wilcox_mt <- wilcox.test(y = as.numeric(as.character(post_all$match)), 
+                         as.numeric(as.character(post_all_nnd$match)))
+
+wilcox_sd
+wilcox_vs
+wilcox_sp
+wilcox_co
+wilcox_sep
+wilcox_mt
