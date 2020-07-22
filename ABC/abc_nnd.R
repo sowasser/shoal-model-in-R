@@ -156,7 +156,7 @@ summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.008139
 custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
 color2 <- c("#79D151", "#29788E")
 
-plot_date <- "21Jul2020_NND"
+plot_date_nnd <- "21Jul2020_NND"
 
 # Data needs to be transformed to be one vector of values labeled with which
 # parameter it is and which distribution it's from.
@@ -185,8 +185,8 @@ dist_density_nnd <- ggplot(dists_nnd, aes(x = value, fill = distribution, color 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~parameter, scale="free")
 
-ggsave(filename= paste0("~/Desktop/dist_density", plot_date, ".pdf"), 
-       plot=dist_density_nnd, width=11, height=7, units="in")
+ggsave(filename= paste0("~/Desktop/dist_density_", plot_date_nnd, ".pdf"), 
+       plot=dist_density_nnd, width=180, height=130, units="mm", dpi=300)
 
 
 # Cross-validation plots of true vs. estimated parameter values

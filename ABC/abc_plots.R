@@ -44,7 +44,7 @@ dist_boxplot <- ggplot(dists, aes(x = parameter, y = value, fill = distribution)
   facet_wrap(~parameter, scale="free")
 
 ggsave(filename= paste0("~/Desktop/dist_boxplot_", plot_date, ".pdf"), 
-       plot=dist_boxplot, width=10, height=8, units="in")
+       plot=dist_boxplot, width=180, height=150, units="in", dpi=300)
 
 
 # Plot distributions as density plots
@@ -57,7 +57,7 @@ dist_density <- ggplot(dists, aes(x = value, fill = distribution, color = distri
   facet_wrap(~parameter, scale="free")
 
 ggsave(filename= paste0("~/Desktop/dist_density_", plot_date, ".pdf"), 
-       plot=dist_density, width=11, height=7, units="in")
+       plot=dist_density, width=180, height=130, units="mm", dpi=300)
 
 
 # Cross-validation plots of true vs. estimated parameter values ---------------
@@ -82,4 +82,4 @@ cv_plots <- ggplot(cv_all, aes(x = true, y = estimated)) + #select data, include
   facet_wrap(~parameter, scale="free")
 
 ggsave(filename= paste0("~/Desktop/cv_plots_", plot_date, ".pdf"), 
-       plot=cv_plots, width=11, height=7, units="in")
+       plot=cv_plots, width=180, height=130, units="mm", dpi=300)

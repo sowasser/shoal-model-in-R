@@ -59,7 +59,8 @@ time_graphs <- ggplot() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
-ggsave(filename="~/Desktop/timeseries_graphs.pdf", plot=time_graphs, width=10, height=8, units="in")
+ggsave(filename="~/Desktop/timeseries_graphs.pdf", plot=time_graphs, 
+       width=180, height=140, units="mm", dpi=300)
 
 
 # Correlations ----------------------------------------------------------------

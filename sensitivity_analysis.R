@@ -5,7 +5,9 @@
 library(ggplot2)
 library(mgcv)
 
+custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
 color3 <- c("#440154", "#29788E", "#79D151")
+color3_2 <- c("#22A784", "#45015A", "#fDE725")
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
@@ -127,7 +129,8 @@ SA_boid_plots <- ggplot(SA_boid, aes(x = input, y = output, color = parameter)) 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
-ggsave(filename="~/Desktop/boid_plots.pdf", plot=SA_boid_plots, width=10, height=8, units="in")
+ggsave(filename="~/Desktop/boid_plots.pdf", plot=SA_boid_plots, 
+       width=180, height=150, units="mm", dpi=300)
 
 SA_move_plots <- ggplot(SA_move, aes(x = input, y = output, color = parameter)) + #select data, include color-coding
   theme_bw() +
@@ -139,4 +142,5 @@ SA_move_plots <- ggplot(SA_move, aes(x = input, y = output, color = parameter)) 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
-ggsave(filename="~/Desktop/move_plots.pdf", plot=SA_move_plots, width=10, height=8, units="in")
+ggsave(filename="~/Desktop/move_plots.pdf", plot=SA_move_plots, 
+       width=180, height=150, units="mm", dpi=300)
