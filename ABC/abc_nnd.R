@@ -177,7 +177,7 @@ dists_nnd <- rbind(priors_nnd, posts_nnd)  # Combine everything into one datafra
 dists_nnd$value <- as.numeric(as.character(dists_nnd$value))
 
 # Plot distributions as density plots
-dist_density <- ggplot(dists_nnd, aes(x = value, fill = distribution, color = distribution)) +
+dist_density_nnd <- ggplot(dists_nnd, aes(x = value, fill = distribution, color = distribution)) +
   theme_bw() +
   scale_fill_manual(values = color2) +
   scale_color_manual(values = color2) +
@@ -185,9 +185,9 @@ dist_density <- ggplot(dists_nnd, aes(x = value, fill = distribution, color = di
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~parameter, scale="free")
 
-pdf(paste0("~/Desktop/dist_density_", plot_date, ".pdf"))
-print(dist_density)
-dev.off()
+ggsave(filename= paste0("~/Desktop/dist_density", plot_date, ".pdf"), 
+       plot=dist_density_nnd, width=11, height=7, units="in")
+
 
 # Cross-validation plots of true vs. estimated parameter values
 # Data from cross-validation output needs to be reshaped to be plotted with ggplot2
@@ -201,18 +201,18 @@ cv_estim_nnd <- melt(cv_estim_raw_nnd)
 cv_all_nnd <- cbind(cv_true_nnd, cv_estim_nnd$value)
 colnames(cv_all_nnd) <- c("parameter", "true", "estimated")
 
-cv_plots <- ggplot(cv_all_nnd, aes(x = true, y = estimated)) + #select data, include color-coding
-  theme_bw() +
-  geom_point(size=0.5) +
-  geom_smooth(method = "lm", se = FALSE, color = "#29788E") + #trendline and get rid of shaded confidence region, change size
-  xlab("true value") +
-  ylab("estimated value") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-  facet_wrap(~parameter, scale="free")
+#cv_plots_nnd <- ggplot(cv_all_nnd, aes(x = true, y = estimated)) + #select data, include color-coding
+#  theme_bw() +
+#  geom_point(size=0.5) +
+#  geom_smooth(method = "lm", se = FALSE, color = "#29788E") + #trendline and get rid of shaded confidence region, change size
+#  xlab("true value") +
+#  ylab("estimated value") +
+#  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+#  facet_wrap(~parameter, scale="free")
 
-pdf(paste0("~/Desktop/cv_plots_", plot_date, ".pdf"))
-print(cv_plots)
-dev.off()
+# ggsave(filename= paste0("~/Desktop/cv_plots_", plot_date, ".pdf"), 
+#       plot=cv_plots_nnd, width=11, height=7, units="in")
+
 
 # Mann-Whitney U tests to compare general ABC and NND-only ABC ----------------
 # Must run general ABC script first

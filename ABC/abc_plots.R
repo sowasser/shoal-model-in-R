@@ -10,7 +10,7 @@ library(reshape2)
 custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
 color2 <- c("#79D151", "#29788E")
 
-plot_date <- "09Jul2020"
+plot_date <- "22Jul2020"
 
 # Prior/posterior distributions from abc --------------------------------------
 # Data needs to be transformed to be one vector of values labeled with which
@@ -43,9 +43,9 @@ dist_boxplot <- ggplot(dists, aes(x = parameter, y = value, fill = distribution)
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~parameter, scale="free")
 
-pdf(paste0("~/Desktop/dist_boxplot_", plot_date, ".pdf"))
-print(dist_boxplot)
-dev.off()
+ggsave(filename= paste0("~/Desktop/dist_boxplot_", plot_date, ".pdf"), 
+       plot=dist_boxplot, width=10, height=8, units="in")
+
 
 # Plot distributions as density plots
 dist_density <- ggplot(dists, aes(x = value, fill = distribution, color = distribution)) +
@@ -56,9 +56,8 @@ dist_density <- ggplot(dists, aes(x = value, fill = distribution, color = distri
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~parameter, scale="free")
 
-pdf(paste0("~/Desktop/dist_density_", plot_date, ".pdf"))
-print(dist_density)
-dev.off()
+ggsave(filename= paste0("~/Desktop/dist_density_", plot_date, ".pdf"), 
+       plot=dist_density, width=11, height=7, units="in")
 
 
 # Cross-validation plots of true vs. estimated parameter values ---------------
@@ -82,6 +81,5 @@ cv_plots <- ggplot(cv_all, aes(x = true, y = estimated)) + #select data, include
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~parameter, scale="free")
 
-pdf(paste0("~/Desktop/cv_plots_", plot_date, ".pdf"))
-print(cv_plots)
-dev.off()
+ggsave(filename= paste0("~/Desktop/cv_plots_", plot_date, ".pdf"), 
+       plot=cv_plots, width=11, height=7, units="in")

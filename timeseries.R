@@ -53,15 +53,13 @@ timeseries_all$step <- as.numeric(as.character(timeseries_all$step))
 time_graphs <- ggplot() + 
   theme_bw() + 
   scale_color_manual(values = color3) +
-  geom_line(data=timeseries_all, aes(x=step, y=value, color = source), size = 0.5) +  # line
+  geom_line(data=timeseries_all, aes(x=step, y=value, color = source), size = 1) +  # line
   xlab("step") +
   ylab("statistic") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
-pdf("~/Desktop/timeseries_graphs.pdf")
-print(time_graphs)
-dev.off()
+ggsave(filename="~/Desktop/timeseries_graphs.pdf", plot=time_graphs, width=10, height=8, units="in")
 
 
 # Correlations ----------------------------------------------------------------

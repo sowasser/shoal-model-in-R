@@ -127,9 +127,7 @@ SA_boid_plots <- ggplot(SA_boid, aes(x = input, y = output, color = parameter)) 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
-pdf("~/Desktop/boid_plots.pdf")
-print(SA_boid_plots)
-dev.off()
+ggsave(filename="~/Desktop/boid_plots.pdf", plot=SA_boid_plots, width=10, height=8, units="in")
 
 SA_move_plots <- ggplot(SA_move, aes(x = input, y = output, color = parameter)) + #select data, include color-coding
   theme_bw() +
@@ -141,8 +139,4 @@ SA_move_plots <- ggplot(SA_move, aes(x = input, y = output, color = parameter)) 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
-pdf("~/Desktop/move_plots.pdf")
-print(SA_move_plots)
-dev.off()
-
-
+ggsave(filename="~/Desktop/move_plots.pdf", plot=SA_move_plots, width=10, height=8, units="in")
