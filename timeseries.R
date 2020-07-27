@@ -65,5 +65,5 @@ ggsave(filename="~/Desktop/timeseries_graphs.pdf", plot=time_graphs,
 
 # Correlations ----------------------------------------------------------------
 stats <- model_run_all[, -1]
-model_cor <- cor(stats)
+model_cor <- cor(stats, method = "spearman")
 ggcorrplot(model_cor, type = "lower", lab = TRUE, colors = c("#79D151", "white", "#29788E"))

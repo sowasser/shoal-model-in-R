@@ -13,6 +13,7 @@
 
 library(abc)
 library(tidyverse)
+library(dplyr)
 library(car)
 library(abctools)
 library(ggcorrplot)
@@ -81,8 +82,8 @@ model_params <- model[, 17:22]
 model_stats <- model[, 1:16]
 
 # Correlations ----------------------------------------------------------------
-model_stats2 <- model_stats[, 1:12]
-model_stats_cor <- cor(model_stats2)
+model_stats2 <- model_stats %>% select(polar_mean, nnd_mean, cent_mean, area_mean)
+model_stats_cor <- cor(model_stats2, method = "spearman")
 ggcorrplot(model_stats_cor, type = "lower", lab = TRUE, colors = c("#79D151", "white", "#29788E"))
 
 
