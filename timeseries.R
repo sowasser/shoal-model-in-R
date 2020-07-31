@@ -67,3 +67,12 @@ ggsave(filename="~/Desktop/timeseries_graphs.pdf", plot=time_graphs,
 stats <- model_run_all[, -1]
 model_cor <- cor(stats, method = "spearman")
 ggcorrplot(model_cor, type = "lower", lab = TRUE, colors = c("#79D151", "white", "#29788E"))
+
+
+# Export data used for further analysis in Python -----------------------------
+model_run2 <- cbind(model_run, model_run_nnd$nnd)
+colnames(model_run2) <- c("step", "cent", "nnd", "polar", "area", "nnd_only")
+write.csv(model_run2, paste0(path, "timeseries_modelled.csv"))
+
+colnames(tracking_scaled) <- c("step", "cent", "nnd", "area", "polar")
+write.csv(tracking_scaled, paste0(path, "timeseries_tracked.csv"))
