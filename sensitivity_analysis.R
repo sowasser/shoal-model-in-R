@@ -22,12 +22,12 @@ var_match <- read.csv(paste0(path, "var-match100.csv"))
 # Isolate data columns & add a factor label
 speed <- as.data.frame(cbind(var_speed$speed, rep("speed", length(var_speed$speed))))
 vision <- as.data.frame(cbind(var_vision$vision, rep("vision", length(var_vision$vision))))
-sep <- as.data.frame(cbind(var_sep$sep, rep("separation", length(var_sep$sep))))
+spacing <- as.data.frame(cbind(var_sep$sep, rep("spacing", length(var_sep$sep))))
 cohere <- as.data.frame(cbind(var_cohere$cohere, rep("cohere", length(var_cohere$cohere))))
 separate <- as.data.frame(cbind(var_separate$separate, rep("separate", length(var_separate$separate))))
 match <- as.data.frame(cbind(var_match$match, rep("match", length(var_match$match))))
 
-boid_params <- rbind(speed, vision, sep)
+boid_params <- rbind(speed, vision, spacing)
 move_params <- rbind(cohere, match, separate)
 
 # Separate out statistics and stack them
