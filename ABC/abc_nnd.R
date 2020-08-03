@@ -69,6 +69,7 @@ real_fish_nnd <- c(min(track_nnd), max(track_nnd), mean(track_nnd), sd(track_nnd
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
 model_params_nnd <- model_nnd[, 5:10]
+colnames(model_params_nnd) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.
@@ -88,7 +89,7 @@ summary(shoaling.nnd)
 # Create array with one column for label, one for the parameter
 sd1_nnd <- cbind(model_params_nnd$speed, rep("prior", length(model_params_nnd$speed)))
 vs1_nnd <- cbind(model_params_nnd$vision, rep("prior", length(model_params_nnd$vision)))
-sp1_nnd <- cbind(model_params_nnd$separation, rep("prior", length(model_params_nnd$separation)))
+sp1_nnd <- cbind(model_params_nnd$spacing, rep("prior", length(model_params_nnd$spacing)))
 co1_nnd <- cbind(model_params_nnd$cohere, rep("prior", length(model_params_nnd$cohere)))
 sep1_nnd <- cbind(model_params_nnd$separate, rep("prior", length(model_params_nnd$separate)))
 mt1_nnd <- cbind(model_params_nnd$match, rep("prior",  length(model_params_nnd$match)))
@@ -97,7 +98,7 @@ mt1_nnd <- cbind(model_params_nnd$match, rep("prior",  length(model_params_nnd$m
 post_nnd <- as.data.frame(shoaling.nnd$unadj.values)
 sd2_nnd <- cbind(post_nnd$speed, rep("post", length(post_nnd$speed)))
 vs2_nnd <- cbind(post_nnd$vision, rep("post", length(post_nnd$vision)))
-sp2_nnd <- cbind(post_nnd$separation, rep("post", length(post_nnd$separation)))
+sp2_nnd <- cbind(post_nnd$spacing, rep("post", length(post_nnd$spacing)))
 co2_nnd <- cbind(post_nnd$cohere, rep("post", length(post_nnd$cohere)))
 sep2_nnd <- cbind(post_nnd$separate, rep("post", length(post_nnd$separate)))
 mt2_nnd <- cbind(post_nnd$match, rep("post", length(post_nnd$match)))
@@ -125,7 +126,7 @@ lpv_nnd <- c(l_sd_nnd[1,3], l_vs_nnd[1,3], l_sp_nnd[1,3], l_co_nnd[1,3], l_sep_n
 ladj_nnd <- p.adjust(p = lpv_nnd, method = "holm")  # run adjustment
 
 # Combine with other values
-lname <- c("speed", "vision", "separation", "cohere", "match", "separate")
+lname <- c("speed", "vision", "spacing", "cohere", "match", "separate")
 levene_out_nnd <- as.data.frame(cbind(lname, lpv_nnd, ladj_nnd))
 
 
@@ -141,11 +142,11 @@ summary(shoaling.cv.nnd)
 # Linear models of cross-validation results
 cv_true_nnd <- as.data.frame(shoaling.cv.nnd$true)
 cv_estim_nnd <- as.data.frame(shoaling.cv.nnd$estim)
-colnames(cv_estim_nnd) <- c("speed", "vision", "separation", "cohere", "separate", "match")
+colnames(cv_estim_nnd) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 
 summary(lm(cv_true_nnd$speed ~ cv_estim_nnd$speed))  # R2 = 0.5746
 summary(lm(cv_true_nnd$vision ~ cv_estim_nnd$vision))  # R2 = 0.508
-summary(lm(cv_true_nnd$separation ~ cv_estim_nnd$separation))  # R2 = 0.2047 
+summary(lm(cv_true_nnd$spacing ~ cv_estim_nnd$spacing))  # R2 = 0.2047 
 summary(lm(cv_true_nnd$cohere ~ cv_estim_nnd$cohere))  # R2 = 0.1009
 summary(lm(cv_true_nnd$separate ~ cv_estim_nnd$separate))  # R2 = 0.1582
 summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.008139
@@ -156,7 +157,7 @@ summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.008139
 custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
 color2 <- c("#79D151", "#29788E")
 
-plot_date_nnd <- "21Jul2020_NND"
+plot_date_nnd <- "03Aug2020_NND"
 
 # Data needs to be transformed to be one vector of values labeled with which
 # parameter it is and which distribution it's from.
@@ -195,7 +196,7 @@ cv_true_raw_nnd <- as.data.frame(shoaling.cv.nnd$true)
 cv_true_nnd <- melt(cv_true_raw_nnd)
 
 cv_estim_raw_nnd <- as.data.frame(shoaling.cv.nnd$estim)
-colnames(cv_estim_raw_nnd) <- c("speed", "vision", "separation", "cohere", "separate", "match")
+colnames(cv_estim_raw_nnd) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 cv_estim_nnd <- melt(cv_estim_raw_nnd)
 
 cv_all_nnd <- cbind(cv_true_nnd, cv_estim_nnd$value)
@@ -220,8 +221,8 @@ wilcox_sd <- wilcox.test(y = as.numeric(as.character(post_all$speed)),
                          as.numeric(as.character(post_all_nnd$speed)))
 wilcox_vs <- wilcox.test(y = as.numeric(as.character(post_all$vision)), 
                          as.numeric(as.character(post_all_nnd$vision)))
-wilcox_sp <- wilcox.test(y = as.numeric(as.character(post_all$separation)), 
-                         as.numeric(as.character(post_all_nnd$separation)))
+wilcox_sp <- wilcox.test(y = as.numeric(as.character(post_all$spacing)), 
+                         as.numeric(as.character(post_all_nnd$spacing)))
 wilcox_co <- wilcox.test(y = as.numeric(as.character(post_all$cohere)), 
                          as.numeric(as.character(post_all_nnd$cohere)))
 wilcox_sep <- wilcox.test(y = as.numeric(as.character(post_all$separate)), 

@@ -76,10 +76,13 @@ real_fish <- c(tmin[1], tmin[2], tmin[3], tmin[4],
 # matrix of simulated parameter values, where each row corresponds to a
 # simulation and each column correponds to a parameter.
 model_params <- model[, 17:22]
+colnames(model_params) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
+
 
 # matrix of simulated summary statistics, where each row corresponds to  a 
 # simulation and each column corresponds to a summary statistic.
 model_stats <- model[, 1:16]
+
 
 # Correlations ----------------------------------------------------------------
 model_stats2 <- model_stats %>% select(polar_mean, nnd_mean, cent_mean, area_mean)
@@ -101,7 +104,7 @@ summary(shoaling.abc)
 # Create array with one column for label, one for the parameter
 sd1 <- cbind(model_params$speed, rep("prior", length(model_params$speed)))
 vs1 <- cbind(model_params$vision, rep("prior", length(model_params$vision)))
-sp1 <- cbind(model_params$separation, rep("prior", length(model_params$separation)))
+sp1 <- cbind(model_params$spacing, rep("prior", length(model_params$spacing)))
 co1 <- cbind(model_params$cohere, rep("prior", length(model_params$cohere)))
 sep1 <- cbind(model_params$separate, rep("prior", length(model_params$separate)))
 mt1 <- cbind(model_params$match, rep("prior",  length(model_params$match)))
@@ -110,7 +113,7 @@ mt1 <- cbind(model_params$match, rep("prior",  length(model_params$match)))
 post_all <- as.data.frame(shoaling.abc$unadj.values)
 sd2 <- cbind(post_all$speed, rep("post", length(post_all$speed)))
 vs2 <- cbind(post_all$vision, rep("post", length(post_all$vision)))
-sp2 <- cbind(post_all$separation, rep("post", length(post_all$separation)))
+sp2 <- cbind(post_all$spacing, rep("post", length(post_all$spacing)))
 co2 <- cbind(post_all$cohere, rep("post", length(post_all$cohere)))
 sep2 <- cbind(post_all$separate, rep("post", length(post_all$separate)))
 mt2 <- cbind(post_all$match, rep("post", length(post_all$match)))
@@ -138,7 +141,7 @@ lpv <- c(l_sd[1,3], l_vs[1,3], l_sp[1,3], l_co[1,3], l_sep[1,3], l_mt[1,3])
 ladj <- p.adjust(p = lpv, method = "holm")  # run adjustment
 
 # Combine with other values
-lname <- c("speed", "vision", "separation", "cohere", "match", "separate")
+lname <- c("speed", "vision", "spacing", "cohere", "match", "separate")
 levene_out <- as.data.frame(cbind(lname, lpv, ladj))
 
 
@@ -154,11 +157,11 @@ summary(shoaling.cv)
 # Linear models of cross-validation results
 cv_true <- as.data.frame(shoaling.cv$true)
 cv_estim <- as.data.frame(shoaling.cv$estim)
-colnames(cv_estim) <- c("speed", "vision", "separation", "cohere", "separate", "match")
+colnames(cv_estim) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 
 summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.781
 summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.6666
-summary(lm(cv_true$separation ~ cv_estim$separation))  # R2 = 0.2326  
+summary(lm(cv_true$spacing ~ cv_estim$spacing))  # R2 = 0.2326  
 summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.1582
 summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.2252 
 summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.07035 

@@ -10,7 +10,7 @@ library(reshape2)
 custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
 color2 <- c("#79D151", "#29788E")
 
-plot_date <- "22Jul2020"
+plot_date <- "03Aug2020"
 
 # Prior/posterior distributions from abc --------------------------------------
 # Data needs to be transformed to be one vector of values labeled with which
@@ -66,7 +66,7 @@ cv_true_raw <- as.data.frame(shoaling.cv$true)
 cv_true <- melt(cv_true_raw)
 
 cv_estim_raw <- as.data.frame(shoaling.cv$estim)
-colnames(cv_estim_raw) <- c("speed", "vision", "separation", "cohere", "separate", "match")
+colnames(cv_estim_raw) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 cv_estim <- melt(cv_estim_raw)
 
 cv_all <- cbind(cv_true, cv_estim$value)
