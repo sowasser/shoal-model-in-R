@@ -35,13 +35,18 @@ pos_data <- pos_data[order(pos_data$step, pos_data$fish), ]
 # Select trial data
 step1 <- pos_data[which(pos_data$step==1), ]
 
-# Plot positions as a density heatmap
+# Plot positions as a density heatmap & save
 density <- ggplot(pos_data, aes(x = x, y = y)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
-  scale_fill_viridis(discrete = FALSE) +
+  scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  xlab(" ") +
+  ylab(" ") +
+  
+  # gganimate stuff below 
   transition_time(step) +
-  labs(tite = "Step: {frame_time}")
+  ggtitle("Step: ")
 
 animate(density, duration = 5, fps = 20, width = 200, height = 200, renderer = gifski_renderer())
 anim_save("density.gif", animation = density, path = "~/Desktop/")
