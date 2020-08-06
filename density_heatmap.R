@@ -4,6 +4,11 @@
 # create the heatmap in R using gganimate.
 
 library(reshape2)
+library(ggplot2)
+library(transformr)
+library(gganimate)
+library(gifski)
+library(viridis)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
@@ -21,6 +26,22 @@ y_coord <- cbind(step, y_coord[, -1])
 new_x <- melt(x_coord, id.vars = "step")
 new_y <- melt(y_coord, id.vars = "step")
 
-# Combine all data together & rename columns again
+# Combine all data together, rename columns, sort by step & fish
 pos_data <- cbind(new_x, new_y[, 3])
 colnames(pos_data) <- c("step", "fish", "x", "y")
+pos_data <- pos_data[order(pos_data$step, pos_data$fish), ]
+
+
+# Select trial data
+step1 <- pos_data[which(pos_data$step==1), ]
+
+# Plot positions as a density heatmap
+density <- ggplot(pos_data, aes(x = x, y = y)) +
+  stat_density2d(aes(fill=..level..), geom="polygon") +
+  scale_fill_viridis(discrete = FALSE) +
+  geom_point(colour="black") +
+  transition_time(step) +
+  labs(tite = "Step: {frame_time}")
+
+animate(density, duration = 5, fps = 20, width = 200, height = 200, renderer = gifski_renderer())
+anim_save("density.gif", animation = density, path = "~/Desktop/")
