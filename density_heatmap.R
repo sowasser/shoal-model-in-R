@@ -13,17 +13,9 @@ y_coord <- read.csv(paste0(path, "heatmap_y.csv"))
 step <- (1:10)  # Create list of number of steps
 
 
-# remove first column generated from the index of the pandas dataframe
+# Remove first column (index of the pandas dataframe) & add step column
 x_coord <- cbind(step, x_coord[, -1])
-y_coord <- cbind(steps, y_coord[, -1])
-
-# New names for the x and y data so they'll match when combined
-new_names <- c("step", "fish 1", "fIsh 2", "fish 3", "fish 4", "fish 5", 
-               "fish 6", "fish 7", "fish 8", "fish 9", "fish 10",
-               "fish 11", "fish 12", "fish 13", "fish 14", "fish 15",
-               "fish 16", "fish 17", "fish 18", "fish 19", "fish 20")
-colnames(x_coord) <- new_names
-colnames(y_coord) <- new_names
+y_coord <- cbind(step, y_coord[, -1])
 
 # Reshape data from wide to long, with all x & y data in 1 column
 new_x <- melt(x_coord, id.vars = "step")
