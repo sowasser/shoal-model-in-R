@@ -45,8 +45,8 @@ density <- ggplot(pos_data, aes(x = x, y = y)) +
   ylab(" ") +
   
   # gganimate stuff below 
-  transition_time(step) +
-  ggtitle("Step: ")
+  transition_states(step, transition_length = 3, state_length = 1) +
+  labs(title = "Step: {closest_state}")
 
 animate(density, duration = 5, fps = 20, width = 200, height = 200, renderer = gifski_renderer())
 anim_save("density.gif", animation = density, path = "~/Desktop/")
