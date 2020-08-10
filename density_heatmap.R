@@ -15,7 +15,7 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 x_coord <- read.csv(paste0(path, "heatmap_x.csv"))
 y_coord <- read.csv(paste0(path, "heatmap_y.csv"))
 
-step <- (1:10)  # Create list of number of steps
+step <- c(1:200)  # Create list of number of steps
 
 
 # Remove first column (index of the pandas dataframe) & add step column
@@ -32,11 +32,11 @@ colnames(pos_data) <- c("step", "fish", "x", "y")
 pos_data <- pos_data[order(pos_data$step, pos_data$fish), ]
 
 
-# Select trial data
-step1 <- pos_data[which(pos_data$step==1), ]
+# Select trial data - last 50 steps of the model
+pos_data_subset <- pos_data[15001:20000, ]
 
 # Plot positions as a density heatmap & save
-density <- ggplot(pos_data, aes(x = x, y = y)) +
+density <- ggplot(pos_data_subset, aes(x = x, y = y, group = step)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black") +
