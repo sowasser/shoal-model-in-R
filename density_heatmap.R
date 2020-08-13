@@ -32,6 +32,33 @@ colnames(pos_data) <- c("step", "fish", "x", "y")
 pos_data <- pos_data[order(pos_data$step, pos_data$fish), ]
 
 
+# Create graph of a few indicative steps (every 50?)
+step1 <- pos_data[which(pos_data$step==1), ]
+step50 <- pos_data[which(pos_data$step==50), ]
+step100 <- pos_data[which(pos_data$step==100), ]
+step150 <- pos_data[which(pos_data$step==150), ]
+step200 <- pos_data[which(pos_data$step==200), ]
+step250 <- pos_data[which(pos_data$step==250), ]
+step300 <- pos_data[which(pos_data$step==300), ]
+step350 <- pos_data[which(pos_data$step==350), ]
+step400 <- pos_data[which(pos_data$step==400), ]
+
+pos_data_graph_subset <- rbind(step1, step50, step100, step150, step200,
+                               step250, step300, step350, step400)
+
+density_plot <- ggplot(pos_data_graph_subset, aes(x = x, y = y)) +
+  stat_density2d(aes(fill=..level..), geom="polygon") +
+  scale_fill_viridis("Density", discrete = FALSE) +
+  # geom_point(colour="black", size = 0.01) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  xlab(" ") +
+  ylab(" ") +
+  facet_wrap(~step, scale="free")
+
+ggsave(filename="~/Desktop/density.pdf", plot=density_plot,
+       width=180, height=150, units="mm", dpi=300)
+
+
 # Select trial data - last 50 steps of the model
 pos_data_subset <- pos_data[15001:20000, ]
 
