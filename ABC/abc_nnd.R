@@ -137,8 +137,6 @@ shoaling.cv.nnd <- cv4abc(param = model_params_nnd,
                           nval = 100, tols = 0.01)  # size of cross validation sample; tolerance rate
 summary(shoaling.cv.nnd)
 
-# Plots for the relationship between true & estimated values are in abc_plots.R
-
 # Linear models of cross-validation results
 cv_true_nnd <- as.data.frame(shoaling.cv.nnd$true)
 cv_estim_nnd <- as.data.frame(shoaling.cv.nnd$estim)
@@ -151,6 +149,18 @@ summary(lm(cv_true_nnd$cohere ~ cv_estim_nnd$cohere))  # R2 = 0.1009
 summary(lm(cv_true_nnd$separate ~ cv_estim_nnd$separate))  # R2 = 0.1582
 summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.008139
 
+
+# Coverage test for ABC results -----------------------------------------------
+testsets_nnd <- sample(1:nrow(model_stats_nnd), 200)  # Subset of model runs to include
+
+# Coverage test for parameter estimation
+shoaling.cov.nnd <- cov.pi(param = model_params_nnd,
+                           sumstat = model_stats_nnd,
+                           testsets = testsets_nnd,  # the rows of sumstat to be used as pseudo-observed data?
+                           multicore = TRUE,
+                           cores = 4,
+                           tol = seq(0.1, 1, by=0.1),   # proportions of ABC acceptances
+                           diagnostics = "KS")  # Kolmogorov-Smirinov
 
 # Plotting --------------------------------------------------------------------
 # custom_color <- c("#463682", "#287D8E", "#3CBB76", "#DCE41A")
@@ -213,6 +223,26 @@ colnames(cv_all_nnd) <- c("parameter", "true", "estimated")
 
 # ggsave(filename= paste0("~/Desktop/cv_plots_", plot_date, ".pdf"), 
 #       plot=cv_plots_nnd, width=11, height=7, units="in")
+
+
+# Coverage Plots
+# Separate out and save the data from the coverage test
+diag_nnd <- shoaling.cov.nnd$diag  # Summary data with p-value from diagonstic test (KS)
+raw_nnd <- subset(shoaling.cov.nnd$raw, select = -c(testset, nacc))  # remove columns 
+raw_coverage_nnd <- melt(raw_nnd, id="tol")
+
+# Plot coverage test outcomes
+coverage_hist_nnd <- ggplot() +
+  theme_bw() +
+  geom_histogram(data = raw_coverage_nnd, aes(x = value), bins = 10, color = "#29788E", fill = "#87b7c4") +
+  xlab("tolerance (p value)") +
+  ylab("number") +
+  ylim(0, 400) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  facet_wrap(~variable, scale="free")
+
+ggsave(filename= paste0("~/Desktop/coverage_hist_nnd_", plot_date, ".pdf"), 
+       plot=coverage_hist_nnd, width=180, height=130, units="mm", dpi=300)
 
 
 # Mann-Whitney U tests to compare general ABC and NND-only ABC ----------------
