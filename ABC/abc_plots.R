@@ -88,12 +88,10 @@ ggsave(filename= paste0("~/Desktop/cv_plots_", plot_date, ".pdf"),
 # Coverage plots --------------------------------------------------------------
 # Checking distribution of values across different proportions of ABC acceptances
 
-# Separate out and save the data from the coverage test
-diag <- shoaling.cov$diag  # Summary data with p-value from diagonstic test (KS)
-raw <- subset(shoaling.cov$raw, select = -c(testset, nacc))  # remove columns 
+# Select raw data
+raw <- subset(shoaling.cov$raw, select = -c(testset, nacc))  # remove extra columns 
 raw_coverage <- melt(raw, id="tol")
 
-# Plot coverage test outcomes
 coverage_hist <- ggplot() +
   theme_bw() +
   geom_histogram(data = raw_coverage, aes(x = value), bins = 10, color = "#29788E", fill = "#87b7c4") +

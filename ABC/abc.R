@@ -182,3 +182,5 @@ shoaling.cov <- cov.pi(param = model_params,
                        cores = 4,
                        tol = seq(0.1, 1, by=0.1),   # proportions of ABC acceptances
                        diagnostics = "KS")  # Kolmogorov-Smirinov
+
+diag <- shoaling.cov$diag  # Summary data with p-value from diagonstic test (KS)
