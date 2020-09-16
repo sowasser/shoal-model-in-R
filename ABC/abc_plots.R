@@ -96,9 +96,10 @@ raw_coverage <- melt(raw, id="tol")
 # Plot coverage test outcomes
 coverage_hist <- ggplot() +
   theme_bw() +
-  geom_histogram(data = raw3, aes(x = value), bins = 10) +
-  xlab("p value") +
+  geom_histogram(data = raw3, aes(x = value), bins = 10, color = "#29788E", fill = "#87b7c4") +
+  xlab("tolerance (p value)") +
   ylab("number") +
+  ylim(0, 400) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~variable, scale="free")
 
