@@ -169,7 +169,7 @@ summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.07035
 
 
 # Test coverage property of ABC results --------------------------
-testsets <- sample(1:nrow(model_stats), 200)  # Subset of model runs to include
+testsets <- sample(1:nrow(model_stats), 100)  # Subset of model runs to include
 eps <- exp(seq(log(0.1), log(10), length.out = 15))  # These are epsilon values; 
 # "vector of ABC thresholds to be examined" Don't know how what this is for my data.
 # Potentially, I think this will be different for the 2 groups of parameters.

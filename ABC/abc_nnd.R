@@ -151,7 +151,7 @@ summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.008139
 
 
 # Coverage test for ABC results -----------------------------------------------
-testsets_nnd <- sample(1:nrow(model_stats_nnd), 200)  # Subset of model runs to include
+testsets_nnd <- sample(1:nrow(model_stats_nnd), 100)  # Subset of model runs to include
 
 # Coverage test for parameter estimation
 shoaling.cov.nnd <- cov.pi(param = model_params_nnd,
