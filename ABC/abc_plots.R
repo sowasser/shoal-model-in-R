@@ -83,3 +83,24 @@ cv_plots <- ggplot(cv_all, aes(x = true, y = estimated)) + #select data, include
 
 ggsave(filename= paste0("~/Desktop/cv_plots_", plot_date, ".pdf"), 
        plot=cv_plots, width=180, height=130, units="mm", dpi=300)
+
+
+# Coverage plots --------------------------------------------------------------
+# Checking distribution of values across different proportions of ABC acceptances
+
+# Separate out and save the data from the coverage test
+diag <- shoaling.cov$diag  # Summary data with p-value from diagonstic test (KS)
+raw <- subset(shoaling.cov$raw, select = -c(testset, nacc))  # remove columns 
+raw_coverage <- melt(raw, id="tol")
+
+# Plot coverage test outcomes
+coverage_hist <- ggplot() +
+  theme_bw() +
+  geom_histogram(data = raw3, aes(x = value), bins = 10) +
+  xlab("p value") +
+  ylab("number") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  facet_wrap(~variable, scale="free")
+
+ggsave(filename= paste0("~/Desktop/coverage_hist_", plot_date, ".pdf"), 
+       plot=coverage_hist, width=180, height=130, units="mm", dpi=300)

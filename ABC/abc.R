@@ -182,20 +182,3 @@ shoaling.cov <- cov.pi(param = model_params,
                        cores = 4,
                        tol = seq(0.1, 1, by=0.1),   # proportions of ABC acceptances
                        diagnostics = "KS")  # Kolmogorov-Smirinov
-diag <- shoaling.cov$diag
-raw <-shoaling.cov$raw
-raw2 <- subset(raw, select = -c(testset, nacc))
-raw3 <- melt(raw2, id="tol")
-
-# Plot coverage test outcomes
-coverage_plot_hist <- ggplot() +
-  theme_bw() +
-  geom_histogram(data = raw3, aes(x = value), bins = 10) +
-  xlab("p value") +
-  ylab("number") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-  facet_wrap(~variable, scale="free")
-
-pdf(paste0("~/Desktop/coverage_hist_", date, ".pdf"))
-print(coverage_plot_hist)
-dev.off()
