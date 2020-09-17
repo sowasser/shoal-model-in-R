@@ -184,3 +184,22 @@ shoaling.cov <- cov.pi(param = model_params,
                        diagnostics = "KS")  # Kolmogorov-Smirinov
 
 diag <- shoaling.cov$diag  # Summary data with p-value from diagonstic test (KS)
+
+# Run Kolmogorov-Smirnov test to see if coverage distributions vary 
+# significantly from a uniform distribution of the same size & shape. 
+
+# Having an issue because there are "ties" (repeated values) in the 
+# distributions, which shouldn't be present in a continuous distribution - 
+# probably attributable to rounding errors.
+ks_sd <- ks.test(raw$speed, punif(1000, 0.1, 1))
+ks_vs <- ks.test(raw$vision, punif(1000, 0.1, 1))
+ks_sp <- ks.test(raw$spacing, punif(1000, 0.1, 1))
+ks_co <- ks.test(raw$cohere, punif(1000, 0.1, 1))
+ks_sep <- ks.test(raw$separate, punif(1000, 0.1, 1))
+ks_mt <- ks.test(raw$match, punif(1000, 0.1, 1))
+
+kspv <- c(ks_sd[2], ks_vs[2], ks_sp[2], ks_co[2], ks_sep[2], ks_mt[2])
+ksadj <- p.adjust(p = kspv, method = "holm")
+
+ks_out <- as.data.frame(cbind(lname, kspv, ksadj))
+

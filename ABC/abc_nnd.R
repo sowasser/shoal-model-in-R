@@ -162,6 +162,24 @@ shoaling.cov.nnd <- cov.pi(param = model_params_nnd,
                            tol = seq(0.1, 1, by=0.1),   # proportions of ABC acceptances
                            diagnostics = "KS")  # Kolmogorov-Smirinov
 
+# Run Kolmogorov-Smirnov test to see if coverage distributions vary 
+# significantly from a uniform distribution of the same size & shape. 
+
+# Having an issue because there are "ties" (repeated values) in the 
+# distributions, which shouldn't be present in a continuous distribution - 
+# probably attributable to rounding errors.
+ks_sd_nnd <- ks.test(raw_nnd$speed, punif(1000, 0.1, 1))
+ks_vs_nnd <- ks.test(raw_nnd$vision, punif(1000, 0.1, 1))
+ks_sp_nnd <- ks.test(raw_nnd$spacing, punif(1000, 0.1, 1))
+ks_co_nnd <- ks.test(raw_nnd$cohere, punif(1000, 0.1, 1))
+ks_sep_nnd <- ks.test(raw_nnd$separate, punif(1000, 0.1, 1))
+ks_mt_nnd <- ks.test(raw_nnd$match, punif(1000, 0.1, 1))
+
+kspv_nnd <- c(ks_sd_nnd[2], ks_vs_nnd[2], ks_sp_nnd[2], ks_co_nnd[2], ks_sep_nnd[2], ks_mt_nnd[2])
+ksadj_nnd <- p.adjust(p = kspv_nnd, method = "holm")
+
+ks_out_nnd <- as.data.frame(cbind(lname, kspv_nnd, ksadj_nnd))
+
 # Plotting --------------------------------------------------------------------
 # custom_color <- c("#463682", "#287D8E", "#3CBB76", "#DCE41A")
 custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
