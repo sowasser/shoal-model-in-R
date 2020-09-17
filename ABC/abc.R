@@ -186,6 +186,11 @@ shoaling.cov <- cov.pi(param = model_params,
 diag <- shoaling.cov$diag  # Summary data with p-value from diagonstic test (KS)
 diag_sig <- subset(diag, pvalue <= 0.01)  # Select rows where KS p-value < 0.01
 
+# Ceate a new dataframe of the p-values organised for the manuscript table
+diag_summary <- dcast(subset(diag, select = -c(test)), tol ~ parameter)
+diag_summary <- diag_summary[, c("tol", "speed", "vision", "spacing", 
+                             "cohere", "separate", "match")]
+
 # Run Kolmogorov-Smirnov test to see if coverage distributions vary 
 # significantly from a uniform distribution of the same size & shape. 
 
