@@ -97,7 +97,7 @@ coverage_hist <- ggplot() +
   geom_histogram(data = raw_coverage, aes(x = value), bins = 20, color = "#29788E", fill = "#87b7c4") +
   xlab("tolerance (p value)") +
   ylab("number") +
-  ylim(0, 200) +
+  ylim(0, 101) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~variable, scale="free")
 
