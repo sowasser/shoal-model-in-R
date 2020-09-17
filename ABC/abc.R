@@ -184,6 +184,7 @@ shoaling.cov <- cov.pi(param = model_params,
                        diagnostics = "KS")  # Kolmogorov-Smirinov
 
 diag <- shoaling.cov$diag  # Summary data with p-value from diagonstic test (KS)
+diag_sig <- subset(diag, pvalue <= 0.01)  # Select rows where KS p-value < 0.01
 
 # Run Kolmogorov-Smirnov test to see if coverage distributions vary 
 # significantly from a uniform distribution of the same size & shape. 

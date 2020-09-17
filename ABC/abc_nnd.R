@@ -162,6 +162,9 @@ shoaling.cov.nnd <- cov.pi(param = model_params_nnd,
                            tol = seq(0.1, 1, by=0.1),   # proportions of ABC acceptances
                            diagnostics = "KS")  # Kolmogorov-Smirinov
 
+diag_nnd <- shoaling.cov.nnd$diag  # Summary data with p-value from diagonstic test (KS)
+diag_nnd_sig <- subset(diag_nnd, pvalue <= 0.01)  # Select rows where KS p-value < 0.01
+
 # Run Kolmogorov-Smirnov test to see if coverage distributions vary 
 # significantly from a uniform distribution of the same size & shape. 
 
@@ -245,7 +248,6 @@ colnames(cv_all_nnd) <- c("parameter", "true", "estimated")
 
 # Coverage Plots
 # Separate out and save the data from the coverage test
-diag_nnd <- shoaling.cov.nnd$diag  # Summary data with p-value from diagonstic test (KS)
 raw_nnd <- subset(shoaling.cov.nnd$raw, select = -c(testset, nacc))  # remove columns 
 raw_coverage_nnd <- melt(raw_nnd, id="tol")
 
