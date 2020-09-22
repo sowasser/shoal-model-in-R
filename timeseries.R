@@ -3,6 +3,7 @@
 
 library(ggplot2)
 library(ggcorrplot)
+library(dplyr)
 
 color2_2 <- c("#440154", "#29788E")
 color3 <- c("#440154", "#29788E", "#79D151")
@@ -61,6 +62,24 @@ time_graphs <- ggplot() +
 
 ggsave(filename="~/Desktop/timeseries_graphs.pdf", plot=time_graphs, 
        width=180, height=140, units="mm", dpi=300)
+
+
+# Overlap ---------------------------------------------------------------------
+# Calculate number of simulated values within range of observed values
+overlap_cent <- subset(model_run_all$cent, 
+                       model_run_all$cent > min(tracking_scaled$cent) & model_run_all$cent < max(tracking_scaled$cent))
+overlap_nnd <- subset(model_run_all$nnd, 
+                      model_run_all$nnd > min(tracking_scaled$nnd) & model_run_all$nnd < max(tracking_scaled$nnd))
+overlap_polar <- subset(model_run_all$polar, 
+                        model_run_all$polar > min(tracking_scaled$polar) & model_run_all$polar < max(tracking_scaled$polar))
+overlap_area <- subset(model_run_all$area, 
+                       model_run_all$area > min(tracking_scaled$area) & model_run_all$area < max(tracking_scaled$area))
+
+# Find percentages & create new dataframe
+percentages <- c((length(overlap_cent) / 200) * 100, 
+                 (length(overlap_nnd) / 200) * 100, 
+                 (length(overlap_polar) / 200) * 100, 
+                 (length(overlap_area) / 200) * 100)
 
 
 # Correlations ----------------------------------------------------------------
