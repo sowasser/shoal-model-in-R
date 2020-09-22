@@ -66,21 +66,29 @@ ggsave(filename="~/Desktop/timeseries_graphs.pdf", plot=time_graphs,
 
 # Overlap ---------------------------------------------------------------------
 # Calculate number of simulated values within range of observed values
-overlap_cent <- subset(model_run_all$cent, 
-                       model_run_all$cent > min(tracking_scaled$cent) & model_run_all$cent < max(tracking_scaled$cent))
-overlap_nnd <- subset(model_run_all$nnd, 
-                      model_run_all$nnd > min(tracking_scaled$nnd) & model_run_all$nnd < max(tracking_scaled$nnd))
-overlap_polar <- subset(model_run_all$polar, 
-                        model_run_all$polar > min(tracking_scaled$polar) & model_run_all$polar < max(tracking_scaled$polar))
-overlap_area <- subset(model_run_all$area, 
-                       model_run_all$area > min(tracking_scaled$area) & model_run_all$area < max(tracking_scaled$area))
+overlap_cent <- subset(model_run$cent, 
+                       model_run$cent > min(tracking_scaled$cent) & model_run$cent < max(tracking_scaled$cent))
+overlap_nnd <- subset(model_run$nnd, 
+                      model_run$nnd > min(tracking_scaled$nnd) & model_run$nnd < max(tracking_scaled$nnd))
+overlap_polar <- subset(model_run$polar, 
+                        model_run$polar > min(tracking_scaled$polar) & model_run$polar < max(tracking_scaled$polar))
+overlap_area <- subset(model_run$area, 
+                       model_run$area > min(tracking_scaled$area) & model_run$area < max(tracking_scaled$area))
 
 # Find percentages & create new dataframe
-percentages <- c((length(overlap_cent) / 200) * 100, 
-                 (length(overlap_nnd) / 200) * 100, 
-                 (length(overlap_polar) / 200) * 100, 
-                 (length(overlap_area) / 200) * 100)
+percentages <- c((length(overlap_cent) / 99) * 100, 
+                 (length(overlap_nnd) / 99) * 100, 
+                 (length(overlap_polar) / 99) * 100, 
+                 (length(overlap_area) / 99) * 100)
 
+# Calculation of overlap for NND-only
+overlap_nndtracked <- subset(model_run_nnd$nnd, 
+                             model_run_nnd$nnd > min(tracking_scaled$nnd) & model_run_nnd$nnd < max(tracking_scaled$nnd))
+overlap_nndmodels <- subset(model_run_nnd$nnd, 
+                            model_run_nnd$nnd > min(model_run$nnd) & model_run_nnd$nnd < max(model_run$nnd))
+
+percentages_nnd <- c((length(overlap_nndtracked) / 99) * 100, 
+                    (length(overlap_nndmodels) / 99) * 100)
 
 # Correlations ----------------------------------------------------------------
 stats <- model_run_all[, -1]
