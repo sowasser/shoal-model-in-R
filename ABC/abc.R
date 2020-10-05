@@ -86,8 +86,8 @@ model_stats <- model[, 1:16]
 
 
 # Correlations ----------------------------------------------------------------
-model_stats2 <- model_stats %>% select(polar_mean, nnd_mean, cent_mean, area_mean)
-model_stats_cor <- cor(model_stats2, method = "spearman")
+model_stats_means <- model_stats %>% select(polar_mean, nnd_mean, cent_mean, area_mean)
+model_stats_cor <- cor(model_stats_means, method = "spearman")
 ggcorrplot(model_stats_cor, type = "lower", lab = TRUE, colors = c("#79D151", "white", "#29788E"))
 
 
