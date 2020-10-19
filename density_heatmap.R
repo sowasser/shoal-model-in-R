@@ -1,6 +1,7 @@
 # Script working towards creating animated heatmaps of density to better 
 # compare with acoustic data. The position of each agent at each step was
-# recorded from the model, then exported in a simplified format to actually
+# recorded from the model, run with shoal_model_pos.py and 
+# data_sensitivity_heatmap.py, then exported in a simplified format to actually
 # create the heatmap in R using gganimate.
 
 library(reshape2)
