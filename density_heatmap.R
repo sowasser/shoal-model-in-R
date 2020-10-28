@@ -16,7 +16,7 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 x_coord <- read.csv(paste0(path, "heatmap_x.csv"))
 y_coord <- read.csv(paste0(path, "heatmap_y.csv"))
 
-step <- c(1:200)  # Create list of number of steps
+step <- c(1:400)  # Create list of number of steps
 
 
 # Remove first column (index of the pandas dataframe) & add step column
@@ -34,18 +34,29 @@ pos_data <- pos_data[order(pos_data$step, pos_data$fish), ]
 
 
 # Create graph of a few indicative steps (every 50?)
-step1 <- pos_data[which(pos_data$step==1), ]
-step50 <- pos_data[which(pos_data$step==50), ]
-step100 <- pos_data[which(pos_data$step==100), ]
-step150 <- pos_data[which(pos_data$step==150), ]
-step200 <- pos_data[which(pos_data$step==200), ]
-step250 <- pos_data[which(pos_data$step==250), ]
-step300 <- pos_data[which(pos_data$step==300), ]
-step350 <- pos_data[which(pos_data$step==350), ]
-step400 <- pos_data[which(pos_data$step==400), ]
+# step1 <- pos_data[which(pos_data$step==1), ]
+# step50 <- pos_data[which(pos_data$step==50), ]
+# step100 <- pos_data[which(pos_data$step==100), ]
+# step150 <- pos_data[which(pos_data$step==150), ]
+# step200 <- pos_data[which(pos_data$step==200), ]
+# step250 <- pos_data[which(pos_data$step==250), ]
+# step300 <- pos_data[which(pos_data$step==300), ]
+# step350 <- pos_data[which(pos_data$step==350), ]
+# step400 <- pos_data[which(pos_data$step==400), ]
 
-pos_data_graph_subset <- rbind(step1, step50, step100, step150, step200,
-                               step250, step300, step350, step400)
+step300 <- pos_data[which(pos_data$step==300), ]
+step301 <- pos_data[which(pos_data$step==301), ]
+step302 <- pos_data[which(pos_data$step==302), ]
+step303 <- pos_data[which(pos_data$step==303), ]
+step304 <- pos_data[which(pos_data$step==304), ]
+step305 <- pos_data[which(pos_data$step==305), ]
+step306 <- pos_data[which(pos_data$step==306), ]
+step307 <- pos_data[which(pos_data$step==307), ]
+step308 <- pos_data[which(pos_data$step==308), ]
+
+
+pos_data_graph_subset <- rbind(step300, step301, step302, step303, step304,
+                               step305, step306, step307, step308)
 
 density_plot <- ggplot(pos_data_graph_subset, aes(x = x, y = y)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
@@ -71,6 +82,7 @@ density <- ggplot(pos_data_subset, aes(x = x, y = y, group = step)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   xlab(" ") +
   ylab(" ") +
+  theme(legend.position = "none") +  # remove the legend
   
   # gganimate stuff below 
   transition_states(step, transition_length = 3, state_length = 1) +
