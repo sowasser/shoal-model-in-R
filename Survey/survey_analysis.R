@@ -2,11 +2,34 @@
 # non-experts & plots for publication
 
 
+library(plyr)
 library(reshape2)
 library(ggplot2)
 library(viridis)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/Survey Data/"  # for laptop
+
+
+# Plot of demographic data for expert vs. non-expert --------------------------
+demographics <- read.csv(paste0(path, "demo_summary.csv"))
+demographics$level <- factor(demographics$level, levels = c("other", 
+                                                            "experience in North Atlantic",
+                                                            "trained in analysis of acoustics",
+                                                            "participated in acoustic survey",
+                                                            "employed in commercial fisheries",
+                                                            "employed in marine science",
+                                                            "studied marine science"))
+
+demo_graph <- ggplot(data = demographics, aes(x = expertise, y = count, fill = level)) +
+  geom_bar(stat = "identity") +
+  theme_classic() +
+  scale_fill_viridis(discrete = TRUE) +
+  ylab(" ") + xlab(" ") +
+  guides(fill=guide_legend(title="experience type"))
+
+ggsave(filename="~/Desktop/demographics.pdf", demo_graph,
+       width=180, height=150, units="mm", dpi=300)
+
 
 # Plot of confidence in species ID for experts and non-experts ----------------
 confidence <- read.csv(paste0(path, "confidence.csv"))
@@ -25,6 +48,7 @@ con_graph <- ggplot(con, aes(fill = expertise, y = value, x = confidence)) +
   facet_wrap(~echogram, scale = "free") +
   ylab(" ") +
   guides(fill=guide_legend(title=" ")) +
+  scale_fill_viridis(discrete = TRUE) +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
@@ -47,6 +71,7 @@ meth_graph <- ggplot(meth, aes(fill = expertise, y = value, x = method)) +
   geom_bar(position = "dodge", stat = "identity") +
   ylab(" ") +
   guides(fill=guide_legend(title=" ")) +
+  scale_fill_viridis(discrete = TRUE) +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
