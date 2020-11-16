@@ -8,6 +8,7 @@ library(ggplot2)
 library(viridis)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/Survey Data/"  # for laptop
+color2 <- c("#443a83", "#8fd744")  # Nicer subset of viridis colors
 
 
 # Plot of demographic data for expert vs. non-expert --------------------------
@@ -48,7 +49,7 @@ con_graph <- ggplot(con, aes(fill = expertise, y = value, x = confidence)) +
   facet_wrap(~echogram, scale = "free") +
   ylab(" ") +
   guides(fill=guide_legend(title=" ")) +
-  scale_fill_viridis(discrete = TRUE) +
+  scale_fill_manual(values = color2) +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
@@ -71,7 +72,7 @@ meth_graph <- ggplot(meth, aes(fill = expertise, y = value, x = method)) +
   geom_bar(position = "dodge", stat = "identity") +
   ylab(" ") +
   guides(fill=guide_legend(title=" ")) +
-  scale_fill_viridis(discrete = TRUE) +
+  scale_fill_manual(values = color2) +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
