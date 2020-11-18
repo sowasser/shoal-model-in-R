@@ -52,6 +52,7 @@ exp_graph_all <- ggplot(exp, aes(fill = expertise, y = percent, x = species)) +
   geom_bar(position = "dodge", stat = "identity") +
   facet_wrap(~echogram, scale = "free", ncol=3) +
   ylab(" ") +
+  ylim(0, 100) +  # set y limit to always be 100
   guides(fill=guide_legend(title="expertise level")) +
   scale_fill_viridis(discrete = TRUE) +
   theme_bw() +
@@ -60,7 +61,8 @@ exp_graph_all <- ggplot(exp, aes(fill = expertise, y = percent, x = species)) +
 ggsave(filename="~/Desktop/expertise_all.pdf", exp_graph_all,
        width=250, height=250, units="mm", dpi=300)
 
-# Graph of just exoert & non-expert
+
+# Graph of just exoert & non-expert identification ----------------------------
 sub_exp <- melt(expert[, 1:4], id=c("echogram", "species")) 
 colnames(sub_exp) <- c("echogram", "species", "expertise", "percent")
 
@@ -74,15 +76,16 @@ sub_exp$species <- factor(sub_exp$species, levels = c("her", "spr", "bof",
 
 exp_graph <- ggplot(sub_exp, aes(fill = expertise, y = percent, x = species)) +
   geom_bar(position = "dodge", stat = "identity") +
-  facet_wrap(~echogram, scale = "free", ncol=3) +
-  ylab(" ") +
+  facet_wrap(~echogram, scale = "free", ncol=2) +
+  ylab(" ") + xlab(" ") +
+  ylim(0, 100) +  # set y limit to always be 100
   guides(fill=guide_legend(title=" ")) +
   scale_fill_manual(values = color2) +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
-ggsave(filename="~/Desktop/expertise.pdf", exp_graph,
-       width=250, height=250, units="mm", dpi=300)
+ggsave(filename="~/Desktop/identification.pdf", exp_graph,
+       width=170, height=250, units="mm", dpi=300)
 
 
 # Plot of confidence in species ID for experts and non-experts ----------------
