@@ -104,6 +104,7 @@ con_graph <- ggplot(con, aes(fill = expertise, y = value, x = confidence)) +
   geom_bar(position = "dodge", stat = "identity") +
   facet_wrap(~echogram, scale = "free") +
   ylab(" ") +
+  ylim(0, 52) +  # set y limit to include all data but stop at 50
   guides(fill=guide_legend(title=" ")) +
   scale_fill_manual(values = color2) +
   theme_bw() +
