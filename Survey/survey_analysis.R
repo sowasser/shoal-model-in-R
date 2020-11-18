@@ -13,13 +13,14 @@ color2 <- c("#443a83", "#8fd744")  # Nicer subset of viridis colors
 
 # Plot of demographic data for expert vs. non-expert --------------------------
 demographics <- read.csv(paste0(path, "demo_summary.csv"))
-demographics$level <- factor(demographics$level, levels = c("other", 
-                                                            "experience in North Atlantic",
-                                                            "trained in analysis of acoustics",
-                                                            "participated in acoustic survey",
-                                                            "employed in commercial fisheries",
-                                                            "employed in marine science",
-                                                            "studied marine science"))
+demographics$level <- factor(demographics$level, 
+                             levels = c("other", 
+                                        "experience in North Atlantic",
+                                        "trained in analysis of acoustics",
+                                        "participated in acoustic survey",
+                                        "employed in commercial fisheries",
+                                        "employed in marine science",
+                                        "studied marine science"))
 
 demo_graph <- ggplot(data = demographics, aes(x = expertise, y = count, fill = level)) +
   geom_bar(stat = "identity") +
@@ -30,6 +31,58 @@ demo_graph <- ggplot(data = demographics, aes(x = expertise, y = count, fill = l
 
 ggsave(filename="~/Desktop/demographics.pdf", demo_graph,
        width=180, height=150, units="mm", dpi=300)
+
+
+# Plot of identifications (hopefully with echograms alongside) ----------------
+expert <- read.csv(paste0(path, "expertise.csv"))
+colnames(expert) <- c("echogram", "species", "expert", "non-expert", 
+                      "local experience", "no experience")
+
+# Reshape dataframe for ggplot, ID are the columns you don't want to change!
+exp <- melt(expert, id=c("echogram", "species")) 
+colnames(exp) <- c("echogram", "species", "expertise", "percent")
+
+# Set order of echograms to show correctly in ggplot
+exp$echogram <- factor(exp$echogram, levels = c("1", "2", "3", "4", "5", "6", 
+                                                "7", "8", "9", "10"))
+exp$species <- factor(exp$species, levels = c("her", "spr", "bof", "mac", 
+                                              "hom", "whb", "other"))
+
+exp_graph_all <- ggplot(exp, aes(fill = expertise, y = percent, x = species)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  facet_wrap(~echogram, scale = "free", ncol=3) +
+  ylab(" ") +
+  guides(fill=guide_legend(title="expertise level")) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+ggsave(filename="~/Desktop/expertise_all.pdf", exp_graph_all,
+       width=250, height=250, units="mm", dpi=300)
+
+# Graph of just exoert & non-expert
+sub_exp <- melt(expert[, 1:4], id=c("echogram", "species")) 
+colnames(sub_exp) <- c("echogram", "species", "expertise", "percent")
+
+# Set order of echograms to show correctly in ggplot
+sub_exp$echogram <- factor(sub_exp$echogram, levels = c("1", "2", "3", "4", 
+                                                        "5", "6", "7", "8", 
+                                                        "9", "10"))
+sub_exp$species <- factor(sub_exp$species, levels = c("her", "spr", "bof", 
+                                                      "mac", "hom", "whb", 
+                                                      "other"))
+
+exp_graph <- ggplot(sub_exp, aes(fill = expertise, y = percent, x = species)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  facet_wrap(~echogram, scale = "free", ncol=3) +
+  ylab(" ") +
+  guides(fill=guide_legend(title=" ")) +
+  scale_fill_manual(values = color2) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+ggsave(filename="~/Desktop/expertise.pdf", exp_graph,
+       width=250, height=250, units="mm", dpi=300)
 
 
 # Plot of confidence in species ID for experts and non-experts ----------------
@@ -65,8 +118,10 @@ meth <- melt(method)  # Reshape by expertise for ggplot
 colnames(meth) <- c("method", "expertise", "value")
 
 # Set order of methods to match survey
-meth$method <- factor(meth$method, levels = c("school size", "school shape", 
-                                              "school depth", "backscatter strength"))
+meth$method <- factor(meth$method, levels = c("school size", 
+                                              "school shape", 
+                                              "school depth", 
+                                              "backscatter strength"))
 
 meth_graph <- ggplot(meth, aes(fill = expertise, y = value, x = method)) +
   geom_bar(position = "dodge", stat = "identity") +
