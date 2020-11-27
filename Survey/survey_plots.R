@@ -1,6 +1,5 @@
-# Analysis of survey acoustic species identification between experts and 
-# non-experts & plots for publication
-
+# Plots for analysis of survey acoustic species identification between experts
+# and non-experts 
 
 library(plyr)
 library(reshape2)
