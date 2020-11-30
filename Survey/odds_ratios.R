@@ -44,7 +44,7 @@ t.test(exp_non.bof, mu = 1)  # p = 0.3268, mean = 1.677139
 
 # Herring 
 exp_non.her <- c(exp_non.r1, exp_non.r5, exp_non.r6, exp_non.r9)
-t.test(exp_non.her, mu = 1)  # p = 0.486, mean = 1566292
+t.test(exp_non.her, mu = 1)  # p = 0.486, mean = 1.566292
 
 # Mackerel 
 exp_non.mac <- c(exp_non.r10, exp_non.r12)
@@ -86,23 +86,23 @@ exp_local.ratios <- c(exp_local.r1, exp_local.r2, exp_local.r3, exp_local.r4,
                       exp_local.r5, exp_local.r6, exp_local.r7, exp_local.r8, 
                       exp_local.r9, exp_local.r10, exp_local.r11, exp_local.r12, 
                       exp_local.r13)
-t.test(exp_local.ratios, mu = 1)  # p = 0.5914, set the mean at 1 instead of 0
+t.test(exp_local.ratios, mu = 1)  # p = 0.5914, mean = 1.098387
 
 # blue whiting
 exp_local.whb <- c(exp_local.r2, exp_local.r3, exp_local.r7)
-t.test(exp_local.whb, mu = 1)  # p = 0.6972
+t.test(exp_local.whb, mu = 1)  # p = 0.6972, mean = 1.10375
 
 # boarfish 
 exp_local.bof <- c(exp_local.r4, exp_local.r11)
-t.test(exp_local.bof, mu = 1)  # p = 0.9136
+t.test(exp_local.bof, mu = 1)  # p = 0.9136 = 1.053391
 
 # Herring 
 exp_local.her <- c(exp_local.r1, exp_local.r5, exp_local.r6, exp_local.r9)
-t.test(exp_local.her, mu = 1)  # p = 0.4171
+t.test(exp_local.her, mu = 1)  # p = 0.4171, mean = 1.382674
 
 # Mackerel 
 exp_local.mac <- c(exp_local.r10, exp_local.r12)
-t.test(exp_local.mac, mu = 1)  # p = 0.9423
+t.test(exp_local.mac, mu = 1)  # p = 0.9423, mean = 0.916667
 
 # Easy
 exp_local.easy <- c(exp_local.r1, exp_local.r2, exp_local.r9)
@@ -140,23 +140,23 @@ exp_none.ratios <- c(exp_none.r1, exp_none.r2, exp_none.r3, exp_none.r4,
                      exp_none.r5, exp_none.r6, exp_none.r7, exp_none.r8, 
                      exp_none.r9, exp_none.r10, exp_none.r11, exp_none.r12, 
                      exp_none.r13)
-t.test(exp_none.ratios, mu = 1)  # p = 0.09079, set the mean at 1 instead of 0
+t.test(exp_none.ratios, mu = 1)  # p = 0.09079, mean = 1.772895
 
 # blue whiting
 exp_none.whb <- c(exp_none.r2, exp_none.r3, exp_none.r7)
-t.test(exp_none.whb, mu = 1)  # p = 0.4453
+t.test(exp_none.whb, mu = 1)  # p = 0.4453, mean = 1.97619
 
 # boarfish 
 exp_none.bof <- c(exp_none.r4, exp_none.r11)
-t.test(exp_none.bof, mu = 1)  # p = 0.4918
+t.test(exp_none.bof, mu = 1)  # p = 0.4918, mean = 2.429947
 
 # Herring 
 exp_none.her <- c(exp_none.r1, exp_none.r5, exp_none.r6, exp_none.r9)
-t.test(exp_none.her, mu = 1)  # p = 0.3884
+t.test(exp_none.her, mu = 1)  # p = 0.3884, mean = 1.734213
 
 # Mackerel 
 exp_none.mac <- c(exp_none.r10, exp_none.r12)
-t.test(exp_none.mac, mu = 1)  # p = 0.716
+t.test(exp_none.mac, mu = 1)  # p = 0.716, mean = 1.916667
 
 # Easy
 exp_none.easy <- c(exp_none.r1, exp_none.r2, exp_none.r9)
