@@ -32,7 +32,11 @@ exp_non.ratios <- c(exp_non.r1, exp_non.r2, exp_non.r3, exp_non.r4, exp_non.r5,
                     exp_non.r11, exp_non.r12, exp_non.r13)
 
 # Run t-test with mean to test at 1 instead of 0
-t.test(exp_non.ratios, mu = 1)  # p = 0.1051, mean = 1.429627
+wilcox.test(exp_non.ratios, mu = 1)# p = 0.09424, 
+mean(exp_non.ratios)  # 1.429627
+
+# Run t-tests for species & difficulty, but I don't think these stats (other
+# than the means) are valid because of the really small sample sizes.
 
 # blue whiting
 exp_non.whb <- c(exp_non.r2, exp_non.r3, exp_non.r7)
@@ -57,7 +61,7 @@ t.test(exp_non.easy, mu = 1)  # p = 0.3737, mean = 2.011724
 # Medium
 exp_non.med <- c(exp_non.r3, exp_non.r4, 
                  exp_non.r11, exp_non.r12, exp_non.r13)
-t.test(exp_non.med, mu = 1)  # p = 0.02005, mean = 1.571573 ***
+wilcox.test(exp_non.med, mu = 1)  # p = 0.02005, mean = 1.571573 ***
 
 # Hard
 exp_non.hard <- c(exp_non.r5, exp_non.r6, exp_non.r7, exp_non.r8)
@@ -86,7 +90,8 @@ exp_local.ratios <- c(exp_local.r1, exp_local.r2, exp_local.r3, exp_local.r4,
                       exp_local.r5, exp_local.r6, exp_local.r7, exp_local.r8, 
                       exp_local.r9, exp_local.r10, exp_local.r11, exp_local.r12, 
                       exp_local.r13)
-t.test(exp_local.ratios, mu = 1)  # p = 0.5914, mean = 1.098387
+wilcox.test(exp_local.ratios, mu = 1)  # p = 0.7354
+mean(exp_local.ratios)  # mean = 1.098387
 
 # blue whiting
 exp_local.whb <- c(exp_local.r2, exp_local.r3, exp_local.r7)
@@ -140,7 +145,8 @@ exp_none.ratios <- c(exp_none.r1, exp_none.r2, exp_none.r3, exp_none.r4,
                      exp_none.r5, exp_none.r6, exp_none.r7, exp_none.r8, 
                      exp_none.r9, exp_none.r10, exp_none.r11, exp_none.r12, 
                      exp_none.r13)
-t.test(exp_none.ratios, mu = 1)  # p = 0.09079, mean = 1.772895
+wilcox.test(exp_none.ratios, mu = 1)  # p = 0.1841 
+mean(exp_none.ratios)  # mean = 1.772895
 
 # blue whiting
 exp_none.whb <- c(exp_none.r2, exp_none.r3, exp_none.r7)
@@ -193,7 +199,8 @@ nonexp_none.ratios <- c(nonexp_none.r1, nonexp_none.r2, nonexp_none.r3,
                         nonexp_none.r7, nonexp_none.r8, nonexp_none.r9, 
                         nonexp_none.r10, nonexp_none.r11, nonexp_none.r12, 
                         nonexp_none.r13)
-t.test(nonexp_none.ratios, mu = 1)  # p = 0.531, mean = 1.146281
+wilcox.test(nonexp_none.ratios, mu = 1)  # p = 0.7798
+mean(nonexp_none.ratios)  # mean = 1.146281
 
 # blue whiting
 nonexp_none.whb <- c(nonexp_none.r2, nonexp_none.r3, nonexp_none.r7)
