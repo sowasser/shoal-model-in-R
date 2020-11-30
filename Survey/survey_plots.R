@@ -87,17 +87,40 @@ ggsave(filename="~/Desktop/identification.pdf", exp_graph,
        width=170, height=250, units="mm", dpi=300)
 
 
-# Plot of confidence in species ID for experts and non-experts ----------------
+# Plot of overall confidence --------------------------------------------------
+conf_overall <- read.csv(paste0(path, "conf_overall.csv"))
+colnames(conf_overall) <- c("confidence", "expert", "non-expert", "low score", 
+                            "high score")  # Re-name columns for graph
+
+con.over <- melt(conf_overall, id=c("confidence"))  # Reshape dataframe for ggplot
+
+con.over$variable <- factor(con.over$variable, levels = c("expert", "non-expert",
+                                                          "high score", "low score"))
+
+con.over_graph <- ggplot(con.over, aes(fill = variable, y = value, x = confidence)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  ylab(" ") +
+  ylim(0, 52) +  # set y limit to include all data but stop at 50
+  guides(fill=guide_legend(title=" ")) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+ggsave(filename="~/Desktop/oveall_confidence.pdf", con.over_graph,
+       width=200, height=140, units="mm", dpi=300)
+
+
+# Plot of confidence for experts and non-experts for all echograms ------------
 confidence <- read.csv(paste0(path, "confidence.csv"))
 confidence <- confidence[, 1:4]  # Drop weird extra column
-colnames(confidence) <- c("echogram", "confidence", "expert", "non-expert")  # Re-name columns to work for graph 
+colnames(confidence) <- c("echogram", "confidence", "expert", "non-expert")  # Re-name columns for graph 
 
 con <- melt(confidence, id=c("echogram", "confidence"))  # Reshape dataframe for ggplot
 colnames(con) <- c("echogram", "confidence", "expertise", "value")
 
 # Set order of echograms to show correctly in ggplot
 con$echogram <- factor(con$echogram, levels = c("1", "2", "3", "4", "5", "6", 
-                                                "7", "8", "9", "10", "overall"))
+                                                "7", "8", "9", "10"))
 
 con_graph <- ggplot(con, aes(fill = expertise, y = value, x = confidence)) +
   geom_bar(position = "dodge", stat = "identity") +
