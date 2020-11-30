@@ -171,3 +171,57 @@ t.test(exp_none.med, mu = 1)  # p = 0.07524, mean = 2.457693
 exp_none.hard <- c(exp_none.r5, exp_none.r6, exp_none.r7, exp_none.r8)
 t.test(exp_none.hard, mu = 1)  # p = 0.1211, mean = 0.4972452
 
+
+# Odds ratio for non-expert/no expertise correct species ID -------------------
+nonexp_none.r1 <- odds.ratio(nonexp[1], none[1])
+nonexp_none.r2 <- odds.ratio(nonexp[2], none[2])
+nonexp_none.r3 <- odds.ratio(nonexp[3], none[3])
+nonexp_none.r4 <- odds.ratio(nonexp[4], none[4])
+nonexp_none.r5 <- odds.ratio(nonexp[5], none[5])
+nonexp_none.r6 <- odds.ratio(nonexp[6], none[6])
+nonexp_none.r7 <- 0
+nonexp_none.r8 <- odds.ratio(nonexp[8], none[8])
+nonexp_none.r9 <- odds.ratio(nonexp[9], none[9])
+nonexp_none.r10 <- 0
+nonexp_none.r11 <- odds.ratio(nonexp[11], none[11])
+nonexp_none.r12 <- odds.ratio(nonexp[12], none[12])
+nonexp_none.r13 <- odds.ratio(nonexp[13], none[13])
+
+# Overall
+nonexp_none.ratios <- c(nonexp_none.r1, nonexp_none.r2, nonexp_none.r3, 
+                        nonexp_none.r4, nonexp_none.r5, nonexp_none.r6, 
+                        nonexp_none.r7, nonexp_none.r8, nonexp_none.r9, 
+                        nonexp_none.r10, nonexp_none.r11, nonexp_none.r12, 
+                        nonexp_none.r13)
+t.test(nonexp_none.ratios, mu = 1)  # p = 0.531, mean = 1.146281
+
+# blue whiting
+nonexp_none.whb <- c(nonexp_none.r2, nonexp_none.r3, nonexp_none.r7)
+t.test(nonexp_none.whb, mu = 1)  # p = 0.8147, mean = 1.15565
+
+# boarfish 
+nonexp_none.bof <- c(nonexp_none.r4, nonexp_none.r11)
+t.test(nonexp_none.bof, mu = 1)  # p = 0.6459, mean = 1.328571
+
+# Herring 
+nonexp_none.her <- c(nonexp_none.r1, nonexp_none.r5, nonexp_none.r6, 
+                     nonexp_none.r9)
+t.test(nonexp_none.her, mu = 1)  # p = 0.5081, mean = 1.31884
+
+# Mackerel 
+nonexp_none.mac <- c(nonexp_none.r10, nonexp_none.r12)
+t.test(nonexp_none.mac, mu = 1)  # p = 0.9448, mean = 1.095238
+
+# Easy
+nonexp_none.easy <- c(nonexp_none.r1, nonexp_none.r2, nonexp_none.r9)
+t.test(nonexp_none.easy, mu = 1)  # p = 0.195, mean = 1.840758
+
+# Medium
+nonexp_none.med <- c(nonexp_none.r3, nonexp_none.r4, nonexp_none.r11, 
+                     nonexp_none.r12, nonexp_none.r13)
+t.test(nonexp_none.med, mu = 1)  # p = 0.1454, mean = 1.477874
+
+# Hard
+nonexp_none.hard <- c(nonexp_none.r5, nonexp_none.r6, nonexp_none.r7, 
+                      nonexp_none.r8)
+t.test(nonexp_none.hard, mu = 1)  # p = 0.08514, mean = 0.4975036
