@@ -7,7 +7,7 @@ library(ggplot2)
 library(viridis)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/Survey Data/"  # for laptop
-color2 <- c("#443a83", "#8fd744")  # Nicer subset of viridis colors
+color2 <- c("#440154", "#31688e")  # Nicer subset of viridis colors
 
 
 # Plot of demographic data for expert vs. non-expert --------------------------
@@ -106,7 +106,7 @@ con.over_graph <- ggplot(con.over, aes(fill = variable, y = value, x = confidenc
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
-ggsave(filename="~/Desktop/oveall_confidence.pdf", con.over_graph,
+ggsave(filename="~/Desktop/overall_confidence.pdf", con.over_graph,
        width=200, height=140, units="mm", dpi=300)
 
 
