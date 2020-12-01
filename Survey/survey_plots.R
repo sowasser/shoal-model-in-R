@@ -49,7 +49,7 @@ exp$species <- factor(exp$species, levels = c("her", "spr", "bof", "mac",
 
 exp_graph_all <- ggplot(exp, aes(fill = expertise, y = percent, x = species)) +
   geom_bar(position = "dodge", stat = "identity") +
-  facet_wrap(~echogram, scale = "free", ncol=3) +
+  facet_wrap(~echogram, scale = "free", ncol=2) +
   ylab(" ") +
   ylim(0, 100) +  # set y limit to always be 100
   guides(fill=guide_legend(title="expertise level")) +
@@ -61,7 +61,7 @@ ggsave(filename="~/Desktop/expertise_all.pdf", exp_graph_all,
        width=250, height=250, units="mm", dpi=300)
 
 
-# Graph of just exoert & non-expert identification ----------------------------
+# Graph of just expert & non-expert identification ----------------------------
 sub_exp <- melt(expert[, 1:4], id=c("echogram", "species")) 
 colnames(sub_exp) <- c("echogram", "species", "expertise", "percent")
 
@@ -124,7 +124,7 @@ con$echogram <- factor(con$echogram, levels = c("1", "2", "3", "4", "5", "6",
 
 con_graph <- ggplot(con, aes(fill = expertise, y = value, x = confidence)) +
   geom_bar(position = "dodge", stat = "identity") +
-  facet_wrap(~echogram, scale = "free") +
+  facet_wrap(~echogram, scale = "free", ncol=2) +
   ylab(" ") +
   ylim(0, 52) +  # set y limit to include all data but stop at 50
   guides(fill=guide_legend(title=" ")) +
@@ -133,7 +133,7 @@ con_graph <- ggplot(con, aes(fill = expertise, y = value, x = confidence)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 ggsave(filename="~/Desktop/confidence.pdf", con_graph,
-       width=200, height=140, units="mm", dpi=300)
+       width=170, height=250, units="mm", dpi=300)
 
 
 # Plot of methods used for identification -------------------------------------
