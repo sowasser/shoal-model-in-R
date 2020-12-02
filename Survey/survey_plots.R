@@ -53,6 +53,9 @@ demo_treemap <- ggplot(demo2, aes(area = count, fill = level, label = level, sub
   # geom_treemap_text(colour = "white", place = "centre", grow = F) +
   scale_fill_viridis(discrete = TRUE)
 
+ggsave(filename="~/Desktop/demo_tree.pdf", demo_treemap,
+       width=250, height=250, units="mm", dpi=300)
+
 
 # Plot of identifications (hopefully with echograms alongside) ----------------
 expert <- read.csv(paste0(path, "expertise.csv"))
