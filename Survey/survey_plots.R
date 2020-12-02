@@ -6,6 +6,8 @@ library(reshape2)
 library(ggplot2)
 library(viridis)
 library(treemapify)
+library(ggalluvial)
+library(ggrepel)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/Survey Data/"  # for laptop
 color2 <- c("#440154", "#31688e")  # Nicer subset of viridis colors
@@ -55,6 +57,35 @@ demo_treemap <- ggplot(demo2, aes(area = count, fill = level, label = level, sub
 
 ggsave(filename="~/Desktop/demo_tree.pdf", demo_treemap,
        width=250, height=250, units="mm", dpi=300)
+
+
+# Alluvial plot of demographic data -------------------------------------------
+demo3 <- demo2
+
+demo3$level <- factor(demo3$level, 
+                      levels = c("studied marine science",
+                                 "employed in marine science",
+                                 "participated in acoustic survey",
+                                 "trained in analysis of acoustics",
+                                 "experience in North Atlantic",
+                                 "employed in commercial fisheries"))
+
+demo_alluvial <- ggplot(data = demo3,
+                        aes(axis1 = level, axis2 = expertise, y = count)) +
+  theme_classic() + 
+  scale_x_discrete(limits = c("experience", "self-identification"), expand = c(.05, .05)) +
+  ylab("total count") +
+  theme(legend.position = "none") +  # no legend
+  geom_alluvium(aes(fill = level), width = 1/12) +
+  guides(fill = FALSE) +
+  geom_stratum(width = 1/12, fill = "grey", color = "white") +
+  geom_label_repel(stat = "stratum", 
+                   aes(label = after_stat(stratum)), 
+                   label.padding = 0.2) +
+  scale_fill_viridis(discrete = TRUE)
+
+ggsave(filename="~/Desktop/demo_alluvial.pdf", demo_alluvial,
+       width=270, height=170, units="mm", dpi=300)
 
 
 # Plot of identifications (hopefully with echograms alongside) ----------------
