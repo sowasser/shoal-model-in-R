@@ -5,6 +5,7 @@ library(plyr)
 library(reshape2)
 library(ggplot2)
 library(viridis)
+library(treemapify)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/Survey Data/"  # for laptop
 color2 <- c("#440154", "#31688e")  # Nicer subset of viridis colors
@@ -30,6 +31,27 @@ demo_graph <- ggplot(data = demographics, aes(x = expertise, y = count, fill = l
 
 ggsave(filename="~/Desktop/demographics.pdf", demo_graph,
        width=180, height=150, units="mm", dpi=300)
+
+
+# Treemap of demographic data -------------------------------------------------
+demo2 <- read.csv(paste0(path, "demo_summary2.csv"))
+
+demo2$level <- factor(demo2$level, 
+                      levels = c("employed in commercial fisheries",
+                                 "experience in North Atlantic",
+                                 "trained in analysis of acoustics",
+                                 "participated in acoustic survey",
+                                 "employed in marine science",
+                                 "studied marine science",
+                                 "no expertise"))
+
+# Plot with no text - can add text by uncommenting geom_treemap_text lines
+demo_treemap <- ggplot(demo2, aes(area = count, fill = level, label = level, subgroup = expertise)) +
+  geom_treemap() +
+  geom_treemap_subgroup_border(color = "black") +
+  # geom_treemap_subgroup_text(place = "centre", grow = F, alpha = 1, colour = "black") +
+  # geom_treemap_text(colour = "white", place = "centre", grow = F) +
+  scale_fill_viridis(discrete = TRUE)
 
 
 # Plot of identifications (hopefully with echograms alongside) ----------------
