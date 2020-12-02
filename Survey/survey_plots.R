@@ -112,6 +112,22 @@ ggsave(filename="~/Desktop/identification.pdf", exp_graph,
        width=170, height=250, units="mm", dpi=300)
 
 
+# Plot of number of correct answers for experts & non-experts -----------------
+correct_answers <- read.csv(paste0(path, "correct_answers.csv"))
+freq_correct <- count(correct_answers, c("overall", "expertise"))
+
+correct_graph <- ggplot(data = freq_correct, aes(x = overall, y = freq, fill = expertise)) +
+  geom_bar(stat = "identity") +
+  theme_classic() +
+  scale_fill_manual(values = color2) +
+  scale_x_discrete(limits = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")) +
+  ylab(" ") + xlab(" ") +
+  guides(fill=guide_legend(title=" ")) +
+
+ggsave(filename="~/Desktop/correct_answers.pdf", correct_graph,
+       width=180, height=150, units="mm", dpi=300)
+
+
 # Plot of overall confidence --------------------------------------------------
 conf_overall <- read.csv(paste0(path, "conf_overall.csv"))
 colnames(conf_overall) <- c("confidence", "expert", "non-expert", "low score", 
