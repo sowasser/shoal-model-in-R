@@ -13,8 +13,8 @@ library(viridis)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
-x_coord <- read.csv(paste0(path, "heatmap_x.csv"))
-y_coord <- read.csv(paste0(path, "heatmap_y.csv"))
+x_coord <- read.csv(paste0(path, "heatmap_x_100.csv"))
+y_coord <- read.csv(paste0(path, "heatmap_y_100.csv"))
 
 step <- c(1:400)  # Create list of number of steps
 

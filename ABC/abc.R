@@ -20,7 +20,7 @@ library(ggcorrplot)
 library(reshape2)
 
 
-date <- "18Jun2020"  # TODO: change date to correct data off of ICHEC.
+date <- "07Dec2020"  # TODO: change date to correct data off of ICHEC.
 
 general_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
@@ -53,8 +53,8 @@ ichec_path <- paste0("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/
 # TODO: run this if new files from ICHEC need to be collated ------------------
 # Create a list of all of the files in this location, read them as tables,
 # and consolidate them into one. 
-# model <- list.files(ichec_path, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
-# write.csv(model, paste0(general_path, "ICHEC_data_", date, ".csv"))  # create .csv
+model <- list.files(ichec_path, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
+write.csv(model, paste0(general_path, "ICHEC_data_", date, ".csv"))  # create .csv
 
 # TODO: run this if collation already completed -------------------------------
 model_saved <- read.csv(paste0(general_path, "ICHEC_data_", date, ".csv"))
@@ -160,12 +160,12 @@ cv_true <- as.data.frame(shoaling.cv$true)
 cv_estim <- as.data.frame(shoaling.cv$estim)
 colnames(cv_estim) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 
-summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.781
-summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.6666
-summary(lm(cv_true$spacing ~ cv_estim$spacing))  # R2 = 0.2326  
-summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.1582
-summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.2252 
-summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.07035 
+summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.684
+summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.7566
+summary(lm(cv_true$spacing ~ cv_estim$spacing))  # R2 = 0.2231  
+summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.1083
+summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.06352 
+summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.02659
 
 
 # Test coverage property of ABC results --------------------------
