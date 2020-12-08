@@ -10,7 +10,7 @@ library(reshape2)
 custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
 color2 <- c("#79D151", "#29788E")
 
-plot_date <- "03Aug2020"
+plot_date <- "07Dec2020"
 
 # Prior/posterior distributions from abc --------------------------------------
 # Data needs to be transformed to be one vector of values labeled with which

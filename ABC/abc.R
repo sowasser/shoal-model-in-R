@@ -160,19 +160,17 @@ cv_true <- as.data.frame(shoaling.cv$true)
 cv_estim <- as.data.frame(shoaling.cv$estim)
 colnames(cv_estim) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 
-summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.684
-summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.7566
-summary(lm(cv_true$spacing ~ cv_estim$spacing))  # R2 = 0.2231  
-summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.1083
-summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.06352 
-summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.02659
+summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.7776
+summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.587
+summary(lm(cv_true$spacing ~ cv_estim$spacing))  # R2 = 0.2939  
+summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.03297
+summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.06506 
+summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.04561
 
 
 # Test coverage property of ABC results --------------------------
 testsets <- sample(1:nrow(model_stats), 100)  # Subset of model runs to include
-eps <- exp(seq(log(0.1), log(10), length.out = 15))  # These are epsilon values; 
-# "vector of ABC thresholds to be examined" Don't know how what this is for my data.
-# Potentially, I think this will be different for the 2 groups of parameters.
+eps <- exp(seq(log(0.1), log(10), length.out = 15))  # Epsilon values
 
 # Coverage test for parameter estimation
 shoaling.cov <- cov.pi(param = model_params,
