@@ -18,7 +18,7 @@ library(abctools)
 library(ggplot2)
 library(reshape2)
 
-date_nnd <- "02Jul2020_nnd"  # TODO: change date to correct data off of ICHEC.
+date_nnd <- "08Dec2020_nnd"  # TODO: change date to correct data off of ICHEC.
 
 general_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
@@ -40,23 +40,24 @@ colnames(tracking) <- c("step", "cent", "nnd", "area", "polar")
 tracking <- tracking[, c("cent", "nnd", "polar", "area")]  # reorder to match other data
 track_nnd <- tracking[, "nnd"]
 
+
 # Import ICHEC data ----------------------------------------------------------
 # path2 <- "~/Desktop/Local/Mackerel/Mackerel Data/ICHEC/27feb2020"  # desktop
-# setwd(paste0("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/", date_nnd))  # laptop
-# ichec_path <- paste0("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/", date_nnd) # laptop
+setwd(paste0("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/", date_nnd))  # laptop
+ichec_path_nnd <- paste0("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/", date_nnd) # laptop
 
 # Testing if data import will work with one file ------------------------------
 # setwd(path)  # laptop
 # test <- read.table("sep_output0.txt", sep = "")
 
+# TODO: run this if new files from ICHEC need to be collated ------------------
 # Create a list of all of the files in this location, read them as tables,
 # and consolidate them into one. 
-# model_nnd <- list.files(ichec_path, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
+model_nnd <- list.files(ichec_path_nnd, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
+write.csv(model, paste0(general_path, "ICHEC_data_", date_nnd, ".csv"))  # create .csv
 
-# Create .csv file with all the ICHEC data
-# write.csv(model_nnd, paste0(general_path, "ICHEC_data_", date_nnd, ".csv"))
 
-# TODO: run this if collation already completed
+# TODO: run this if collation already completed -------------------------------
 model_saved_nnd <- read.csv(paste0(general_path, "ICHEC_data_", date_nnd, ".csv"))
 model_nnd <- model_saved_nnd[,-1]  # Remove 1st column, generated when data was written to .csv
 
@@ -142,12 +143,12 @@ cv_true_nnd <- as.data.frame(shoaling.cv.nnd$true)
 cv_estim_nnd <- as.data.frame(shoaling.cv.nnd$estim)
 colnames(cv_estim_nnd) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 
-summary(lm(cv_true_nnd$speed ~ cv_estim_nnd$speed))  # R2 = 0.5746
-summary(lm(cv_true_nnd$vision ~ cv_estim_nnd$vision))  # R2 = 0.508
-summary(lm(cv_true_nnd$spacing ~ cv_estim_nnd$spacing))  # R2 = 0.2047 
-summary(lm(cv_true_nnd$cohere ~ cv_estim_nnd$cohere))  # R2 = 0.1009
-summary(lm(cv_true_nnd$separate ~ cv_estim_nnd$separate))  # R2 = 0.1582
-summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.008139
+summary(lm(cv_true_nnd$speed ~ cv_estim_nnd$speed))  # R2 = 0.5576
+summary(lm(cv_true_nnd$vision ~ cv_estim_nnd$vision))  # R2 = 0.373
+summary(lm(cv_true_nnd$spacing ~ cv_estim_nnd$spacing))  # R2 = 0.1507
+summary(lm(cv_true_nnd$cohere ~ cv_estim_nnd$cohere))  # R2 = 0.06297
+summary(lm(cv_true_nnd$separate ~ cv_estim_nnd$separate))  # R2 = 0.05541
+summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.00972
 
 
 # Coverage test for ABC results -----------------------------------------------
@@ -173,6 +174,10 @@ diag_summary_nnd <- diag_summary_nnd[, c("tol", "speed", "vision", "spacing",
 # Run Kolmogorov-Smirnov test to see if coverage distributions vary 
 # significantly from a uniform distribution of the same size & shape. 
 
+# Separate out coverage test results
+raw_nnd <- subset(shoaling.cov.nnd$raw, select = -c(testset, nacc))  # remove columns 
+raw_coverage_nnd <- melt(raw_nnd, id="tol")
+
 # Having an issue because there are "ties" (repeated values) in the 
 # distributions, which shouldn't be present in a continuous distribution - 
 # probably attributable to rounding errors.
@@ -193,7 +198,7 @@ ks_out_nnd <- as.data.frame(cbind(lname, kspv_nnd, ksadj_nnd))
 custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
 color2 <- c("#79D151", "#29788E")
 
-plot_date_nnd <- "03Aug2020_NND"
+plot_date_nnd <- "08Dec2020_NND"
 
 # Data needs to be transformed to be one vector of values labeled with which
 # parameter it is and which distribution it's from.
@@ -252,10 +257,6 @@ colnames(cv_all_nnd) <- c("parameter", "true", "estimated")
 
 
 # Coverage Plots
-# Separate out and save the data from the coverage test
-raw_nnd <- subset(shoaling.cov.nnd$raw, select = -c(testset, nacc))  # remove columns 
-raw_coverage_nnd <- melt(raw_nnd, id="tol")
-
 # Plot coverage test outcomes
 coverage_hist_nnd <- ggplot() +
   theme_bw() +
