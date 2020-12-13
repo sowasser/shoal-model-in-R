@@ -10,7 +10,7 @@ library(reshape2)
 custom_color <- c("#404387", "#22A784", "#790251", "#2A788E", "#45015A", "#fDE725")
 color2 <- c("#79D151", "#29788E")
 
-plot_date <- "07Dec2020"
+plot_date <- "11Dec2020"
 
 # Prior/posterior distributions from abc --------------------------------------
 # Data needs to be transformed to be one vector of values labeled with which
@@ -87,11 +87,6 @@ ggsave(filename= paste0("~/Desktop/cv_plots_", plot_date, ".pdf"),
 
 # Coverage plots --------------------------------------------------------------
 # Checking distribution of values across different proportions of ABC acceptances
-
-# Select raw data
-raw <- subset(shoaling.cov$raw, select = -c(testset, nacc))  # remove extra columns 
-raw_coverage <- melt(raw, id="tol")
-
 coverage_hist <- ggplot() +
   theme_bw() +
   geom_histogram(data = raw_coverage, aes(x = value), bins = 20, color = "#29788E", fill = "#87b7c4") +
