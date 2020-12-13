@@ -160,12 +160,12 @@ cv_true <- as.data.frame(shoaling.cv$true)
 cv_estim <- as.data.frame(shoaling.cv$estim)
 colnames(cv_estim) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 
-summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.7776
-summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.587
-summary(lm(cv_true$spacing ~ cv_estim$spacing))  # R2 = 0.2939  
-summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.03297
-summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.06506 
-summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.04561
+summary(lm(cv_true$speed ~ cv_estim$speed))  # R2 = 0.7119
+summary(lm(cv_true$vision ~ cv_estim$vision))  # R2 = 0.5834
+summary(lm(cv_true$spacing ~ cv_estim$spacing))  # R2 = 0.33424
+summary(lm(cv_true$cohere ~ cv_estim$cohere))  # R2 = 0.0424
+summary(lm(cv_true$separate ~ cv_estim$separate))  # R2 = 0.1785
+summary(lm(cv_true$match ~ cv_estim$match))  # R2 = 0.00071
 
 
 # Test coverage property of ABC results --------------------------

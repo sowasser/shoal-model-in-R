@@ -168,12 +168,12 @@ cv_true_nnd <- as.data.frame(shoaling.cv.nnd$true)
 cv_estim_nnd <- as.data.frame(shoaling.cv.nnd$estim)
 colnames(cv_estim_nnd) <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 
-summary(lm(cv_true_nnd$speed ~ cv_estim_nnd$speed))  # R2 = 0.5576
-summary(lm(cv_true_nnd$vision ~ cv_estim_nnd$vision))  # R2 = 0.373
-summary(lm(cv_true_nnd$spacing ~ cv_estim_nnd$spacing))  # R2 = 0.1507
-summary(lm(cv_true_nnd$cohere ~ cv_estim_nnd$cohere))  # R2 = 0.06297
-summary(lm(cv_true_nnd$separate ~ cv_estim_nnd$separate))  # R2 = 0.05541
-summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.00972
+summary(lm(cv_true_nnd$speed ~ cv_estim_nnd$speed))  # R2 = 0.567
+summary(lm(cv_true_nnd$vision ~ cv_estim_nnd$vision))  # R2 = 0.4124
+summary(lm(cv_true_nnd$spacing ~ cv_estim_nnd$spacing))  # R2 = 0.3877
+summary(lm(cv_true_nnd$cohere ~ cv_estim_nnd$cohere))  # R2 = 0.06221
+summary(lm(cv_true_nnd$separate ~ cv_estim_nnd$separate))  # R2 = 0.0292
+summary(lm(cv_true_nnd$match ~ cv_estim_nnd$match))  # R2 = -0.005529
 
 
 # Coverage test for ABC results -----------------------------------------------
