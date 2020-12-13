@@ -142,7 +142,7 @@ lpv <- c(l_sd[1,3], l_vs[1,3], l_sp[1,3], l_co[1,3], l_sep[1,3], l_mt[1,3])
 ladj <- p.adjust(p = lpv, method = "holm")  # run adjustment
 
 # Combine with other values
-lname <- c("speed", "vision", "spacing", "cohere", "match", "separate")
+lname <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 levene_out <- as.data.frame(cbind(lname, lpv, ladj))
 
 
