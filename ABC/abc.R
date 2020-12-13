@@ -20,7 +20,7 @@ library(ggcorrplot)
 library(reshape2)
 
 
-date <- "07Dec2020"  # TODO: change date to correct data off of ICHEC.
+date <- "11Dec2020"  # TODO: change date to correct data off of ICHEC.
 
 general_path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 # path <- "~/Desktop/Local/Mackerel/Mackerel Data/"  # for desktop
@@ -206,4 +206,3 @@ kspv <- c(ks_sd[2], ks_vs[2], ks_sp[2], ks_co[2], ks_sep[2], ks_mt[2])
 ksadj <- p.adjust(p = kspv, method = "holm")
 
 ks_out <- as.data.frame(cbind(lname, kspv, ksadj))
-
