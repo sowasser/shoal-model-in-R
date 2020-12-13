@@ -54,7 +54,7 @@ ichec_path_nnd <- paste0("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/IC
 # Create a list of all of the files in this location, read them as tables,
 # and consolidate them into one. 
 model_nnd <- list.files(ichec_path_nnd, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
-write.csv(model, paste0(general_path, "ICHEC_data_", date_nnd, ".csv"))  # create .csv
+write.csv(model_nnd, paste0(general_path, "ICHEC_data_", date_nnd, ".csv"))  # create .csv
 
 
 # TODO: run this if collation already completed -------------------------------
@@ -127,8 +127,33 @@ lpv_nnd <- c(l_sd_nnd[1,3], l_vs_nnd[1,3], l_sp_nnd[1,3], l_co_nnd[1,3], l_sep_n
 ladj_nnd <- p.adjust(p = lpv_nnd, method = "holm")  # run adjustment
 
 # Combine with other values
-lname <- c("speed", "vision", "spacing", "cohere", "match", "separate")
+lname <- c("speed", "vision", "spacing", "cohere", "separate", "match")
 levene_out_nnd <- as.data.frame(cbind(lname, lpv_nnd, ladj_nnd))
+
+
+# Mann-Whitney U tests to compare general ABC and NND-only ABC ----------------
+# Must run general ABC script first
+post_all_nnd <- as.data.frame(shoaling.nnd$unadj.values)
+
+wilcox_sd <- wilcox.test(y = as.numeric(as.character(post_all$speed)), 
+                         as.numeric(as.character(post_all_nnd$speed)))
+wilcox_vs <- wilcox.test(y = as.numeric(as.character(post_all$vision)), 
+                         as.numeric(as.character(post_all_nnd$vision)))
+wilcox_sp <- wilcox.test(y = as.numeric(as.character(post_all$spacing)), 
+                         as.numeric(as.character(post_all_nnd$spacing)))
+wilcox_co <- wilcox.test(y = as.numeric(as.character(post_all$cohere)), 
+                         as.numeric(as.character(post_all_nnd$cohere)))
+wilcox_sep <- wilcox.test(y = as.numeric(as.character(post_all$separate)), 
+                          as.numeric(as.character(post_all_nnd$separate)))
+wilcox_mt <- wilcox.test(y = as.numeric(as.character(post_all$match)), 
+                         as.numeric(as.character(post_all_nnd$match)))
+
+wilcox_sd  # p > 0.0001
+wilcox_vs  # p > 0.0001
+wilcox_sp  # p = 0.00039
+wilcox_co  # p = 0.1547
+wilcox_sep  # p = 0.0008
+wilcox_mt  # p = 0.2463
 
 
 # Run cross-validation of ABC results -----------------------------------------
@@ -208,7 +233,6 @@ priors_nnd <- melt(model_params_nnd)
 priors_nnd <- cbind(priors_nnd, rep("prior", length(priors_nnd$value)))
 colnames(priors_nnd) <- c("parameter", "value", "distribution")
 
-post_all_nnd <- as.data.frame(shoaling.nnd$unadj.values)
 posts_nnd <- melt(post_all_nnd)
 posts_nnd <- cbind(posts_nnd, rep("posterior", length(posts_nnd$value)))
 colnames(posts_nnd) <- c("parameter", "value", "distribution")
@@ -269,26 +293,3 @@ coverage_hist_nnd <- ggplot() +
 
 ggsave(filename= paste0("~/Desktop/coverage_hist_nnd_", plot_date, ".pdf"), 
        plot=coverage_hist_nnd, width=180, height=130, units="mm", dpi=300)
-
-
-# Mann-Whitney U tests to compare general ABC and NND-only ABC ----------------
-# Must run general ABC script first
-wilcox_sd <- wilcox.test(y = as.numeric(as.character(post_all$speed)), 
-                         as.numeric(as.character(post_all_nnd$speed)))
-wilcox_vs <- wilcox.test(y = as.numeric(as.character(post_all$vision)), 
-                         as.numeric(as.character(post_all_nnd$vision)))
-wilcox_sp <- wilcox.test(y = as.numeric(as.character(post_all$spacing)), 
-                         as.numeric(as.character(post_all_nnd$spacing)))
-wilcox_co <- wilcox.test(y = as.numeric(as.character(post_all$cohere)), 
-                         as.numeric(as.character(post_all_nnd$cohere)))
-wilcox_sep <- wilcox.test(y = as.numeric(as.character(post_all$separate)), 
-                          as.numeric(as.character(post_all_nnd$separate)))
-wilcox_mt <- wilcox.test(y = as.numeric(as.character(post_all$match)), 
-                         as.numeric(as.character(post_all_nnd$match)))
-
-wilcox_sd
-wilcox_vs
-wilcox_sp
-wilcox_co
-wilcox_sep
-wilcox_mt
