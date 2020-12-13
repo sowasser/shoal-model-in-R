@@ -192,6 +192,10 @@ diag_summary <- diag_summary[, c("tol", "speed", "vision", "spacing",
 # Run Kolmogorov-Smirnov test to see if coverage distributions vary 
 # significantly from a uniform distribution of the same size & shape. 
 
+# Select raw data
+raw <- subset(shoaling.cov$raw, select = -c(testset, nacc))  # remove extra columns 
+raw_coverage <- melt(raw, id="tol")
+
 # Having an issue because there are "ties" (repeated values) in the 
 # distributions, which shouldn't be present in a continuous distribution - 
 # probably attributable to rounding errors.
