@@ -120,7 +120,7 @@ time_graphs <- ggplot() +
   facet_wrap(~statistic, scale="free")
 
 ggsave(filename="~/Desktop/timeseries_graphs_test.pdf", plot=time_graphs, 
-       width=180, height=140, units="mm", dpi=300)
+       width=200, height=140, units="mm", dpi=300)
 
 
 # Overlap ---------------------------------------------------------------------
