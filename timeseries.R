@@ -10,69 +10,114 @@ color2_2 <- c("#440154", "#29788E")
 color3 <- c("#440154", "#29788E", "#79D151")
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
-tracking_scaled <- read.csv(paste0(path, "stepwise_data_scaled.csv"))
-
-runs_path <- fs::dir_ls("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/general runs")  # for laptop
-
-general_files <- list()
-
-for (i in seq_along(runs_path)) {
-  general_files[[i]] <- read.csv(
-    file = runs_path[[i]]
-  )
-}
-
-file_contents <- set_names(general_files, runs_path)
-
-model_run_all <- read.csv(paste0(path, "single_run.csv"))
-
-model_run_all_nnd <- read.csv(paste0(path, "single_run_nnd.csv"))
-
-
-# Timeseries ------------------------------------------------------------------
-model_run <- model_run_all[200:298,]  # only keep 99 steps so same length as tracking_scaled
-model_run_nnd <- model_run_all_nnd[100:198,]
 
 steps <- c(1:99)  
 
-# Reformat and stack to make graphs
-tp <- cbind(steps, tracking_scaled$polar, rep("polarization", length(tracking_scaled$polar)))
-tn <- cbind(steps, tracking_scaled$nnd, rep("nearest neighbour distance", length(tracking_scaled$nnd)))
-tc <- cbind(steps, tracking_scaled$cent, rep("distance from centroid", length(tracking_scaled$cent)))
-ta <- cbind(steps, tracking_scaled$area, rep("shoal area", length(tracking_scaled$area)))
 
-track_all <- cbind(rbind(tp, tn, tc, ta), rep("tracked", length(396)))
+# Read in modelled (general) data ---------------------------------------------
+general_runs <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/general runs/"  
 
-mp <- cbind(steps, model_run$polar, rep("polarization", length(model_run$polar)))  
-mn <- cbind(steps, model_run$nnd, rep("nearest neighbour distance", length(model_run$nnd)))
-mc <- cbind(steps, model_run$cent, rep("distance from centroid", length(model_run$cent)))
-ma <- cbind(steps, model_run$area, rep("shoal area", length(model_run$area)))
+g0 <- cbind(steps, read.csv(paste0(general_runs, "single_run_0.csv"))[200:298, -1], rep("modelled (general)", length(99)), rep("1", length(99)))
+g1 <- cbind(steps, read.csv(paste0(general_runs, "single_run_1.csv"))[200:298, -1], rep("modelled (general)", length(99)), rep("2", length(99)))
+g2 <- cbind(steps, read.csv(paste0(general_runs, "single_run_2.csv"))[200:298, -1], rep("modelled (general)", length(99)), rep("3", length(99)))
+g3 <- cbind(steps, read.csv(paste0(general_runs, "single_run_3.csv"))[200:298, -1], rep("modelled (general)", length(99)), rep("4", length(99)))
+g4 <- cbind(steps, read.csv(paste0(general_runs, "single_run_4.csv"))[200:298, -1], rep("modelled (general)", length(99)), rep("5", length(99)))
+g5 <- cbind(steps, read.csv(paste0(general_runs, "single_run_5.csv"))[200:298, -1], rep("modelled (general)", length(99)), rep("6", length(99)))
+g6 <- cbind(steps, read.csv(paste0(general_runs, "single_run_6.csv"))[200:298, -1], rep("modelled (general)", length(99)), rep("7", length(99)))
+g7 <- cbind(steps, read.csv(paste0(general_runs, "single_run_7.csv"))[200:298, -1], rep("modelled (general)", length(99)), rep("8", length(99)))
+g8 <- cbind(steps, read.csv(paste0(general_runs, "single_run_8.csv"))[200:298, -1], rep("modelled (general)", length(99)), rep("9", length(99)))
+g9 <- cbind(steps, read.csv(paste0(general_runs, "single_run_9.csv"))[200:298, -1], rep("modelled (general)", length(99)), rep("10", length(99)))
 
-model_all <- cbind(rbind(mp, mn, mc, ma), rep("modelled (general)", length(396)))
+colnames(g0) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(g1) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(g2) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(g3) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(g4) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(g5) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(g6) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(g7) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(g8) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(g9) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
 
-# Just for NND, data from the parameters derived from the NND-only ABC
-nndn <- cbind(steps, 
-              model_run_nnd$nnd, 
-              rep("nearest neighbour distance", length(model_run_nnd$nnd)), 
-              rep("modelled (nnd-only)", length(396)))
+g0_all <- melt(g0, id.vars = c("step", "source", "run"))
+g1_all <- melt(g1, id.vars = c("step", "source", "run"))
+g2_all <- melt(g2, id.vars = c("step", "source", "run"))
+g3_all <- melt(g3, id.vars = c("step", "source", "run"))
+g4_all <- melt(g4, id.vars = c("step", "source", "run"))
+g5_all <- melt(g5, id.vars = c("step", "source", "run"))
+g6_all <- melt(g6, id.vars = c("step", "source", "run"))
+g7_all <- melt(g7, id.vars = c("step", "source", "run"))
+g8_all <- melt(g8, id.vars = c("step", "source", "run"))
+g9_all <- melt(g9, id.vars = c("step", "source", "run"))
 
 
-timeseries_all <- as.data.frame(rbind(track_all, model_all, nndn))
-colnames(timeseries_all) <- c("step", "value", "statistic", "source")
-timeseries_all$value <- as.numeric(as.character(timeseries_all$value))
-timeseries_all$step <- as.numeric(as.character(timeseries_all$step))
+# Read in modelled (NND-only) data --------------------------------------------
+NND_runs <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/general runs/"  
+
+n0 <- cbind(steps, read.csv(paste0(NND_runs, "single_run_0.csv"))[200:298, -1], rep("modelled (NND-only)", length(99)), rep("1", length(99)))
+n1 <- cbind(steps, read.csv(paste0(NND_runs, "single_run_1.csv"))[200:298, -1], rep("modelled (NND-only)", length(99)), rep("2", length(99)))
+n2 <- cbind(steps, read.csv(paste0(NND_runs, "single_run_2.csv"))[200:298, -1], rep("modelled (NND-only)", length(99)), rep("3", length(99)))
+n3 <- cbind(steps, read.csv(paste0(NND_runs, "single_run_3.csv"))[200:298, -1], rep("modelled (NND-only)", length(99)), rep("4", length(99)))
+n4 <- cbind(steps, read.csv(paste0(NND_runs, "single_run_4.csv"))[200:298, -1], rep("modelled (NND-only)", length(99)), rep("5", length(99)))
+n5 <- cbind(steps, read.csv(paste0(NND_runs, "single_run_5.csv"))[200:298, -1], rep("modelled (NND-only)", length(99)), rep("6", length(99)))
+n6 <- cbind(steps, read.csv(paste0(NND_runs, "single_run_6.csv"))[200:298, -1], rep("modelled (NND-only)", length(99)), rep("7", length(99)))
+n7 <- cbind(steps, read.csv(paste0(NND_runs, "single_run_7.csv"))[200:298, -1], rep("modelled (NND-only)", length(99)), rep("8", length(99)))
+n8 <- cbind(steps, read.csv(paste0(NND_runs, "single_run_8.csv"))[200:298, -1], rep("modelled (NND-only)", length(99)), rep("9", length(99)))
+n9 <- cbind(steps, read.csv(paste0(NND_runs, "single_run_9.csv"))[200:298, -1], rep("modelled (NND-only)", length(99)), rep("10", length(99)))
+
+colnames(n0) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(n1) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(n2) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(n3) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(n4) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(n5) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(n6) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(n7) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(n8) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+colnames(n9) <- c("step", "distance from centroid", "nearest neighbour distance", "polarization", "shoal area", "source", "run")
+
+n0_all <- melt(n0, id.vars = c("step", "source", "run"))
+n1_all <- melt(n1, id.vars = c("step", "source", "run"))
+n2_all <- melt(n2, id.vars = c("step", "source", "run"))
+n3_all <- melt(n3, id.vars = c("step", "source", "run"))
+n4_all <- melt(n4, id.vars = c("step", "source", "run"))
+n5_all <- melt(n5, id.vars = c("step", "source", "run"))
+n6_all <- melt(n6, id.vars = c("step", "source", "run"))
+n7_all <- melt(n7, id.vars = c("step", "source", "run"))
+n8_all <- melt(n8, id.vars = c("step", "source", "run"))
+n9_all <- melt(n9, id.vars = c("step", "source", "run"))
+
+
+# Tracked data, combine all, and graph ----------------------------------------
+tracking_scaled <- read.csv(paste0(path, "stepwise_data_scaled.csv"))
+track <- cbind(steps, tracking_scaled[, -1], rep("tracked", length(99)))
+colnames(track) <- c("step", 
+                     "distance from centroid", 
+                     "nearest neighbour distance", 
+                     "polarization", 
+                     "shoal area", 
+                     "source")
+
+track_all <- melt(track, id.vars = c("step", "source"))
+
+general_all <- as.data.frame(rbind(g0_all, g1_all, g2_all, g3_all, g4_all, 
+                                   g5_all, g6_all, g7_all, g8_all, g9_all))
+
+nnd_all <- as.data.frame(rbind(n0_all, n1_all, n2_all, n3_all, n4_all, n5_all, 
+                               n6_all, n7_all, n8_all, n9_all))
+
 
 # Graphs of timeseries
 time_graphs <- ggplot() + 
   theme_bw() + 
-  scale_color_manual(values = color3) +
-  geom_line(data=timeseries_all, aes(x=step, y=value, color = source), size = 1) +  # line
+  geom_line(data=general_all, aes(x=step, y=value, color = run), size = 0.5) +  # line
+  geom_line(data=track_all, aes(x=step, y=value, color=source), size = 3) +
   xlab("step") +
   ylab("statistic") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-  facet_wrap(~statistic, scale="free")
+  facet_wrap(~variable, scale="free")
 
-ggsave(filename="~/Desktop/timeseries_graphs.pdf", plot=time_graphs, 
+ggsave(filename="~/Desktop/timeseries_graphs_test.pdf", plot=time_graphs, 
        width=180, height=140, units="mm", dpi=300)
 
 
