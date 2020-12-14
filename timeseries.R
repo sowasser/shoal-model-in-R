@@ -1,6 +1,7 @@
 # Script for timeseries analysis of ideal model (with parameter inputs gleaned
 # from ABC) and real fish.
 
+library(fs)
 library(ggplot2)
 library(ggcorrplot)
 library(dplyr)
@@ -9,8 +10,19 @@ color2_2 <- c("#440154", "#29788E")
 color3 <- c("#440154", "#29788E", "#79D151")
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
-
 tracking_scaled <- read.csv(paste0(path, "stepwise_data_scaled.csv"))
+
+runs_path <- fs::dir_ls("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/general runs")  # for laptop
+
+general_files <- list()
+
+for (i in seq_along(runs_path)) {
+  general_files[[i]] <- read.csv(
+    file = runs_path[[i]]
+  )
+}
+
+file_contents <- set_names(general_files, runs_path)
 
 model_run_all <- read.csv(paste0(path, "single_run.csv"))
 
@@ -18,7 +30,7 @@ model_run_all_nnd <- read.csv(paste0(path, "single_run_nnd.csv"))
 
 
 # Timeseries ------------------------------------------------------------------
-model_run <- model_run_all[100:198,]  # only keep 99 steps so same length as tracking_scaled
+model_run <- model_run_all[200:298,]  # only keep 99 steps so same length as tracking_scaled
 model_run_nnd <- model_run_all_nnd[100:198,]
 
 steps <- c(1:99)  
