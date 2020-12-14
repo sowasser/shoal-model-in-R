@@ -1,7 +1,7 @@
 # Script for timeseries analysis of ideal model (with parameter inputs gleaned
 # from ABC) and real fish.
 
-library(fs)
+library(reshape2)
 library(ggplot2)
 library(ggcorrplot)
 library(dplyr)
@@ -94,22 +94,20 @@ track <- cbind(steps, tracking_scaled[, -1], rep("tracked", length(99)))
 colnames(track) <- c("step", 
                      "distance from centroid", 
                      "nearest neighbour distance", 
-                     "polarization", 
                      "shoal area", 
+                     "polarization", 
                      "source")
 
 track_all <- melt(track, id.vars = c("step", "source"))
+colnames(track_all) <- c("step", "source", "statistic", "value")
 
 
 # Graphs of timeseries --------------------------------------------------------
 time_graphs <- ggplot() + 
   theme_bw() + 
-  geom_ribbon(data=general_all, aes(x=step, ymin=min, ymax=max, fill=source), alpha = 0.5) +
-  geom_line(data=general_all, aes(x=step, y=mean, color=source), size = 0.5) +  # line
-  
-  geom_ribbon(data=nnd_only, aes(x=step, ymin=min, ymax=max, fill=source), alpha = 0.5) +
-  geom_line(data=nnd_only, aes(x=step, y=mean, color=source), size = 0.5) +  # line
-  # geom_line(data=track_all, aes(x=step, y=value, color=source), size = 1) +
+  geom_ribbon(data=general_all, aes(x=step, ymin=min, ymax=max, fill=source), fill=color3[1], alpha=0.5) +
+  geom_ribbon(data=nnd_only, aes(x=step, ymin=min, ymax=max, fill=source), fill=color3[2], alpha=0.5) +
+  geom_line(data=track_all, aes(x=step, y=value), size = 2, color=color3[3]) +
   xlab("step") +
   ylab("statistic") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
