@@ -7,7 +7,7 @@ library(ggcorrplot)
 library(dplyr)
 
 color2_2 <- c("#440154", "#29788E")
-color3 <- c("#440154", "#29788E", "#79D151")
+color3 <- c("#440154", "#29788E", "#79d151")
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
@@ -105,9 +105,12 @@ colnames(track_all) <- c("step", "source", "statistic", "value")
 # Graphs of timeseries --------------------------------------------------------
 time_graphs <- ggplot() + 
   theme_bw() + 
-  geom_ribbon(data=general_all, aes(x=step, ymin=min, ymax=max, fill=source), fill=color3[1], alpha=0.5) +
-  geom_ribbon(data=nnd_only, aes(x=step, ymin=min, ymax=max, fill=source), fill=color3[2], alpha=0.5) +
-  geom_line(data=track_all, aes(x=step, y=value), size = 2, color=color3[3]) +
+  scale_color_manual(values=color3) +
+  geom_ribbon(data=general_all, aes(x=step, ymin=min, ymax=max), fill="#440154", alpha=0.5) +
+  geom_line(data=general_all, aes(x=step, y=mean, color=source)) +
+  geom_ribbon(data=nnd_only, aes(x=step, ymin=min, ymax=max), fill="#29788e", alpha=0.5) +
+  geom_line(data=nnd_only, aes(x=step, y=mean, color=source)) +
+  geom_line(data=track_all, aes(x=step, y=value, color=source), size = 2) +
   xlab("step") +
   ylab("statistic") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
