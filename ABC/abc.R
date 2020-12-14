@@ -53,8 +53,8 @@ ichec_path <- paste0("~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/ICHEC/
 # TODO: run this if new files from ICHEC need to be collated ------------------
 # Create a list of all of the files in this location, read them as tables,
 # and consolidate them into one. 
-model <- list.files(ichec_path, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
-write.csv(model, paste0(general_path, "ICHEC_data_", date, ".csv"))  # create .csv
+# model <- list.files(ichec_path, pattern="*.txt") %>% map_df(~read.table(., sep = ""))
+# write.csv(model, paste0(general_path, "ICHEC_data_", date, ".csv"))  # create .csv
 
 # TODO: run this if collation already completed -------------------------------
 model_saved <- read.csv(paste0(general_path, "ICHEC_data_", date, ".csv"))
