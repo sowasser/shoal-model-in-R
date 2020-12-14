@@ -105,11 +105,14 @@ colnames(track_all) <- c("step", "source", "statistic", "value")
 # Graphs of timeseries --------------------------------------------------------
 time_graphs <- ggplot() + 
   theme_bw() + 
-  scale_color_manual(values=color3) +
+  scale_color_manual(values=color3) +  # Custom color palette defined above
+  # Add general-ABC derived data
   geom_ribbon(data=general_all, aes(x=step, ymin=min, ymax=max), fill="#440154", alpha=0.5) +
   geom_line(data=general_all, aes(x=step, y=mean, color=source)) +
+  # Add NND-only derived data
   geom_ribbon(data=nnd_only, aes(x=step, ymin=min, ymax=max), fill="#29788e", alpha=0.5) +
   geom_line(data=nnd_only, aes(x=step, y=mean, color=source)) +
+  # Add tracking data
   geom_line(data=track_all, aes(x=step, y=value, color=source), size = 2) +
   xlab("step") +
   ylab("statistic") +
