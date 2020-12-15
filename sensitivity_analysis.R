@@ -55,68 +55,37 @@ colnames(SA_move) <- c("input", "parameter", "output", "statistic")
 SA_move$input <- as.numeric(as.character(SA_move$input))
 SA_move$output <- as.numeric(as.character(SA_move$output))
 
-# Linear regression for sensitivity analysis ----------------------------------
-summary(lm(speed ~ Polarization, data = var_speed))
-summary(lm(speed ~ Nearest.Neighbour.Distance, data = var_speed))
-summary(lm(speed ~ Mean.Distance.from.Centroid, data = var_speed))
-summary(lm(speed ~ Shoal.Area, data = var_speed))
-
-summary(lm(vision ~ Polarization, data = var_vision))
-summary(lm(vision ~ Nearest.Neighbour.Distance, data = var_vision))
-summary(lm(vision ~ Mean.Distance.from.Centroid, data = var_vision))
-summary(lm(vision ~ Shoal.Area, data = var_vision))
-
-summary(lm(separation ~ Polarization, data = var_sep))
-summary(lm(separation ~ Nearest.Neighbour.Distance, data = var_sep))
-summary(lm(separation ~ Mean.Distance.from.Centroid, data = var_sep))
-summary(lm(separation ~ Shoal.Area, data = var_sep))
-
-summary(lm(cohere ~ Polarization, data = var_cohere))
-summary(lm(cohere ~ Nearest.Neighbour.Distance, data = var_cohere))
-summary(lm(cohere ~ Mean.Distance.from.Centroid, data = var_cohere))
-summary(lm(cohere ~ Shoal.Area, data = var_cohere))
-
-summary(lm(separate ~ Polarization, data = var_separate))
-summary(lm(separate ~ Nearest.Neighbour.Distance, data = var_separate))
-summary(lm(separate ~ Mean.Distance.from.Centroid, data = var_separate))
-summary(lm(separate ~ Shoal.Area, data = var_separate))
-
-summary(lm(match ~ Polarization, data = var_match))
-summary(lm(match ~ Nearest.Neighbour.Distance, data = var_match))
-summary(lm(match ~ Mean.Distance.from.Centroid, data = var_match))
-summary(lm(match ~ Shoal.Area, data = var_match))
-
 
 # GAM for sensitivity analysis ------------------------------------------------
-summary(gam(Polarization ~ s(speed, bs = "tp"), data = var_speed))  # R2 = 0.336
-summary(gam(Nearest.Neighbour.Distance ~ s(speed, bs = "tp"), data = var_speed))  # 0.0855 
-summary(gam(Mean.Distance.from.Centroid ~ s(speed, bs = "tp"), data = var_speed))  # 0.402 
-summary(gam(Shoal.Area ~ s(speed, bs = "tp"), data = var_speed))  # 0.1
+summary(gam(Polarization ~ s(speed, bs = "tp"), data = var_speed))  # R2 = 0.279
+summary(gam(Nearest.Neighbour.Distance ~ s(speed, bs = "tp"), data = var_speed))  # 0.168
+summary(gam(Mean.Distance.from.Centroid ~ s(speed, bs = "tp"), data = var_speed))  # 0.248
+summary(gam(Shoal.Area ~ s(speed, bs = "tp"), data = var_speed))  # 0.267
 
-summary(gam(Polarization ~ s(vision, bs = "tp"), data = var_vision))  # R2 = 0.189
-summary(gam(Nearest.Neighbour.Distance ~ s(vision, bs = "tp"), data = var_vision))  # 0.97
-summary(gam(Mean.Distance.from.Centroid ~ s(vision, bs = "tp"), data = var_vision))  # 0.713
-summary(gam(Shoal.Area ~ s(vision, bs = "tp"), data = var_vision))  # 0.904
+summary(gam(Polarization ~ s(vision, bs = "tp"), data = var_vision))  # R2 = 0.0842
+summary(gam(Nearest.Neighbour.Distance ~ s(vision, bs = "tp"), data = var_vision))  # 0.898
+summary(gam(Mean.Distance.from.Centroid ~ s(vision, bs = "tp"), data = var_vision))  # 0.383
+summary(gam(Shoal.Area ~ s(vision, bs = "tp"), data = var_vision))  # 0.796
 
-summary(gam(Polarization ~ s(separation, bs = "tp"), data = var_sep))  # R2 = 0.543
-summary(gam(Nearest.Neighbour.Distance ~ s(separation, bs = "tp"), data = var_sep))  # 0.97
-summary(gam(Mean.Distance.from.Centroid ~ s(separation, bs = "tp"), data = var_sep))  # 0.72
-summary(gam(Shoal.Area ~ s(separation, bs = "tp"), data = var_sep))  # 0.922
+summary(gam(Polarization ~ s(separation, bs = "tp"), data = var_sep))  # R2 = 0.27
+summary(gam(Nearest.Neighbour.Distance ~ s(separation, bs = "tp"), data = var_sep))  # 0.94
+summary(gam(Mean.Distance.from.Centroid ~ s(separation, bs = "tp"), data = var_sep))  # 0.461
+summary(gam(Shoal.Area ~ s(separation, bs = "tp"), data = var_sep))  # 0.82
 
-summary(gam(Polarization ~ s(cohere, bs = "tp"), data = var_cohere))  # R2 = 0.0706
-summary(gam(Nearest.Neighbour.Distance ~ s(cohere, bs = "tp"), data = var_cohere))  # 0.902
-summary(gam(Mean.Distance.from.Centroid ~ s(cohere, bs = "tp"), data = var_cohere))  # 0.3
-summary(gam(Shoal.Area ~ s(cohere, bs = "tp"), data = var_cohere))  # 0.798
+summary(gam(Polarization ~ s(cohere, bs = "tp"), data = var_cohere))  # R2 = 0.0105
+summary(gam(Nearest.Neighbour.Distance ~ s(cohere, bs = "tp"), data = var_cohere))  # 0.832
+summary(gam(Mean.Distance.from.Centroid ~ s(cohere, bs = "tp"), data = var_cohere))  # 0.198
+summary(gam(Shoal.Area ~ s(cohere, bs = "tp"), data = var_cohere))  # 0.659
 
-summary(gam(Polarization ~ s(separate, bs = "tp"), data = var_separate))  # R2 = 0.364
-summary(gam(Nearest.Neighbour.Distance ~ s(separate, bs = "tp"), data = var_separate))  # 0.965
-summary(gam(Mean.Distance.from.Centroid ~ s(separate, bs = "tp"), data = var_separate))  # 0.611
-summary(gam(Shoal.Area ~ s(separate, bs = "tp"), data = var_separate))  # 0.897
+summary(gam(Polarization ~ s(separate, bs = "tp"), data = var_separate))  # R2 = 0.234
+summary(gam(Nearest.Neighbour.Distance ~ s(separate, bs = "tp"), data = var_separate))  # 0.938
+summary(gam(Mean.Distance.from.Centroid ~ s(separate, bs = "tp"), data = var_separate))  # 0.467
+summary(gam(Shoal.Area ~ s(separate, bs = "tp"), data = var_separate))  # 0.822
 
-summary(gam(Polarization ~ s(match, bs = "tp"), data = var_match))  # R2 = 0.54
-summary(gam(Nearest.Neighbour.Distance ~ s(match, bs = "tp"), data = var_match))  # 0.777
-summary(gam(Mean.Distance.from.Centroid ~ s(match, bs = "tp"), data = var_match))  # 0.611
-summary(gam(Shoal.Area ~ s(match, bs = "tp"), data = var_match))  # 0.61
+summary(gam(Polarization ~ s(match, bs = "tp"), data = var_match))  # R2 = 0.504
+summary(gam(Nearest.Neighbour.Distance ~ s(match, bs = "tp"), data = var_match))  # 0.631
+summary(gam(Mean.Distance.from.Centroid ~ s(match, bs = "tp"), data = var_match))  # 0.482
+summary(gam(Shoal.Area ~ s(match, bs = "tp"), data = var_match))  # 0.441
 
 # Graphs of varying parameter vs. summary statistics --------------------------
 SA_boid_plots <- ggplot(SA_boid, aes(x = input, y = output, color = parameter)) + #select data, include color-coding
