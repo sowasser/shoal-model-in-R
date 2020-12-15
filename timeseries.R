@@ -119,15 +119,22 @@ time_graphs <- ggplot() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~statistic, scale="free")
 
-ggsave(filename="~/Desktop/timeseries_graphs_test.pdf", plot=time_graphs, 
+ggsave(filename="~/Desktop/timeseries_graphs.pdf", plot=time_graphs, 
        width=200, height=140, units="mm", dpi=300)
 
 
 # Export data used for further analysis in Python -----------------------------
-write.csv(g_nnd, paste0(path, "ts_general_NND.csv"))
-write.csv(g_cent, paste0(path, "ts_general_cent.csv"))
-write.csv(g_polar, paste0(path, "ts_general_polar.csv"))
-write.csv(g_area, paste0(path, "ts_general_area.csv"))
+colnames(mean_nnd) <- c("steps", "mean", "min", "max", "stat")
+write.csv(mean_nnd, paste0(path, "ts_general_NND.csv"))
+
+colnames(mean_cent) <- c("steps", "mean", "min", "max", "stat")
+write.csv(mean_cent, paste0(path, "ts_general_cent.csv"))
+
+colnames(mean_polar) <- c("steps", "mean", "min", "max", "stat")
+write.csv(mean_polar, paste0(path, "ts_general_polar.csv"))
+
+colnames(mean_area) <- c("steps", "mean", "min", "max", "stat")
+write.csv(mean_area, paste0(path, "ts_general_area.csv"))
 
 write.csv(nnd_only, paste0(path, "ts_nnd_NND.csv"))
 
