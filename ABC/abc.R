@@ -88,8 +88,12 @@ model_stats <- model[, 1:16]
 # Correlations ----------------------------------------------------------------
 model_stats_means <- model_stats %>% select(polar_mean, nnd_mean, cent_mean, area_mean)
 model_stats_cor <- cor(model_stats_means, method = "spearman")
+
+colnames(model_stats_cor) <- c("mean polar", "mean NND", "mean DC", "mean area")
+row.names(model_stats_cor) <- c("mean polar", "mean NND", "mean DC", "mean area")
+
 correlations <- ggcorrplot(model_stats_cor, 
-                           type = "lower", lab = TRUE, 
+                           lab = TRUE, 
                            colors = c("#79D151", "white", "#29788E"),
                            legend.title = "Correlation")
 ggsave(filename="~/Desktop/ABC_correlations.pdf", correlations, 
