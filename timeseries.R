@@ -123,42 +123,13 @@ ggsave(filename="~/Desktop/timeseries_graphs_test.pdf", plot=time_graphs,
        width=200, height=140, units="mm", dpi=300)
 
 
-# Overlap ---------------------------------------------------------------------
-# Calculate number of simulated values within range of observed values
-overlap_cent <- subset(model_run$cent, 
-                       model_run$cent > min(tracking_scaled$cent) & model_run$cent < max(tracking_scaled$cent))
-overlap_nnd <- subset(model_run$nnd, 
-                      model_run$nnd > min(tracking_scaled$nnd) & model_run$nnd < max(tracking_scaled$nnd))
-overlap_polar <- subset(model_run$polar, 
-                        model_run$polar > min(tracking_scaled$polar) & model_run$polar < max(tracking_scaled$polar))
-overlap_area <- subset(model_run$area, 
-                       model_run$area > min(tracking_scaled$area) & model_run$area < max(tracking_scaled$area))
-
-# Find percentages & create new dataframe
-percentages <- c((length(overlap_cent) / 99) * 100, 
-                 (length(overlap_nnd) / 99) * 100, 
-                 (length(overlap_polar) / 99) * 100, 
-                 (length(overlap_area) / 99) * 100)
-
-# Calculation of overlap for NND-only
-overlap_nndtracked <- subset(model_run_nnd$nnd, 
-                             model_run_nnd$nnd > min(tracking_scaled$nnd) & model_run_nnd$nnd < max(tracking_scaled$nnd))
-overlap_nndmodels <- subset(model_run_nnd$nnd, 
-                            model_run_nnd$nnd > min(model_run$nnd) & model_run_nnd$nnd < max(model_run$nnd))
-
-percentages_nnd <- c((length(overlap_nndtracked) / 99) * 100, 
-                    (length(overlap_nndmodels) / 99) * 100)
-
-# Correlations ----------------------------------------------------------------
-stats <- model_run_all[, -1]
-model_cor <- cor(stats, method = "spearman")
-ggcorrplot(model_cor, type = "lower", lab = TRUE, colors = c("#79D151", "white", "#29788E"))
-
-
 # Export data used for further analysis in Python -----------------------------
-model_run2 <- cbind(model_run, model_run_nnd$nnd)
-colnames(model_run2) <- c("step", "cent", "nnd", "polar", "area", "nnd_only")
-write.csv(model_run2, paste0(path, "timeseries_modelled.csv"))
+write.csv(g_nnd, paste0(path, "ts_general_NND.csv"))
+write.csv(g_cent, paste0(path, "ts_general_cent.csv"))
+write.csv(g_polar, paste0(path, "ts_general_polar.csv"))
+write.csv(g_area, paste0(path, "ts_general_area.csv"))
+
+write.csv(nnd_only, paste0(path, "ts_nnd_NND.csv"))
 
 colnames(tracking_scaled) <- c("step", "cent", "nnd", "area", "polar")
 write.csv(tracking_scaled, paste0(path, "timeseries_tracked.csv"))
