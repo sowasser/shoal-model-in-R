@@ -14,9 +14,9 @@ color2 <- c("#440154", "#31688e")  # Nicer subset of viridis colors
 
 
 # Alluvial plot of demographic data -------------------------------------------
-demo3 <- demo2
+demo2 <- read.csv(paste0(path, "demo_summary2.csv"))
 
-demo3$level <- factor(demo3$level, 
+demo2$level <- factor(demo2$level, 
                       levels = c("studied marine science",
                                  "employed in marine science",
                                  "participated in acoustic survey",
@@ -24,7 +24,7 @@ demo3$level <- factor(demo3$level,
                                  "experience in North Atlantic",
                                  "employed in commercial fisheries"))
 
-demo_alluvial <- ggplot(data = demo3,
+demo_alluvial <- ggplot(data = demo2,
                         aes(axis1 = level, axis2 = expertise, y = count)) +
   theme_classic() + 
   scale_x_discrete(limits = c("experience", "self-identification"), expand = c(.05, .05)) +
@@ -42,36 +42,27 @@ ggsave(filename="~/Desktop/demo_alluvial.pdf", demo_alluvial,
        width=270, height=170, units="mm", dpi=300)
 
 
-# Plot of identifications (hopefully with echograms alongside) ----------------
+# Plot of number of correct answers for experts & non-experts -----------------
+correct_answers <- read.csv(paste0(path, "correct_answers.csv"))
+freq_correct <- count(correct_answers, c("overall", "expertise"))
+
+correct_graph <- ggplot(data = freq_correct, aes(x = overall, y = freq, fill = expertise)) +
+  geom_bar(stat = "identity") +
+  theme_classic() +
+  scale_fill_manual(values = color2) +
+  scale_x_discrete(limits = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")) +
+  ylab(" ") + xlab(" ") +
+  guides(fill=guide_legend(title=" ")) 
+  
+ggsave(filename="~/Desktop/correct_answers.pdf", correct_graph,
+       width=180, height=150, units="mm", dpi=300)
+
+
+# Plot of expert vs. non-expert identifications for each echogram -------------
 expert <- read.csv(paste0(path, "expertise.csv"))
 colnames(expert) <- c("echogram", "species", "expert", "non-expert", 
                       "local experience", "no experience")
 
-# Reshape dataframe for ggplot, ID are the columns you don't want to change!
-exp <- melt(expert, id=c("echogram", "species")) 
-colnames(exp) <- c("echogram", "species", "expertise", "percent")
-
-# Set order of echograms to show correctly in ggplot
-exp$echogram <- factor(exp$echogram, levels = c("1", "2", "3", "4", "5", "6", 
-                                                "7", "8", "9", "10"))
-exp$species <- factor(exp$species, levels = c("her", "spr", "bof", "mac", 
-                                              "hom", "whb", "other"))
-
-exp_graph_all <- ggplot(exp, aes(fill = expertise, y = percent, x = species)) +
-  geom_bar(position = "dodge", stat = "identity") +
-  facet_wrap(~echogram, scale = "free", ncol=2) +
-  ylab(" ") +
-  ylim(0, 100) +  # set y limit to always be 100
-  guides(fill=guide_legend(title="expertise level")) +
-  scale_fill_viridis(discrete = TRUE) +
-  theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-
-ggsave(filename="~/Desktop/expertise_all.pdf", exp_graph_all,
-       width=250, height=250, units="mm", dpi=300)
-
-
-# Graph of just expert & non-expert identification ----------------------------
 sub_exp <- melt(expert[, 1:4], id=c("echogram", "species")) 
 colnames(sub_exp) <- c("echogram", "species", "expertise", "percent")
 
@@ -95,22 +86,6 @@ exp_graph <- ggplot(sub_exp, aes(fill = expertise, y = percent, x = species)) +
 
 ggsave(filename="~/Desktop/identification.pdf", exp_graph,
        width=170, height=250, units="mm", dpi=300)
-
-
-# Plot of number of correct answers for experts & non-experts -----------------
-correct_answers <- read.csv(paste0(path, "correct_answers.csv"))
-freq_correct <- count(correct_answers, c("overall", "expertise"))
-
-correct_graph <- ggplot(data = freq_correct, aes(x = overall, y = freq, fill = expertise)) +
-  geom_bar(stat = "identity") +
-  theme_classic() +
-  scale_fill_manual(values = color2) +
-  scale_x_discrete(limits = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")) +
-  ylab(" ") + xlab(" ") +
-  guides(fill=guide_legend(title=" ")) +
-
-ggsave(filename="~/Desktop/correct_answers.pdf", correct_graph,
-       width=180, height=150, units="mm", dpi=300)
 
 
 # Plot of overall confidence --------------------------------------------------
