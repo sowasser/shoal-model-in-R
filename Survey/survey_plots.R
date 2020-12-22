@@ -13,52 +13,6 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/Survey Data/"  # fo
 color2 <- c("#440154", "#31688e")  # Nicer subset of viridis colors
 
 
-# Plot of demographic data for expert vs. non-expert --------------------------
-demographics <- read.csv(paste0(path, "demo_summary.csv"))
-demographics$level <- factor(demographics$level, 
-                             levels = c("other", 
-                                        "experience in North Atlantic",
-                                        "trained in analysis of acoustics",
-                                        "participated in acoustic survey",
-                                        "employed in commercial fisheries",
-                                        "employed in marine science",
-                                        "studied marine science"))
-
-demo_graph <- ggplot(data = demographics, aes(x = expertise, y = count, fill = level)) +
-  geom_bar(stat = "identity") +
-  theme_classic() +
-  scale_fill_viridis(discrete = TRUE) +
-  ylab(" ") + xlab(" ") +
-  guides(fill=guide_legend(title="experience type"))
-
-ggsave(filename="~/Desktop/demographics.pdf", demo_graph,
-       width=180, height=150, units="mm", dpi=300)
-
-
-# Treemap of demographic data -------------------------------------------------
-demo2 <- read.csv(paste0(path, "demo_summary2.csv"))
-
-demo2$level <- factor(demo2$level, 
-                      levels = c("employed in commercial fisheries",
-                                 "experience in North Atlantic",
-                                 "trained in analysis of acoustics",
-                                 "participated in acoustic survey",
-                                 "employed in marine science",
-                                 "studied marine science",
-                                 "no expertise"))
-
-# Plot with no text - can add text by uncommenting geom_treemap_text lines
-demo_treemap <- ggplot(demo2, aes(area = count, fill = level, label = level, subgroup = expertise)) +
-  geom_treemap() +
-  geom_treemap_subgroup_border(color = "black") +
-  # geom_treemap_subgroup_text(place = "centre", grow = F, alpha = 1, colour = "black") +
-  # geom_treemap_text(colour = "white", place = "centre", grow = F) +
-  scale_fill_viridis(discrete = TRUE)
-
-ggsave(filename="~/Desktop/demo_tree.pdf", demo_treemap,
-       width=250, height=250, units="mm", dpi=300)
-
-
 # Alluvial plot of demographic data -------------------------------------------
 demo3 <- demo2
 
