@@ -8,6 +8,7 @@ library(dplyr)
 
 color2_2 <- c("#440154", "#29788E")
 color3 <- c("#440154", "#29788E", "#79d151")
+color4 <- c("#440154", "#fee900", "#29788E", "#79d151")
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
@@ -61,6 +62,53 @@ general_all$min <- as.numeric(general_all$min)
 general_all$max <- as.numeric(general_all$max)
 
 
+# Read in model runs with parameters set to mean of prior distributions -------
+prior_runs <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/prior runs/"  
+
+p0 <- cbind(read.csv(paste0(prior_runs, "single_run_prior_0.csv"))[200:298, -1])
+p1 <- cbind(read.csv(paste0(prior_runs, "single_run_prior_1.csv"))[200:298, -1])
+p2 <- cbind(read.csv(paste0(prior_runs, "single_run_prior_2.csv"))[200:298, -1])
+p3 <- cbind(read.csv(paste0(prior_runs, "single_run_prior_3.csv"))[200:298, -1])
+p4 <- cbind(read.csv(paste0(prior_runs, "single_run_prior_4.csv"))[200:298, -1])
+p5 <- cbind(read.csv(paste0(prior_runs, "single_run_prior_5.csv"))[200:298, -1])
+p6 <- cbind(read.csv(paste0(prior_runs, "single_run_prior_6.csv"))[200:298, -1])
+p7 <- cbind(read.csv(paste0(prior_runs, "single_run_prior_7.csv"))[200:298, -1])
+p8 <- cbind(read.csv(paste0(prior_runs, "single_run_prior_8.csv"))[200:298, -1])
+p9 <- cbind(read.csv(paste0(prior_runs, "single_run_prior_9.csv"))[200:298, -1])
+
+p_nnd <- cbind(p0$nnd, p1$nnd, p2$nnd, p3$nnd, p4$nnd, p5$nnd, p6$nnd, p7$nnd ,p8$nnd, p9$nnd)
+p_mean_nnd <- as.data.frame(cbind(steps, 
+                                  rowMeans(p_nnd), 
+                                  apply(p_nnd, 1, FUN=min), apply(p_nnd, 1, FUN=max),
+                                  rep("nearest neighbour distance", length(99))))
+
+p_cent <- cbind(p0$cent, p1$cent, p2$cent, p3$cent, p4$cent, p5$cent, p6$cent, p7$cent ,p8$cent, p9$cent)
+p_mean_cent <- as.data.frame(cbind(steps, 
+                                   rowMeans(p_cent), 
+                                   apply(p_cent, 1, FUN=min), apply(p_cent, 1, FUN=max),
+                                   rep("distance from centroid", length(99))))
+
+p_polar <- cbind(p0$polar, p1$polar, p2$polar, p3$polar, p4$polar, p5$polar, p6$polar, p7$polar ,p8$polar, p9$polar)
+p_mean_polar <- as.data.frame(cbind(steps, 
+                                    rowMeans(p_polar), 
+                                    apply(p_polar, 1, FUN=min), apply(p_polar, 1, FUN=max),
+                                    rep("polarization", length(99))))
+
+p_area <- cbind(p0$area, p1$area, p2$area, p3$area, p4$area, p5$area, p6$area, p7$area ,p8$area, p9$area)
+p_mean_area <- as.data.frame(cbind(steps, 
+                                   rowMeans(p_area), 
+                                   apply(p_area, 1, FUN=min), apply(p_area, 1, FUN=max),
+                                   rep("shoal area", length(99))))
+
+priors_all <- cbind(rbind(p_mean_nnd, p_mean_cent, p_mean_polar, p_mean_area), 
+                    rep("modelled (mean priors)", length(396)))
+colnames(priors_all) <- c("step", "mean", "min", "max", "statistic", "source")
+priors_all$step <- as.numeric(priors_all$step)
+priors_all$mean <- as.numeric(priors_all$mean)
+priors_all$min <- as.numeric(priors_all$min)
+priors_all$max <- as.numeric(priors_all$max)
+
+
 # Read in modelled (NND-only) data & find mean NND ----------------------------
 NND_runs <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/NND runs/"  
 
@@ -105,12 +153,15 @@ colnames(track_all) <- c("step", "source", "statistic", "value")
 # Graphs of timeseries --------------------------------------------------------
 time_graphs <- ggplot() + 
   theme_bw() + 
-  scale_color_manual(values=color3) +  # Custom color palette defined above
+  scale_color_manual(values=color4) +  # Custom color palette defined above
   # Add general-ABC derived data
-  geom_ribbon(data=general_all, aes(x=step, ymin=min, ymax=max), fill="#440154", alpha=0.5) +
+  geom_ribbon(data=priors_all, aes(x=step, ymin=min, ymax=max), fill="#fee900", alpha=0.3) +
+  geom_line(data=priors_all, aes(x=step, y=mean, color=source)) +
+  # Add general-ABC derived data
+  geom_ribbon(data=general_all, aes(x=step, ymin=min, ymax=max), fill="#440154", alpha=0.2) +
   geom_line(data=general_all, aes(x=step, y=mean, color=source)) +
   # Add NND-only derived data
-  geom_ribbon(data=nnd_only, aes(x=step, ymin=min, ymax=max), fill="#29788e", alpha=0.5) +
+  geom_ribbon(data=nnd_only, aes(x=step, ymin=min, ymax=max), fill="#29788e", alpha=0.3) +
   geom_line(data=nnd_only, aes(x=step, y=mean, color=source)) +
   # Add tracking data
   geom_line(data=track_all, aes(x=step, y=value, color=source), size = 2) +
@@ -135,6 +186,20 @@ write.csv(mean_polar, paste0(path, "ts_general_polar.csv"))
 
 colnames(mean_area) <- c("steps", "mean", "min", "max", "stat")
 write.csv(mean_area, paste0(path, "ts_general_area.csv"))
+
+
+colnames(p_mean_nnd) <- c("steps", "mean", "min", "max", "stat")
+write.csv(p_mean_nnd, paste0(path, "ts_prior_NND.csv"))
+
+colnames(p_mean_cent) <- c("steps", "mean", "min", "max", "stat")
+write.csv(p_mean_cent, paste0(path, "ts_prior_cent.csv"))
+
+colnames(p_mean_polar) <- c("steps", "mean", "min", "max", "stat")
+write.csv(p_mean_polar, paste0(path, "ts_prior_polar.csv"))
+
+colnames(p_mean_area) <- c("steps", "mean", "min", "max", "stat")
+write.csv(p_mean_area, paste0(path, "ts_prior_area.csv"))
+
 
 write.csv(nnd_only, paste0(path, "ts_nnd_NND.csv"))
 
