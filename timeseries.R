@@ -8,7 +8,7 @@ library(dplyr)
 
 color2_2 <- c("#440154", "#29788E")
 color3 <- c("#440154", "#29788E", "#79d151")
-color4 <- c("#440154", "#fee900", "#29788E", "#79d151")
+color4 <- c("#79d151", "#fee900", "#29788E", "#440154")
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
@@ -154,17 +154,17 @@ colnames(track_all) <- c("step", "source", "statistic", "value")
 time_graphs <- ggplot() + 
   theme_bw() + 
   scale_color_manual(values=color4) +  # Custom color palette defined above
-  # Add general-ABC derived data
+  # Add data derived from prior distributions
   geom_ribbon(data=priors_all, aes(x=step, ymin=min, ymax=max), fill="#fee900", alpha=0.3) +
   geom_line(data=priors_all, aes(x=step, y=mean, color=source)) +
   # Add general-ABC derived data
-  geom_ribbon(data=general_all, aes(x=step, ymin=min, ymax=max), fill="#440154", alpha=0.2) +
+  geom_ribbon(data=general_all, aes(x=step, ymin=min, ymax=max), fill="#79d151", alpha=0.3) +
   geom_line(data=general_all, aes(x=step, y=mean, color=source)) +
   # Add NND-only derived data
   geom_ribbon(data=nnd_only, aes(x=step, ymin=min, ymax=max), fill="#29788e", alpha=0.3) +
   geom_line(data=nnd_only, aes(x=step, y=mean, color=source)) +
   # Add tracking data
-  geom_line(data=track_all, aes(x=step, y=value, color=source), size = 2) +
+  geom_line(data=track_all, aes(x=step, y=value, color=source), size = 1) +
   xlab("step") +
   ylab("statistic") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
