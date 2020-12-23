@@ -27,6 +27,7 @@ demo2$level <- factor(demo2$level,
 demo_alluvial <- ggplot(data = demo2,
                         aes(axis1 = level, axis2 = expertise, y = count)) +
   theme_classic() + 
+  theme(axis.text.x=element_text(size=12)) +
   scale_x_discrete(limits = c("experience", "self-identification"), expand = c(.05, .05)) +
   ylab("total count") +
   theme(legend.position = "none") +  # no legend
