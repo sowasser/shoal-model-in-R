@@ -13,6 +13,8 @@ library(viridis)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
+# Density graphs and gif for 100 agents ---------------------------------------
+
 x_coord <- read.csv(paste0(path, "heatmap_x.csv"))
 y_coord <- read.csv(paste0(path, "heatmap_y.csv"))
 
@@ -39,37 +41,40 @@ step202 <- pos_data[which(pos_data$step==202), ]
 step203 <- pos_data[which(pos_data$step==203), ]
 step204 <- pos_data[which(pos_data$step==204), ]
 step205 <- pos_data[which(pos_data$step==205), ]
-step206 <- pos_data[which(pos_data$step==206), ]
-step207 <- pos_data[which(pos_data$step==207), ]
-step208 <- pos_data[which(pos_data$step==208), ]
 
-
-pos_data_graph_subset <- rbind(step200, step201, step202, step203, step204,
-                               step205, step206, step207, step208)
+pos_data_graph_subset <- rbind(step200, step201, step202, 
+                               step203, step204, step205)
 
 # Plot graph of densities across different steps
 density_plot <- ggplot(pos_data_graph_subset, aes(x = x, y = y)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_blank(), axis.title.y = element_blank(),
+        axis.text.x = element_blank(), axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
   xlab(" ") +
   ylab(" ") +
+  ggtitle("IBM with 100 individuals") +
   facet_wrap(~step, scale="free")
 
 ggsave(filename="~/Desktop/density.pdf", plot=density_plot,
-       width=200, height=150, units="mm", dpi=300)
+       width=180, height=100, units="mm", dpi=300)
 
 
 # Select trial data - last 50 steps of the model
 pos_data_subset <- pos_data[15001:20000, ]
 
-# Plot positions as a density heatmap & save
+# Gif of positions & density
 density <- ggplot(pos_data_subset, aes(x = x, y = y, group = step)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", alpha = 0.3) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_blank(), axis.title.y = element_blank(),
+        axis.text.x = element_blank(), axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
   xlab(" ") +
   ylab(" ") +
   theme(legend.position = "none") +  # remove the legend
@@ -107,38 +112,40 @@ step202_300 <- pos_data_300[which(pos_data_300$step==202), ]
 step203_300 <- pos_data_300[which(pos_data_300$step==203), ]
 step204_300 <- pos_data_300[which(pos_data_300$step==204), ]
 step205_300 <- pos_data_300[which(pos_data_300$step==205), ]
-step206_300 <- pos_data_300[which(pos_data_300$step==206), ]
-step207_300 <- pos_data_300[which(pos_data_300$step==207), ]
-step208_300 <- pos_data_300[which(pos_data_300$step==208), ]
-
 
 pos_data_graph_subset_300 <- rbind(step200_300, step201_300, step202_300,
-                                   step203_300, step204_300, step205_300, 
-                                   step206_300, step207_300, step208_300)
+                                   step203_300, step204_300, step205_300)
 
 # Plot graph of densities across different steps
 density_plot_300 <- ggplot(pos_data_graph_subset_300, aes(x = x, y = y)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_blank(), axis.title.y = element_blank(),
+        axis.text.x = element_blank(), axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
   xlab(" ") +
   ylab(" ") +
+  ggtitle("IBM with 300 individuals") +
   facet_wrap(~step, scale="free")
 
 ggsave(filename="~/Desktop/density_300.pdf", plot=density_plot_300,
-       width=200, height=150, units="mm", dpi=300)
+       width=180, height=100, units="mm", dpi=300)
 
 
 # Select trial data - last 50 steps of the model
 pos_data_subset_300 <- pos_data_300[15001:20000, ]
 
-# Plot positions as a density heatmap & save
+# Gif of positions & density
 density_300 <- ggplot(pos_data_subset_300, aes(x = x, y = y, group = step)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", alpha = 0.3) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_blank(), axis.title.y = element_blank(),
+        axis.text.x = element_blank(), axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
   xlab(" ") +
   ylab(" ") +
   theme(legend.position = "none") +  # remove the legend
