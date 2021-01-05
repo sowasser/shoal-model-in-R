@@ -88,8 +88,8 @@ anim_save("density.gif", animation = density, path = "~/Desktop/")
 
 
 # With 300 agents -------------------------------------------------------------
-x_coord_300 <- read.csv(paste0(path, "heatmap_x.csv"))
-y_coord_300 <- read.csv(paste0(path, "heatmap_y.csv"))
+x_coord_300 <- read.csv(paste0(path, "heatmap_x_300.csv"))
+y_coord_300 <- read.csv(paste0(path, "heatmap_y_300.csv"))
 
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord_300 <- cbind(step, x_coord_300[, -1])
