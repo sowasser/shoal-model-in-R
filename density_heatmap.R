@@ -13,11 +13,10 @@ library(viridis)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
-x_coord <- read.csv(paste0(path, "heatmap_x_100.csv"))
-y_coord <- read.csv(paste0(path, "heatmap_y_100.csv"))
+x_coord <- read.csv(paste0(path, "heatmap_x.csv"))
+y_coord <- read.csv(paste0(path, "heatmap_y.csv"))
 
 step <- c(1:400)  # Create list of number of steps
-
 
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord <- cbind(step, x_coord[, -1])
@@ -33,42 +32,33 @@ colnames(pos_data) <- c("step", "fish", "x", "y")
 pos_data <- pos_data[order(pos_data$step, pos_data$fish), ]
 
 
-# Create graph of a few indicative steps (every 50?)
-# step1 <- pos_data[which(pos_data$step==1), ]
-# step50 <- pos_data[which(pos_data$step==50), ]
-# step100 <- pos_data[which(pos_data$step==100), ]
-# step150 <- pos_data[which(pos_data$step==150), ]
-# step200 <- pos_data[which(pos_data$step==200), ]
-# step250 <- pos_data[which(pos_data$step==250), ]
-# step300 <- pos_data[which(pos_data$step==300), ]
-# step350 <- pos_data[which(pos_data$step==350), ]
-# step400 <- pos_data[which(pos_data$step==400), ]
-
-step300 <- pos_data[which(pos_data$step==300), ]
-step301 <- pos_data[which(pos_data$step==301), ]
-step302 <- pos_data[which(pos_data$step==302), ]
-step303 <- pos_data[which(pos_data$step==303), ]
-step304 <- pos_data[which(pos_data$step==304), ]
-step305 <- pos_data[which(pos_data$step==305), ]
-step306 <- pos_data[which(pos_data$step==306), ]
-step307 <- pos_data[which(pos_data$step==307), ]
-step308 <- pos_data[which(pos_data$step==308), ]
+# Select steps for density graph
+step200 <- pos_data[which(pos_data$step==200), ]
+step201 <- pos_data[which(pos_data$step==201), ]
+step202 <- pos_data[which(pos_data$step==202), ]
+step203 <- pos_data[which(pos_data$step==203), ]
+step204 <- pos_data[which(pos_data$step==204), ]
+step205 <- pos_data[which(pos_data$step==205), ]
+step206 <- pos_data[which(pos_data$step==206), ]
+step207 <- pos_data[which(pos_data$step==207), ]
+step208 <- pos_data[which(pos_data$step==208), ]
 
 
-pos_data_graph_subset <- rbind(step300, step301, step302, step303, step304,
-                               step305, step306, step307, step308)
+pos_data_graph_subset <- rbind(step200, step201, step202, step203, step204,
+                               step205, step206, step207, step208)
 
+# Plot graph of densities across different steps
 density_plot <- ggplot(pos_data_graph_subset, aes(x = x, y = y)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
-  # geom_point(colour="black", size = 0.01) +
+  geom_point(colour="black", size = 0.01, alpha = 0.3) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   xlab(" ") +
   ylab(" ") +
   facet_wrap(~step, scale="free")
 
 ggsave(filename="~/Desktop/density.pdf", plot=density_plot,
-       width=180, height=150, units="mm", dpi=300)
+       width=200, height=150, units="mm", dpi=300)
 
 
 # Select trial data - last 50 steps of the model
@@ -78,7 +68,7 @@ pos_data_subset <- pos_data[15001:20000, ]
 density <- ggplot(pos_data_subset, aes(x = x, y = y, group = step)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
-  geom_point(colour="black") +
+  geom_point(colour="black", alpha = 0.3) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   xlab(" ") +
   ylab(" ") +
@@ -90,3 +80,73 @@ density <- ggplot(pos_data_subset, aes(x = x, y = y, group = step)) +
 
 animate(density, duration = 5, fps = 20, width = 200, height = 200, renderer = gifski_renderer())
 anim_save("density.gif", animation = density, path = "~/Desktop/")
+
+
+# With 300 agents -------------------------------------------------------------
+x_coord_300 <- read.csv(paste0(path, "heatmap_x.csv"))
+y_coord_300 <- read.csv(paste0(path, "heatmap_y.csv"))
+
+# Remove first column (index of the pandas dataframe) & add step column
+x_coord_300 <- cbind(step, x_coord_300[, -1])
+y_coord_300 <- cbind(step, y_coord_300[, -1])
+
+# Reshape data from wide to long, with all x & y data in 1 column
+new_x_300 <- melt(x_coord_300, id.vars = "step")
+new_y_300 <- melt(y_coord_300, id.vars = "step")
+
+# Combine all data together, rename columns, sort by step & fish
+pos_data_300 <- cbind(new_x_300, new_y_300[, 3])
+colnames(pos_data_300) <- c("step", "fish", "x", "y")
+pos_data_300 <- pos_data_300[order(pos_data_300$step, pos_data_300$fish), ]
+
+
+# Select steps for density graph
+step200_300 <- pos_data_300[which(pos_data_300$step==200), ]
+step201_300 <- pos_data_300[which(pos_data_300$step==201), ]
+step202_300 <- pos_data_300[which(pos_data_300$step==202), ]
+step203_300 <- pos_data_300[which(pos_data_300$step==203), ]
+step204_300 <- pos_data_300[which(pos_data_300$step==204), ]
+step205_300 <- pos_data_300[which(pos_data_300$step==205), ]
+step206_300 <- pos_data_300[which(pos_data_300$step==206), ]
+step207_300 <- pos_data_300[which(pos_data_300$step==207), ]
+step208_300 <- pos_data_300[which(pos_data_300$step==208), ]
+
+
+pos_data_graph_subset_300 <- rbind(step200_300, step201_300, step202_300,
+                                   step203_300, step204_300, step205_300, 
+                                   step206_300, step207_300, step208_300)
+
+# Plot graph of densities across different steps
+density_plot_300 <- ggplot(pos_data_graph_subset_300, aes(x = x, y = y)) +
+  stat_density2d(aes(fill=..level..), geom="polygon") +
+  scale_fill_viridis("Density", discrete = FALSE) +
+  geom_point(colour="black", size = 0.01, alpha = 0.3) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  xlab(" ") +
+  ylab(" ") +
+  facet_wrap(~step, scale="free")
+
+ggsave(filename="~/Desktop/density_300.pdf", plot=density_plot_300,
+       width=200, height=150, units="mm", dpi=300)
+
+
+# Select trial data - last 50 steps of the model
+pos_data_subset_300 <- pos_data_300[15001:20000, ]
+
+# Plot positions as a density heatmap & save
+density_300 <- ggplot(pos_data_subset_300, aes(x = x, y = y, group = step)) +
+  stat_density2d(aes(fill=..level..), geom="polygon") +
+  scale_fill_viridis("Density", discrete = FALSE) +
+  geom_point(colour="black", alpha = 0.3) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  xlab(" ") +
+  ylab(" ") +
+  theme(legend.position = "none") +  # remove the legend
+  
+  # gganimate stuff below 
+  transition_states(step, transition_length = 3, state_length = 1) +
+  labs(title = "Step: {closest_state}")
+
+animate(density_300, duration = 5, fps = 20, width = 200, height = 200, 
+        renderer = gifski_renderer())
+anim_save("density_300.gif", animation = density_300, path = "~/Desktop/")
