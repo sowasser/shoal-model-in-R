@@ -202,3 +202,50 @@ density_plot_c <- ggplot(pos_data_graph_subset_c, aes(x = x, y = y)) +
 
 ggsave(filename="~/Desktop/density_c.pdf", plot=density_plot_c,
        width=180, height=100, units="mm", dpi=300)
+
+
+# With a sloped bottom --------------------------------------------------------
+x_coord_slope <- read.csv(paste0(path, "heatmap_x_slope300.csv"))
+y_coord_slope <- read.csv(paste0(path, "heatmap_y_slope300.csv"))
+
+# Remove first column (index of the pandas dataframe) & add step column
+x_coord_slope <- cbind(step, x_coord_slope[, -1])
+y_coord_slope <- cbind(step, y_coord_slope[, -1])
+
+# Reshape data from wide to long, with all x & y data in 1 column
+new_x_slope <- melt(x_coord_slope, id.vars = "step")
+new_y_slope <- melt(y_coord_slope, id.vars = "step")
+
+# Combine all data together, rename columns, sort by step & fish
+pos_data_slope <- cbind(new_x_slope, new_y_slope[, 3])
+colnames(pos_data_slope) <- c("step", "fish", "x", "y")
+pos_data_slope <- pos_data_slope[order(pos_data_slope$step, pos_data_slope$fish), ]
+
+# Select steps for density graph
+step200_slope <- pos_data_slope[which(pos_data_slope$step==200), ]
+step201_slope <- pos_data_slope[which(pos_data_slope$step==201), ]
+step202_slope <- pos_data_slope[which(pos_data_slope$step==202), ]
+step203_slope <- pos_data_slope[which(pos_data_slope$step==203), ]
+step204_slope <- pos_data_slope[which(pos_data_slope$step==204), ]
+step205_slope <- pos_data_slope[which(pos_data_slope$step==205), ]
+
+pos_data_graph_subset_slope <- rbind(step200_slope, step201_slope, step202_slope,
+                                 step203_slope, step204_slope, step205_slope)
+
+# Plot graph of densities across different steps
+density_plot_slope <- ggplot(pos_data_graph_subset_slope, aes(x = x, y = y)) +
+  stat_density2d(aes(fill=..level..), geom="polygon") +
+  scale_fill_viridis("Density", discrete = FALSE) +
+  geom_point(colour="black", size = 0.01, alpha = 0.3) +
+  scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
+  # geom_abline(intercept=1, slope=1.7) +  # add line to represent sloped bottom
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_blank(), axis.title.y = element_blank(),
+        axis.text.x = element_blank(), axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) + 
+  xlab(" ") +
+  ylab(" ") +
+  facet_wrap(~step)
+
+ggsave(filename="~/Desktop/density_slope.pdf", plot=density_plot_slope,
+       width=180, height=100, units="mm", dpi=300)
