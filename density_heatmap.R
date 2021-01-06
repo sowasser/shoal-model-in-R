@@ -56,8 +56,7 @@ density_plot <- ggplot(pos_data_graph_subset, aes(x = x, y = y)) +
         axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
   xlab(" ") +
   ylab(" ") +
-  ggtitle("IBM with 100 individuals") +
-  facet_wrap(~step, scale="free")
+  facet_wrap(~step)
 
 ggsave(filename="~/Desktop/density.pdf", plot=density_plot,
        width=180, height=100, units="mm", dpi=300)
@@ -127,8 +126,7 @@ density_plot_300 <- ggplot(pos_data_graph_subset_300, aes(x = x, y = y)) +
         axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
   xlab(" ") +
   ylab(" ") +
-  ggtitle("IBM with 300 individuals") +
-  facet_wrap(~step, scale="free")
+  facet_wrap(~step)
 
 ggsave(filename="~/Desktop/density_300.pdf", plot=density_plot_300,
        width=180, height=100, units="mm", dpi=300)
@@ -157,3 +155,50 @@ density_300 <- ggplot(pos_data_subset_300, aes(x = x, y = y, group = step)) +
 animate(density_300, duration = 5, fps = 20, width = 200, height = 200, 
         renderer = gifski_renderer())
 anim_save("density_300.gif", animation = density_300, path = "~/Desktop/")
+
+
+# With at thermocline ---------------------------------------------------------
+x_coord_c <- read.csv(paste0(path, "heatmap_x_cline.csv"))
+y_coord_c <- read.csv(paste0(path, "heatmap_y_cline.csv"))
+
+# Remove first column (index of the pandas dataframe) & add step column
+x_coord_c <- cbind(step, x_coord_c[, -1])
+y_coord_c <- cbind(step, y_coord_c[, -1])
+
+# Reshape data from wide to long, with all x & y data in 1 column
+new_x_c <- melt(x_coord_c, id.vars = "step")
+new_y_c <- melt(y_coord_c, id.vars = "step")
+
+# Combine all data together, rename columns, sort by step & fish
+pos_data_c <- cbind(new_x_c, new_y_c[, 3])
+colnames(pos_data_c) <- c("step", "fish", "x", "y")
+pos_data_c <- pos_data_c[order(pos_data_c$step, pos_data_c$fish), ]
+
+# Select steps for density graph
+step200_c <- pos_data_c[which(pos_data_c$step==200), ]
+step201_c <- pos_data_c[which(pos_data_c$step==201), ]
+step202_c <- pos_data_c[which(pos_data_c$step==202), ]
+step203_c <- pos_data_c[which(pos_data_c$step==203), ]
+step204_c <- pos_data_c[which(pos_data_c$step==204), ]
+step205_c <- pos_data_c[which(pos_data_c$step==205), ]
+
+pos_data_graph_subset_c <- rbind(step200_c, step201_c, step202_c,
+                                   step203_c, step204_c, step205_c)
+
+# Plot graph of densities across different steps
+density_plot_c <- ggplot(pos_data_graph_subset_c, aes(x = x, y = y)) +
+  stat_density2d(aes(fill=..level..), geom="polygon") +
+  scale_fill_viridis("Density", discrete = FALSE) +
+  geom_point(colour="black", size = 0.01, alpha = 0.3) +
+  scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
+  geom_hline(yintercept=25, linetype = "dotted") +  # add line to represent thermo or halocline
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_blank(), axis.title.y = element_blank(),
+        axis.text.x = element_blank(), axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
+  xlab(" ") +
+  ylab(" ") +
+  facet_wrap(~step)
+
+ggsave(filename="~/Desktop/density_c.pdf", plot=density_plot_c,
+       width=180, height=100, units="mm", dpi=300)
