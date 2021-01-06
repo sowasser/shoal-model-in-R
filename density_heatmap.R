@@ -50,6 +50,7 @@ density_plot <- ggplot(pos_data_graph_subset, aes(x = x, y = y)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
+  scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
@@ -87,8 +88,8 @@ anim_save("density.gif", animation = density, path = "~/Desktop/")
 
 
 # With 300 agents -------------------------------------------------------------
-x_coord_300 <- read.csv(paste0(path, "heatmap_x_300.csv"))
-y_coord_300 <- read.csv(paste0(path, "heatmap_y_300.csv"))
+x_coord_300 <- read.csv(paste0(path, "heatmap_x_300_2.csv"))
+y_coord_300 <- read.csv(paste0(path, "heatmap_y_300_2.csv"))
 
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord_300 <- cbind(step, x_coord_300[, -1])
@@ -120,6 +121,7 @@ density_plot_300 <- ggplot(pos_data_graph_subset_300, aes(x = x, y = y)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
+  scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
@@ -157,9 +159,9 @@ animate(density_300, duration = 5, fps = 20, width = 200, height = 200,
 anim_save("density_300.gif", animation = density_300, path = "~/Desktop/")
 
 
-# With at thermocline ---------------------------------------------------------
-x_coord_c <- read.csv(paste0(path, "heatmap_x_cline.csv"))
-y_coord_c <- read.csv(paste0(path, "heatmap_y_cline.csv"))
+# With a thermocline ----------------------------------------------------------
+x_coord_c <- read.csv(paste0(path, "heatmap_x_cline300.csv"))
+y_coord_c <- read.csv(paste0(path, "heatmap_y_cline300.csv"))
 
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord_c <- cbind(step, x_coord_c[, -1])
@@ -190,7 +192,7 @@ density_plot_c <- ggplot(pos_data_graph_subset_c, aes(x = x, y = y)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
-  scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
+  # scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
   geom_hline(yintercept=25, linetype = "dotted") +  # add line to represent thermo or halocline
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_blank(), axis.title.y = element_blank(),
