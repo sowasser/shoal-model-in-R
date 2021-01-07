@@ -109,12 +109,8 @@ pos_data_300 <- pos_data_300[order(pos_data_300$step, pos_data_300$fish), ]
 step200_300 <- pos_data_300[which(pos_data_300$step==200), ]
 step201_300 <- pos_data_300[which(pos_data_300$step==201), ]
 step202_300 <- pos_data_300[which(pos_data_300$step==202), ]
-step203_300 <- pos_data_300[which(pos_data_300$step==203), ]
-step204_300 <- pos_data_300[which(pos_data_300$step==204), ]
-step205_300 <- pos_data_300[which(pos_data_300$step==205), ]
 
-pos_data_graph_subset_300 <- rbind(step200_300, step201_300, step202_300,
-                                   step203_300, step204_300, step205_300)
+pos_data_graph_subset_300 <- rbind(step200_300, step201_300, step202_300)
 
 # Plot graph of densities across different steps
 density_plot_300 <- ggplot(pos_data_graph_subset_300, aes(x = x, y = y)) +
@@ -131,7 +127,7 @@ density_plot_300 <- ggplot(pos_data_graph_subset_300, aes(x = x, y = y)) +
   facet_wrap(~step)
 
 ggsave(filename="~/Desktop/density_300.pdf", plot=density_plot_300,
-       width=180, height=100, units="mm", dpi=300)
+       width=240, height=70, units="mm", dpi=300)
 
 
 # Select trial data - last 50 steps of the model
@@ -180,12 +176,8 @@ pos_data_c <- pos_data_c[order(pos_data_c$step, pos_data_c$fish), ]
 step200_c <- pos_data_c[which(pos_data_c$step==200), ]
 step201_c <- pos_data_c[which(pos_data_c$step==201), ]
 step202_c <- pos_data_c[which(pos_data_c$step==202), ]
-step203_c <- pos_data_c[which(pos_data_c$step==203), ]
-step204_c <- pos_data_c[which(pos_data_c$step==204), ]
-step205_c <- pos_data_c[which(pos_data_c$step==205), ]
 
-pos_data_graph_subset_c <- rbind(step200_c, step201_c, step202_c,
-                                   step203_c, step204_c, step205_c)
+pos_data_graph_subset_c <- rbind(step200_c, step201_c, step202_c)
 
 # Plot graph of densities across different steps
 density_plot_c <- ggplot(pos_data_graph_subset_c, aes(x = x, y = y)) +
@@ -203,7 +195,7 @@ density_plot_c <- ggplot(pos_data_graph_subset_c, aes(x = x, y = y)) +
   facet_wrap(~step)
 
 ggsave(filename="~/Desktop/density_c.pdf", plot=density_plot_c,
-       width=180, height=100, units="mm", dpi=300)
+       width=240, height=70, units="mm", dpi=300)
 
 
 # With a sloped bottom --------------------------------------------------------
@@ -227,12 +219,8 @@ pos_data_slope <- pos_data_slope[order(pos_data_slope$step, pos_data_slope$fish)
 step200_slope <- pos_data_slope[which(pos_data_slope$step==200), ]
 step201_slope <- pos_data_slope[which(pos_data_slope$step==201), ]
 step202_slope <- pos_data_slope[which(pos_data_slope$step==202), ]
-step203_slope <- pos_data_slope[which(pos_data_slope$step==203), ]
-step204_slope <- pos_data_slope[which(pos_data_slope$step==204), ]
-step205_slope <- pos_data_slope[which(pos_data_slope$step==205), ]
 
-pos_data_graph_subset_slope <- rbind(step200_slope, step201_slope, step202_slope,
-                                 step203_slope, step204_slope, step205_slope)
+pos_data_graph_subset_slope <- rbind(step200_slope, step201_slope, step202_slope)
 
 # Plot graph of densities across different steps
 density_plot_slope <- ggplot(pos_data_graph_subset_slope, aes(x = x, y = y)) +
@@ -250,7 +238,7 @@ density_plot_slope <- ggplot(pos_data_graph_subset_slope, aes(x = x, y = y)) +
   facet_wrap(~step)
 
 ggsave(filename="~/Desktop/density_slope.pdf", plot=density_plot_slope,
-       width=180, height=100, units="mm", dpi=300)
+       width=240, height=70, units="mm", dpi=300)
 
 
 # 300 agents, speed = 1 -------------------------------------------------------
@@ -274,12 +262,8 @@ pos_data_300s1 <- pos_data_300s1[order(pos_data_300s1$step, pos_data_300s1$fish)
 step200_300s1 <- pos_data_300s1[which(pos_data_300s1$step==200), ]
 step201_300s1 <- pos_data_300s1[which(pos_data_300s1$step==201), ]
 step202_300s1 <- pos_data_300s1[which(pos_data_300s1$step==202), ]
-step203_300s1 <- pos_data_300s1[which(pos_data_300s1$step==203), ]
-step204_300s1 <- pos_data_300s1[which(pos_data_300s1$step==204), ]
-step205_300s1 <- pos_data_300s1[which(pos_data_300s1$step==205), ]
 
-pos_data_graph_subset_300s1 <- rbind(step200_300s1, step201_300s1, step202_300s1,
-                                     step203_300s1, step204_300s1, step205_300s1)
+pos_data_graph_subset_300s1 <- rbind(step200_300s1, step201_300s1, step202_300s1)
 
 # Plot graph of densities across different steps
 density_plot_300s1 <- ggplot(pos_data_graph_subset_300s1, aes(x = x, y = y)) +
@@ -296,7 +280,7 @@ density_plot_300s1 <- ggplot(pos_data_graph_subset_300s1, aes(x = x, y = y)) +
   facet_wrap(~step)
 
 ggsave(filename="~/Desktop/density_300s1.pdf", plot=density_plot_300s1,
-       width=180, height=100, units="mm", dpi=300)
+       width=240, height=70, units="mm", dpi=300)
 
 
 # 300 agents, speed = 15 ------------------------------------------------------
@@ -320,12 +304,8 @@ pos_data_300s15 <- pos_data_300s15[order(pos_data_300s15$step, pos_data_300s15$f
 step200_300s15 <- pos_data_300s15[which(pos_data_300s15$step==200), ]
 step201_300s15 <- pos_data_300s15[which(pos_data_300s15$step==201), ]
 step202_300s15 <- pos_data_300s15[which(pos_data_300s15$step==202), ]
-step203_300s15 <- pos_data_300s15[which(pos_data_300s15$step==203), ]
-step204_300s15 <- pos_data_300s15[which(pos_data_300s15$step==204), ]
-step205_300s15 <- pos_data_300s15[which(pos_data_300s15$step==205), ]
 
-pos_data_graph_subset_300s15 <- rbind(step200_300s15, step201_300s15, step202_300s15,
-                                      step203_300s15, step204_300s15, step205_300s15)
+pos_data_graph_subset_300s15 <- rbind(step200_300s15, step201_300s15, step202_300s15)
 
 # Plot graph of densities across different steps
 density_plot_300s15 <- ggplot(pos_data_graph_subset_300s15, aes(x = x, y = y)) +
@@ -342,7 +322,7 @@ density_plot_300s15 <- ggplot(pos_data_graph_subset_300s15, aes(x = x, y = y)) +
   facet_wrap(~step)
 
 ggsave(filename="~/Desktop/density_300s15.pdf", plot=density_plot_300s15,
-       width=180, height=100, units="mm", dpi=300)
+       width=240, height=70, units="mm", dpi=300)
 
 
 # Combine all first steps -----------------------------------------------------
