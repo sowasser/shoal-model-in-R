@@ -251,3 +251,129 @@ density_plot_slope <- ggplot(pos_data_graph_subset_slope, aes(x = x, y = y)) +
 
 ggsave(filename="~/Desktop/density_slope.pdf", plot=density_plot_slope,
        width=180, height=100, units="mm", dpi=300)
+
+
+# 300 agents, speed = 1 -------------------------------------------------------
+x_coord_300s1 <- read.csv(paste0(path, "heatmap_x_300_speed1.csv"))
+y_coord_300s1 <- read.csv(paste0(path, "heatmap_y_300_speed1.csv"))
+
+# Remove first column (index of the pandas dataframe) & add step column
+x_coord_300s1 <- cbind(step, x_coord_300s1[, -1])
+y_coord_300s1 <- cbind(step, y_coord_300s1[, -1])
+
+# Reshape data from wide to long, with all x & y data in 1 column
+new_x_300s1 <- melt(x_coord_300s1, id.vars = "step")
+new_y_300s1 <- melt(y_coord_300s1, id.vars = "step")
+
+# Combine all data together, rename columns, sort by step & fish
+pos_data_300s1 <- cbind(new_x_300s1, new_y_300s1[, 3])
+colnames(pos_data_300s1) <- c("step", "fish", "x", "y")
+pos_data_300s1 <- pos_data_300s1[order(pos_data_300s1$step, pos_data_300s1$fish), ]
+
+# Select steps for density graph
+step200_300s1 <- pos_data_300s1[which(pos_data_300s1$step==200), ]
+step201_300s1 <- pos_data_300s1[which(pos_data_300s1$step==201), ]
+step202_300s1 <- pos_data_300s1[which(pos_data_300s1$step==202), ]
+step203_300s1 <- pos_data_300s1[which(pos_data_300s1$step==203), ]
+step204_300s1 <- pos_data_300s1[which(pos_data_300s1$step==204), ]
+step205_300s1 <- pos_data_300s1[which(pos_data_300s1$step==205), ]
+
+pos_data_graph_subset_300s1 <- rbind(step200_300s1, step201_300s1, step202_300s1,
+                                     step203_300s1, step204_300s1, step205_300s1)
+
+# Plot graph of densities across different steps
+density_plot_300s1 <- ggplot(pos_data_graph_subset_300s1, aes(x = x, y = y)) +
+  stat_density2d(aes(fill=..level..), geom="polygon") +
+  scale_fill_viridis("Density", discrete = FALSE) +
+  geom_point(colour="black", size = 0.01, alpha = 0.3) +
+  scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_blank(), axis.title.y = element_blank(),
+        axis.text.x = element_blank(), axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) + 
+  xlab(" ") +
+  ylab(" ") +
+  facet_wrap(~step)
+
+ggsave(filename="~/Desktop/density_300s1.pdf", plot=density_plot_300s1,
+       width=180, height=100, units="mm", dpi=300)
+
+
+# 300 agents, speed = 15 ------------------------------------------------------
+x_coord_300s15 <- read.csv(paste0(path, "heatmap_x_300_speed15.csv"))
+y_coord_300s15 <- read.csv(paste0(path, "heatmap_y_300_speed15.csv"))
+
+# Remove first column (index of the pandas dataframe) & add step column
+x_coord_300s15 <- cbind(step, x_coord_300s15[, -1])
+y_coord_300s15 <- cbind(step, y_coord_300s15[, -1])
+
+# Reshape data from wide to long, with all x & y data in 1 column
+new_x_300s15 <- melt(x_coord_300s15, id.vars = "step")
+new_y_300s15 <- melt(y_coord_300s15, id.vars = "step")
+
+# Combine all data together, rename columns, sort by step & fish
+pos_data_300s15 <- cbind(new_x_300s15, new_y_300s15[, 3])
+colnames(pos_data_300s15) <- c("step", "fish", "x", "y")
+pos_data_300s15 <- pos_data_300s15[order(pos_data_300s15$step, pos_data_300s15$fish), ]
+
+# Select steps for density graph
+step200_300s15 <- pos_data_300s15[which(pos_data_300s15$step==200), ]
+step201_300s15 <- pos_data_300s15[which(pos_data_300s15$step==201), ]
+step202_300s15 <- pos_data_300s15[which(pos_data_300s15$step==202), ]
+step203_300s15 <- pos_data_300s15[which(pos_data_300s15$step==203), ]
+step204_300s15 <- pos_data_300s15[which(pos_data_300s15$step==204), ]
+step205_300s15 <- pos_data_300s15[which(pos_data_300s15$step==205), ]
+
+pos_data_graph_subset_300s15 <- rbind(step200_300s15, step201_300s15, step202_300s15,
+                                      step203_300s15, step204_300s15, step205_300s15)
+
+# Plot graph of densities across different steps
+density_plot_300s15 <- ggplot(pos_data_graph_subset_300s15, aes(x = x, y = y)) +
+  stat_density2d(aes(fill=..level..), geom="polygon") +
+  scale_fill_viridis("Density", discrete = FALSE) +
+  geom_point(colour="black", size = 0.01, alpha = 0.3) +
+  scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_blank(), axis.title.y = element_blank(),
+        axis.text.x = element_blank(), axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) + 
+  xlab(" ") +
+  ylab(" ") +
+  facet_wrap(~step)
+
+ggsave(filename="~/Desktop/density_300s15.pdf", plot=density_plot_300s15,
+       width=180, height=100, units="mm", dpi=300)
+
+
+# Combine all first steps -----------------------------------------------------
+
+run.100 <- cbind(step200, rep("n = 100", length(step200$step)))
+colnames(run.100) <- c("step", "fish", "x", "y", "run")
+run.300 <- cbind(step200_300, rep("n = 300", length(step200_300$step)))
+colnames(run.300) <- c("step", "fish", "x", "y", "run")
+run.300.c <- cbind(step200_c, rep("n = 300 with 'thermocline'", length(step200_c$step))) 
+colnames(run.300.c) <- c("step", "fish", "x", "y", "run")
+run.300.slope <- cbind(step200_slope, rep("n = 300 with slope", length(step200_slope$step)))  
+colnames(run.300.slope) <- c("step", "fish", "x", "y", "run")
+run.300.s1 <- cbind(step200_300s1, rep("n = 300, speed = 1", length(step200_300s1$step)))
+colnames(run.300.s1) <- c("step", "fish", "x", "y", "run")
+run.300.s15 <- cbind(step200_300s15, rep("n = 300, speed = 15", length(step200_300s15$step)))
+colnames(run.300.s15) <- c("step", "fish", "x", "y", "run")
+
+all_runs <- rbind(run.100, run.300, run.300.c, run.300.slope, run.300.s1, run.300.s15)
+
+density_plot_all <- ggplot(all_runs, aes(x = x, y = y)) +
+  stat_density2d(aes(fill=..level..), geom="polygon") +
+  scale_fill_viridis("Density", discrete = FALSE) +
+  geom_point(colour="black", size = 0.01, alpha = 0.3) +
+  scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_blank(), axis.title.y = element_blank(),
+        axis.text.x = element_blank(), axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) + 
+  xlab(" ") +
+  ylab(" ") +
+  facet_wrap(~run)
+
+ggsave(filename="~/Desktop/density_all.pdf", plot=density_plot_all,
+       width=180, height=100, units="mm", dpi=300)
