@@ -13,12 +13,12 @@ library(viridis)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
+step <- c(1:400)  # Create list of number of steps
+
 # Density graphs and gif for 100 agents ---------------------------------------
 
 x_coord <- read.csv(paste0(path, "heatmap_x.csv"))
 y_coord <- read.csv(paste0(path, "heatmap_y.csv"))
-
-step <- c(1:400)  # Create list of number of steps
 
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord <- cbind(step, x_coord[, -1])
