@@ -1,0 +1,42 @@
+# Script for calculating density relative to tilt angle by creating a scaling
+# factor from the heading of each agent/fish for each step of a model run.
+
+library(reshape2)
+library(ggplot2)
+library(transformr)
+library(gganimate)
+library(gifski)
+library(viridis)
+
+path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
+
+step <- c(1:400)  # Create list of number of steps
+
+
+# Read in & manage data for 300 agents ----------------------------------------
+# Read in position data
+x_coord_300 <- read.csv(paste0(path, "heatmap_x_300_3.csv"))
+y_coord_300 <- read.csv(paste0(path, "heatmap_y_300_3.csv"))
+
+# Remove first column (index of the pandas dataframe) & add step column
+x_coord_300 <- cbind(step, x_coord_300[, -1])
+y_coord_300 <- cbind(step, y_coord_300[, -1])
+
+# Reshape data from wide to long, with all x & y data in 1 column
+new_x_300 <- melt(x_coord_300, id.vars = "step")
+new_y_300 <- melt(y_coord_300, id.vars = "step")
+
+# Read in heading data
+heading <- read.csv(paste0(path, "headings_300.csv"))
+
+# Add step column & reshape from wide to long to match position data
+heading <- cbind(step, heading[, -1])
+new_heading <- melt(heading, id.vars = "step")
+
+# Combine all data together, rename columns, sort by step & fish
+pos_head <- cbind(new_x_300, new_y_300[, 3], new_heading[, 3])
+colnames(pos_head) <- c("step", "fish", "x", "y", "angle")
+pos_head <- pos_head[order(pos_head$step, pos_head$fish), ]
+
+
+# Calculate density & scale with heading/tilt angle ---------------------------
