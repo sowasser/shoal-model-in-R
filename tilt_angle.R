@@ -5,6 +5,7 @@ library(reshape2)
 library(MASS)
 library(ggtern)
 library(viridis)
+library(Peacock.test)
 
 custom <- c("white", "#FDE725", "#B4DE2C", "#6DCD59", "#35B779", "#1F9E89",
             "#30688E", "#3D4A89", "#482879", "#440D54")
@@ -47,14 +48,14 @@ density <- kde2d(x=step250$x, y=step250$y) # calculate density
 # Expand into dataframe & add column describing weighting
 density_df <- data.frame(expand.grid(x=density$x, y=density$y), 
                          z=as.vector(density$z))
-density_df <- cbind(density_df, rep("no weighting", length(density_df$x)))
+density_df <- cbind(density_df, rep("(A) no weighting", length(density_df$x)))
 colnames(density_df) <- c("x", "y", "z", "weighting")
 
 # Calculate weighted density, expand, and add column describing weighting
 density_wt <- kde2d.weighted(x=step250$x, y=step250$y, w=step250$angle)
 density_wt_df <- data.frame(expand.grid(x=density_wt$x, y=density_wt$y), 
                             z=as.vector(density_wt$z))
-density_wt_df <- cbind(density_wt_df, rep("weighted by tilt angle", length(density_wt_df$x)))
+density_wt_df <- cbind(density_wt_df, rep("(B) weighted by tilt angle", length(density_wt_df$x)))
 colnames(density_wt_df) <- c("x", "y", "z", "weighting")
 
 # Combine baseline & weighted data into one dataframe & plot
@@ -70,3 +71,14 @@ density_weighted <- ggplot(density_all, aes(x = x, y = y, z = z)) +
 ggsave(filename="~/Desktop/density_weighted.pdf", plot=density_weighted,
        width=180, height=80, units="mm", dpi=300)
 
+
+# Compare z-values from the non-weighted & weighted densities -----------------
+# Calculate density for step 250
+peacock2(density$z, density_wt$z)  # p=0.08
+
+# Calculate density for step 10
+step10 <- pos_head[which(pos_head$step==10), ]  # select step
+density_10 <- kde2d(x=step10$x, y=step10$y) # calculate density
+density_wt_10 <- kde2d.weighted(x=step10$x, y=step10$y, w=step10$angle)
+
+peacock2(density_10$z, density_wt_10$z)
