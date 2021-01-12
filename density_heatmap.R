@@ -47,6 +47,7 @@ pos_data_graph_subset <- rbind(step200, step201, step202,
 
 # Plot graph of densities across different steps
 density_plot <- ggplot(pos_data_graph_subset, aes(x = x, y = y)) +
+  theme_bw() +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
@@ -114,6 +115,7 @@ pos_data_graph_subset_300 <- rbind(step200_300, step201_300, step202_300)
 
 # Plot graph of densities across different steps
 density_plot_300 <- ggplot(pos_data_graph_subset_300, aes(x = x, y = y)) +
+  theme_bw() +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
@@ -122,7 +124,6 @@ density_plot_300 <- ggplot(pos_data_graph_subset_300, aes(x = x, y = y)) +
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
         axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
-  theme_bw() +
   xlab(" ") +
   ylab(" ") +
   facet_wrap(~step)
@@ -182,6 +183,7 @@ pos_data_graph_subset_c <- rbind(step200_c, step201_c, step202_c)
 
 # Plot graph of densities across different steps
 density_plot_c <- ggplot(pos_data_graph_subset_c, aes(x = x, y = y)) +
+  theme_bw() +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
@@ -191,7 +193,6 @@ density_plot_c <- ggplot(pos_data_graph_subset_c, aes(x = x, y = y)) +
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
         axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
-  theme_bw() +
   xlab(" ") +
   ylab(" ") +
   facet_wrap(~step)
@@ -226,6 +227,7 @@ pos_data_graph_subset_slope <- rbind(step200_slope, step201_slope, step202_slope
 
 # Plot graph of densities across different steps
 density_plot_slope <- ggplot(pos_data_graph_subset_slope, aes(x = x, y = y)) +
+  theme_bw() +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
@@ -235,7 +237,6 @@ density_plot_slope <- ggplot(pos_data_graph_subset_slope, aes(x = x, y = y)) +
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
         axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) + 
-  theme_bw() +
   xlab(" ") +
   ylab(" ") +
   facet_wrap(~step)
@@ -270,6 +271,7 @@ pos_data_graph_subset_300s1 <- rbind(step200_300s1, step201_300s1, step202_300s1
 
 # Plot graph of densities across different steps
 density_plot_300s1 <- ggplot(pos_data_graph_subset_300s1, aes(x = x, y = y)) +
+  theme_bw() +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
@@ -312,6 +314,7 @@ pos_data_graph_subset_300s15 <- rbind(step200_300s15, step201_300s15, step202_30
 
 # Plot graph of densities across different steps
 density_plot_300s15 <- ggplot(pos_data_graph_subset_300s15, aes(x = x, y = y)) +
+  theme_bw() +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
@@ -320,7 +323,6 @@ density_plot_300s15 <- ggplot(pos_data_graph_subset_300s15, aes(x = x, y = y)) +
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
         axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
-  theme_bw() +
   xlab(" ") +
   ylab(" ") +
   facet_wrap(~step)
@@ -330,7 +332,6 @@ ggsave(filename="~/Desktop/density_300s15.pdf", plot=density_plot_300s15,
 
 
 # Combine all first steps -----------------------------------------------------
-
 run.100 <- cbind(step200, rep("n = 100", length(step200$step)))
 colnames(run.100) <- c("step", "fish", "x", "y", "run")
 run.300 <- cbind(step200_300, rep("n = 300", length(step200_300$step)))
@@ -347,6 +348,7 @@ colnames(run.300.s15) <- c("step", "fish", "x", "y", "run")
 all_runs <- rbind(run.100, run.300, run.300.c, run.300.slope, run.300.s1, run.300.s15)
 
 density_plot_all <- ggplot(all_runs, aes(x = x, y = y)) +
+  theme_bw() +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
