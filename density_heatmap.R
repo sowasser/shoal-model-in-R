@@ -122,6 +122,7 @@ density_plot_300 <- ggplot(pos_data_graph_subset_300, aes(x = x, y = y)) +
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
         axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
+  theme_bw() +
   xlab(" ") +
   ylab(" ") +
   facet_wrap(~step)
@@ -190,6 +191,7 @@ density_plot_c <- ggplot(pos_data_graph_subset_c, aes(x = x, y = y)) +
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
         axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
+  theme_bw() +
   xlab(" ") +
   ylab(" ") +
   facet_wrap(~step)
@@ -233,6 +235,7 @@ density_plot_slope <- ggplot(pos_data_graph_subset_slope, aes(x = x, y = y)) +
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
         axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) + 
+  theme_bw() +
   xlab(" ") +
   ylab(" ") +
   facet_wrap(~step)
@@ -316,7 +319,8 @@ density_plot_300s15 <- ggplot(pos_data_graph_subset_300s15, aes(x = x, y = y)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
-        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) + 
+        axis.ticks.x = element_blank(), axis.ticks.y = element_blank()) +
+  theme_bw() +
   xlab(" ") +
   ylab(" ") +
   facet_wrap(~step)
