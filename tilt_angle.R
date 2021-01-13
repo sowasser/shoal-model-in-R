@@ -3,9 +3,12 @@
 
 library(reshape2)
 library(MASS)
-library(ggtern)
 library(viridis)
 library(Peacock.test)
+library(ggplot2)
+
+# TODO: only load if running the weighted density calculation! Interferes with ggplot.
+# library(ggtern)
 
 custom <- c("white", "#FDE725", "#B4DE2C", "#6DCD59", "#35B779", "#1F9E89",
             "#30688E", "#3D4A89", "#482879", "#440D54")
