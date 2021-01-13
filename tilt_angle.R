@@ -43,9 +43,34 @@ colnames(pos_head) <- c("step", "fish", "x", "y", "angle")
 pos_head <- pos_head[order(pos_head$step, pos_head$fish), ]
 
 
-# Calculate density & scale with heading/tilt angle ---------------------------
+# Graph heading/angle for selected steps to show weighting --------------------
 # Can only calculate density for each step
-step250 <- pos_head[which(pos_head$step==250), ]  # select step
+step100 <- pos_head[which(pos_head$step==100), ]
+step150 <- pos_head[which(pos_head$step==150), ]
+step200 <- pos_head[which(pos_head$step==200), ]
+step250 <- pos_head[which(pos_head$step==250), ]  
+step300 <- pos_head[which(pos_head$step==300), ]
+
+# Combine all 
+all_angles <- c(sum(step100$angle), sum(step150$angle), sum(step200$angle), 
+                sum(step250$angle), sum(step300$angle))
+step_labels <- c("step 100", "step 150", "step 200", "step 250", "step 300")
+
+all_angles_df <- data.frame(cbind(step_labels, all_angles))
+colnames(all_angles_df) <- c("step", "sum of angles")
+
+angles_graph <- ggplot(all_angles_df, aes(x = step_labels, y = all_angles)) +
+  geom_bar(stat = "identity", fill = "#440D54") +
+  scale_fill_viridis(discrete = TRUE) +
+  ylab("sum of all headings/angles (radians)") + xlab(" ") +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+ggsave(filename="~/Desktop/angles.pdf", plot=angles_graph,
+       width=150, height=120, units="mm", dpi=300)
+
+
+# Calculate density and weighted density & show difference in a graph ---------
 density <- kde2d(x=step250$x, y=step250$y) # calculate density
 
 # Expand into dataframe & add column describing weighting
