@@ -128,7 +128,7 @@ density_all <- rbind(density_df, density_wt_df)
 
 density_weighted <- ggplot(density_all, aes(x = x, y = y, z = z)) + 
   stat_contour(geom="polygon", aes(fill = ..level..), bins=30) + 
-  scale_fill_viridis("Density", discrete = FALSE) +
+  scale_fill_viridis("Density", discrete = FALSE, option="plasma") +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~weighting)
