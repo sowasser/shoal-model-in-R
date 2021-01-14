@@ -89,8 +89,8 @@ anim_save("density.gif", animation = density, path = "~/Desktop/")
 
 
 # With 300 agents -------------------------------------------------------------
-x_coord_300 <- read.csv(paste0(path, "heatmap_x_300_3.csv"))
-y_coord_300 <- read.csv(paste0(path, "heatmap_y_300_3.csv"))
+x_coord_300 <- read.csv(paste0(path, "heatmap_x_300_5.csv"))
+y_coord_300 <- read.csv(paste0(path, "heatmap_y_300_5.csv"))
 
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord_300 <- cbind(step, x_coord_300[, -1])
@@ -111,7 +111,7 @@ step250_300 <- pos_data_300[which(pos_data_300$step==250), ]
 step251_300 <- pos_data_300[which(pos_data_300$step==251), ]
 step252_300 <- pos_data_300[which(pos_data_300$step==252), ]
 
-pos_data_graph_subset_300 <- rbind(step200_300, step201_300, step202_300)
+pos_data_graph_subset_300 <- rbind(step250_300, step251_300, step252_300)
 
 # Plot graph of densities across different steps
 density_plot_300 <- ggplot(pos_data_graph_subset_300, aes(x = x, y = y)) +
