@@ -89,8 +89,8 @@ anim_save("density.gif", animation = density, path = "~/Desktop/")
 
 
 # With 300 agents -------------------------------------------------------------
-x_coord_300 <- read.csv(paste0(path, "heatmap_x_300_2.csv"))
-y_coord_300 <- read.csv(paste0(path, "heatmap_y_300_2.csv"))
+x_coord_300 <- read.csv(paste0(path, "heatmap_x_300_3.csv"))
+y_coord_300 <- read.csv(paste0(path, "heatmap_y_300_3.csv"))
 
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord_300 <- cbind(step, x_coord_300[, -1])
@@ -107,9 +107,9 @@ pos_data_300 <- pos_data_300[order(pos_data_300$step, pos_data_300$fish), ]
 
 
 # Select steps for density graph
-step200_300 <- pos_data_300[which(pos_data_300$step==200), ]
-step201_300 <- pos_data_300[which(pos_data_300$step==201), ]
-step202_300 <- pos_data_300[which(pos_data_300$step==202), ]
+step250_300 <- pos_data_300[which(pos_data_300$step==250), ]
+step251_300 <- pos_data_300[which(pos_data_300$step==251), ]
+step252_300 <- pos_data_300[which(pos_data_300$step==252), ]
 
 pos_data_graph_subset_300 <- rbind(step200_300, step201_300, step202_300)
 
@@ -158,8 +158,8 @@ anim_save("density_300.gif", animation = density_300, path = "~/Desktop/")
 
 
 # With a thermocline ----------------------------------------------------------
-x_coord_c <- read.csv(paste0(path, "heatmap_x_cline300.csv"))
-y_coord_c <- read.csv(paste0(path, "heatmap_y_cline300.csv"))
+x_coord_c <- read.csv(paste0(path, "heatmap_x_cline.csv"))
+y_coord_c <- read.csv(paste0(path, "heatmap_y_cline.csv"))
 
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord_c <- cbind(step, x_coord_c[, -1])
@@ -175,11 +175,11 @@ colnames(pos_data_c) <- c("step", "fish", "x", "y")
 pos_data_c <- pos_data_c[order(pos_data_c$step, pos_data_c$fish), ]
 
 # Select steps for density graph
-step200_c <- pos_data_c[which(pos_data_c$step==200), ]
-step201_c <- pos_data_c[which(pos_data_c$step==201), ]
-step202_c <- pos_data_c[which(pos_data_c$step==202), ]
+step250_c <- pos_data_c[which(pos_data_c$step==250), ]
+step251_c <- pos_data_c[which(pos_data_c$step==251), ]
+step252_c <- pos_data_c[which(pos_data_c$step==252), ]
 
-pos_data_graph_subset_c <- rbind(step200_c, step201_c, step202_c)
+pos_data_graph_subset_c <- rbind(step250_c, step251_c, step252_c)
 
 # Plot graph of densities across different steps
 density_plot_c <- ggplot(pos_data_graph_subset_c, aes(x = x, y = y)) +
@@ -187,7 +187,7 @@ density_plot_c <- ggplot(pos_data_graph_subset_c, aes(x = x, y = y)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
-  # scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
+  scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
   geom_hline(yintercept=25, linetype = "dotted") +  # add line to represent thermo or halocline
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_blank(), axis.title.y = element_blank(),
@@ -202,8 +202,8 @@ ggsave(filename="~/Desktop/density_c.pdf", plot=density_plot_c,
 
 
 # With a sloped bottom --------------------------------------------------------
-x_coord_slope <- read.csv(paste0(path, "heatmap_x_slope300.csv"))
-y_coord_slope <- read.csv(paste0(path, "heatmap_y_slope300.csv"))
+x_coord_slope <- read.csv(paste0(path, "heatmap_x_slope.csv"))
+y_coord_slope <- read.csv(paste0(path, "heatmap_y_slope.csv"))
 
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord_slope <- cbind(step, x_coord_slope[, -1])
@@ -219,11 +219,11 @@ colnames(pos_data_slope) <- c("step", "fish", "x", "y")
 pos_data_slope <- pos_data_slope[order(pos_data_slope$step, pos_data_slope$fish), ]
 
 # Select steps for density graph
-step200_slope <- pos_data_slope[which(pos_data_slope$step==200), ]
-step201_slope <- pos_data_slope[which(pos_data_slope$step==201), ]
-step202_slope <- pos_data_slope[which(pos_data_slope$step==202), ]
+step250_slope <- pos_data_slope[which(pos_data_slope$step==250), ]
+step251_slope <- pos_data_slope[which(pos_data_slope$step==251), ]
+step252_slope <- pos_data_slope[which(pos_data_slope$step==252), ]
 
-pos_data_graph_subset_slope <- rbind(step200_slope, step201_slope, step202_slope)
+pos_data_graph_subset_slope <- rbind(step250_slope, step251_slope, step252_slope)
 
 # Plot graph of densities across different steps
 density_plot_slope <- ggplot(pos_data_graph_subset_slope, aes(x = x, y = y)) +
@@ -306,11 +306,11 @@ colnames(pos_data_300s15) <- c("step", "fish", "x", "y")
 pos_data_300s15 <- pos_data_300s15[order(pos_data_300s15$step, pos_data_300s15$fish), ]
 
 # Select steps for density graph
-step200_300s15 <- pos_data_300s15[which(pos_data_300s15$step==200), ]
-step201_300s15 <- pos_data_300s15[which(pos_data_300s15$step==201), ]
-step202_300s15 <- pos_data_300s15[which(pos_data_300s15$step==202), ]
+step250_300s15 <- pos_data_300s15[which(pos_data_300s15$step==250), ]
+step251_300s15 <- pos_data_300s15[which(pos_data_300s15$step==251), ]
+step252_300s15 <- pos_data_300s15[which(pos_data_300s15$step==252), ]
 
-pos_data_graph_subset_300s15 <- rbind(step200_300s15, step201_300s15, step202_300s15)
+pos_data_graph_subset_300s15 <- rbind(step250_300s15, step251_300s15, step252_300s15)
 
 # Plot graph of densities across different steps
 density_plot_300s15 <- ggplot(pos_data_graph_subset_300s15, aes(x = x, y = y)) +
