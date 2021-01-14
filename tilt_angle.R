@@ -45,23 +45,65 @@ pos_head <- pos_head[order(pos_head$step, pos_head$fish), ]
 
 # Graph heading/angle for selected steps to show weighting --------------------
 # Subset, find sum of heading for each step & make new dataframe
+
+# Normal model
 steps <- subset(pos_head, step<301)
 step_sums <- tapply(steps$angle, steps$step, sum)
-
 step_subset <- c(1:300)
-
 step_sums_df <- data.frame(cbind(step_subset, step_sums))
-colnames(step_sums_df) <- c("step", "sum")
+sums <- cbind(step_sums_df, rep("no obstruction", 
+                                length(step_sums_df$step_subset)))
+colnames(sums) <- c("step", "sum", "model")
+
+# Model with thermocline
+# Add step column & reshape from wide to long to match position data
+heading_c <- read.csv(paste0(path, "headings_cline.csv"))
+heading_c <- cbind(step, heading_c[, -1])
+new_heading_c <- melt(heading_c, id.vars = "step")
+# Combine all data together, rename columns, sort by step & fish
+pos_head_c <- cbind(new_x_c, new_y_c[, 3], new_heading_c[, 3])
+colnames(pos_head_c) <- c("step", "fish", "x", "y", "angle")
+pos_head <- pos_head[order(pos_head$step, pos_head$fish), ]
+# Subseet & get angle sum
+steps_c <- subset(pos_head_c, step<301)
+step_sums_c <- tapply(steps_c$angle, steps_c$step, sum)
+step_subset_c <- c(1:300)
+step_sums_df_c <- data.frame(cbind(step_subset_c, step_sums_c))
+sums_c <- cbind(step_sums_df_c, rep("thermocline", 
+                                    length(step_sums_df_c$step_subset)))
+colnames(sums_c) <- c("step", "sum", "model")
+
+# Model with slope
+# Add step column & reshape from wide to long to match position data
+heading_slope <- read.csv(paste0(path, "headings_slope.csv"))
+heading_slope <- cbind(step, heading_slope[, -1])
+new_heading_slope <- melt(heading_slope, id.vars = "step")
+# Combine all data together, rename columns, sort by step & fish
+pos_head_slope <- cbind(new_x_slope, new_y_slope[, 3], new_heading_slope[, 3])
+colnames(pos_head_slope) <- c("step", "fish", "x", "y", "angle")
+pos_head <- pos_head[order(pos_head$step, pos_head$fish), ]
+# Subseet & get angle sum
+steps_slope <- subset(pos_head_slope, step<301)
+step_sums_slope <- tapply(steps_slope$angle, steps_slope$step, sum)
+step_subset_slope <- c(1:300)
+step_sums_df_slope <- data.frame(cbind(step_subset_slope, step_sums_slope))
+sums_s <- cbind(step_sums_df_slope, rep("sloped bottom", 
+                                        length(step_sums_df_slope$step_subset)))
+colnames(sums_s) <- c("step", "sum", "model")
+
+# Combine all model angle sums
+all_sums <- rbind(sums, sums_c, sums_s)
 
 # Linegraph of sum of heading across the steps selected
-angles_graph <- ggplot(step_sums_df, aes(x = step, y = sum)) + 
-  geom_line(color = "#440D54", size = 1) +
-  ylab("sum of all headings/angles (radians)") + xlab("step") +
+angles_graph <- ggplot(all_sums, aes(x = step, y = sum)) + 
+  geom_line(color = "#440D54", size = 0.8) +
+  ylab("sum of headings/angles (radians)") + xlab("step") +
   theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  facet_wrap(~model)
 
 ggsave(filename="~/Desktop/angles_timeseries.pdf", plot=angles_graph,
-       width=150, height=120, units="mm", dpi=300)
+       width=200, height=80, units="mm", dpi=300)
 
 
 # Calculate density and weighted density & show difference in a graph ---------
