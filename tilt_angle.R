@@ -109,6 +109,37 @@ angles_graph <- ggplot(all_sums, aes(x = step, y = sum)) +
 ggsave(filename="~/Desktop/angles_timeseries.pdf", plot=angles_graph,
        width=200, height=80, units="mm", dpi=300)
 
+# Do the same with standard deviation
+step_stdev <- tapply(steps$angle, steps$step, sd)
+step_stdev_df <- data.frame(cbind(step_subset, step_stdev))
+stdev <- cbind(step_stdev_df, rep("no obstruction", 
+                                  length(step_stdev_df$step_subset)))
+colnames(stdev) <- c("step", "stdev", "model")
+
+step_stdev_c <- tapply(steps_c$angle, steps_c$step, sd)
+step_stdev_df_c <- data.frame(cbind(step_subset_c, step_stdev_c))
+stdev_c <- cbind(step_stdev_df_c, rep("thermocline", 
+                                      length(step_stdev_df_c$step_subset)))
+colnames(stdev_c) <- c("step", "stdev", "model")
+
+step_stdev_slope <- tapply(steps_slope$angle, steps_slope$step, sd)
+step_stdev_df_slope <- data.frame(cbind(step_subset_slope, step_stdev_slope))
+stdev_slope <- cbind(step_stdev_df_slope, rep("sloped bottom", 
+                                              length(step_stdev_df_slope$step_subset)))
+colnames(stdev_slope) <- c("step", "stdev", "model")
+
+all_stdev <- rbind(stdev, stdev_c, stdev_slope)
+
+stdev_graph <- ggplot(all_stdev, aes(x = step, y = stdev)) + 
+  geom_line(color = "#31688e", size = 0.8) +
+  ylab("SD of headings/angles (radians)") + xlab("step") +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  facet_wrap(~model)
+
+ggsave(filename="~/Desktop/angles_stdev.pdf", plot=stdev_graph,
+       width=200, height=80, units="mm", dpi=300)
+
 
 # Calculate density and weighted density & show difference in a graph ---------
 step250 <- pos_head[which(pos_head$step==250), ]  # select a step
