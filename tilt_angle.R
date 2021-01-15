@@ -74,42 +74,42 @@ colnames(pos_head_slope) <- c("step", "fish", "x", "y", "angle")
 
 # Normal model
 steps <- subset(pos_head, step<301)
-step_sums <- tapply(steps$angle, steps$step, sum)
+step_means <- tapply(steps$angle, steps$step, mean)
 step_subset <- c(1:300)
-step_sums_df <- data.frame(cbind(step_subset, step_sums))
-sums <- cbind(step_sums_df, rep("no obstruction", 
-                                length(step_sums_df$step_subset)))
-colnames(sums) <- c("step", "sum", "model")
+step_means_df <- data.frame(cbind(step_subset, step_means))
+means <- cbind(step_means_df, rep("no obstruction", 
+                                length(step_means_df$step_subset)))
+colnames(means) <- c("step", "mean", "model")
 
 # Model with thermocline
 steps_c <- subset(pos_head_c, step<301)
-step_sums_c <- tapply(steps_c$angle, steps_c$step, sum)
+step_means_c <- tapply(steps_c$angle, steps_c$step, mean)
 step_subset_c <- c(1:300)
-step_sums_df_c <- data.frame(cbind(step_subset_c, step_sums_c))
-sums_c <- cbind(step_sums_df_c, rep("thermocline", 
-                                    length(step_sums_df_c$step_subset)))
-colnames(sums_c) <- c("step", "sum", "model")
+step_means_df_c <- data.frame(cbind(step_subset_c, step_means_c))
+means_c <- cbind(step_means_df_c, rep("thermocline", 
+                                    length(step_means_df_c$step_subset)))
+colnames(means_c) <- c("step", "mean", "model")
 
 # Model with slope
 steps_slope <- subset(pos_head_slope, step<301)
-step_sums_slope <- tapply(steps_slope$angle, steps_slope$step, sum)
+step_means_slope <- tapply(steps_slope$angle, steps_slope$step, mean)
 step_subset_slope <- c(1:300)
-step_sums_df_slope <- data.frame(cbind(step_subset_slope, step_sums_slope))
-sums_s <- cbind(step_sums_df_slope, rep("sloped bottom", 
-                                        length(step_sums_df_slope$step_subset)))
-colnames(sums_s) <- c("step", "sum", "model")
+step_means_df_slope <- data.frame(cbind(step_subset_slope, step_means_slope))
+means_s <- cbind(step_means_df_slope, rep("sloped bottom", 
+                                        length(step_means_df_slope$step_subset)))
+colnames(means_s) <- c("step", "mean", "model")
 
-# Combine all model angle sums
-all_sums <- rbind(sums, sums_c, sums_s)
+# Combine all model angle means
+all_means <- rbind(means, means_c, means_s)
 
 # Test to see if the models are statistically different - 
-kruskal.test(sum ~ model, data=all_sums)
-pairwise.wilcox.test(all_sums$sum, all_sums$model, p.adjust.method = "holm")
+kruskal.test(mean ~ model, data=all_means)
+pairwise.wilcox.test(all_means$mean, all_means$model, p.adjust.method = "holm")
 
-# Linegraph of sum of heading across the steps selected
-angles_graph <- ggplot(all_sums, aes(x = step, y = sum)) + 
+# Linegraph of mean of heading across the steps selected
+angles_graph <- ggplot(all_means, aes(x = step, y = mean)) + 
   geom_line(color = "#0d0887", size = 0.8) +  # color to match plasma 
-  ylab("sum of headings/angles (radians)") + xlab("step") +
+  ylab("mean of headings/angles (radians)") + xlab("step") +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   facet_wrap(~model)
