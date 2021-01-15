@@ -75,7 +75,7 @@ colnames(sums_c) <- c("step", "sum", "model")
 
 # Model with slope
 # Add step column & reshape from wide to long to match position data
-heading_slope <- read.csv(paste0(path, "headings_slope.csv"))
+heading_slope <- read.csv(paste0(path, "headings_slope2.csv"))
 heading_slope <- cbind(step, heading_slope[, -1])
 new_heading_slope <- melt(heading_slope, id.vars = "step")
 # Combine all data together, rename columns, sort by step & fish

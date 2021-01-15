@@ -202,8 +202,8 @@ ggsave(filename="~/Desktop/density_c.pdf", plot=density_plot_c,
 
 
 # With a sloped bottom --------------------------------------------------------
-x_coord_slope <- read.csv(paste0(path, "heatmap_x_slope.csv"))
-y_coord_slope <- read.csv(paste0(path, "heatmap_y_slope.csv"))
+x_coord_slope <- read.csv(paste0(path, "heatmap_x_slope2.csv"))
+y_coord_slope <- read.csv(paste0(path, "heatmap_y_slope2.csv"))
 
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord_slope <- cbind(step, x_coord_slope[, -1])
@@ -231,8 +231,8 @@ density_plot_slope <- ggplot(pos_data_graph_subset_slope, aes(x = x, y = y)) +
   stat_density2d(aes(fill=..level..), geom="polygon") +
   scale_fill_viridis("Density", discrete = FALSE) +
   geom_point(colour="black", size = 0.01, alpha = 0.3) +
-  scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
-  # geom_abline(intercept=1, slope=1.7) +  # add line to represent sloped bottom
+  geom_abline(intercept=1, slope=0.5) +  # add line to represent sloped bottom
+  # scale_y_continuous(trans = "reverse") +  # reverse axis to match Mesa indexing
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_blank(), axis.title.y = element_blank(),
         axis.text.x = element_blank(), axis.text.y = element_blank(),
