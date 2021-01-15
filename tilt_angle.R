@@ -94,6 +94,10 @@ colnames(sums_s) <- c("step", "sum", "model")
 # Combine all model angle sums
 all_sums <- rbind(sums, sums_c, sums_s)
 
+# Test to see if the models are statistically different - 
+kruskal.test(sum ~ model, data=all_sums)
+pairwise.wilcox.test(all_sums$sum, all_sums$model, p.adjust.method = "holm")
+
 # Linegraph of sum of heading across the steps selected
 angles_graph <- ggplot(all_sums, aes(x = step, y = sum)) + 
   geom_line(color = "#440D54", size = 0.8) +
