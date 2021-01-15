@@ -196,7 +196,7 @@ dens2_slope <- cbind(selected_steps, dens_slope, rep("not weighted", length(dens
 denswt_slope <- c(mean(d50_slope$z), mean(dwt100_slope$z), mean(dwt150_slope$z), mean(dwt200_slope$z), mean(dwt250_slope$z), mean(dwt300_slope$z))
 dens2wt_slope <- cbind(selected_steps, denswt_slope, rep("weighted", length(denswt_slope)))
 dens_all_slope <- data.frame(rbind(dens2_slope, dens2wt_slope))
-dens_all2_slope <- cbind(dens_all_slope, rep("thermocline", length(dens_all_slope$V3)))
+dens_all2_slope <- cbind(dens_all_slope, rep("sloped bottom", length(dens_all_slope$V3)))
 colnames(dens_all2_slope) <- c("step", "density", "weighting", "model") 
 
 # Combine data again and export
