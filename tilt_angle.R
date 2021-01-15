@@ -11,7 +11,6 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 
 step <- c(1:400)  # Create list of number of steps
 
-
 # Read in & manage data -------------------------------------------------------
 # Read in position data
 x_coord_300 <- read.csv(paste0(path, "heatmap_x_300_3.csv"))
@@ -168,13 +167,19 @@ ggsave(filename="~/Desktop/density_weighted.pdf", plot=density_weighted,
 # Non-weighted and weighted densities for steps across models -----------------
 wt_den <- read.csv(paste0(path, "weighted_densities.csv"))
 
+# Make steps a factor so all will show up
+wt_den$step <- as.factor(wt_den$step)
+
 wt_den_plot <- ggplot(wt_den, aes(fill = weighting, y = density, x = step)) +
   geom_bar(position = "dodge", stat = "identity") +
-  facet_wrap(~model) +
   ylab("density") +
+  scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
   guides(fill=guide_legend(title=" ")) +
+  scale_fill_manual(values = c("#0d0887", "#7302a8")) +
   theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  facet_wrap(~model, scales = "free") +
+  theme(legend.position = "bottom")
 
 ggsave(filename="~/Desktop/wt_den.pdf", wt_den_plot,
-       width=250, height=80, units="mm", dpi=300)
+       width=200, height=80, units="mm", dpi=300)
