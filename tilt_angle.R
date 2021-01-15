@@ -3,7 +3,6 @@
 
 library(reshape2)
 library(viridis)
-library(Peacock.test)
 library(ggplot2)
 
 custom <- c("white", "#FDE725", "#B4DE2C", "#6DCD59", "#35B779", "#1F9E89",
@@ -13,30 +12,62 @@ path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/"  # for laptop
 step <- c(1:400)  # Create list of number of steps
 
 
-# Read in & manage data for 300 agents ----------------------------------------
+# Read in & manage data -------------------------------------------------------
 # Read in position data
 x_coord_300 <- read.csv(paste0(path, "heatmap_x_300_3.csv"))
 y_coord_300 <- read.csv(paste0(path, "heatmap_y_300_3.csv"))
-
 # Remove first column (index of the pandas dataframe) & add step column
 x_coord_300 <- cbind(step, x_coord_300[, -1])
 y_coord_300 <- cbind(step, y_coord_300[, -1])
-
 # Reshape data from wide to long, with all x & y data in 1 column
 new_x_300 <- melt(x_coord_300, id.vars = "step")
 new_y_300 <- melt(y_coord_300, id.vars = "step")
 
 # Read in heading data
 heading <- read.csv(paste0(path, "headings_300.csv"))
-
 # Add step column & reshape from wide to long to match position data
 heading <- cbind(step, heading[, -1])
 new_heading <- melt(heading, id.vars = "step")
-
 # Combine all data together, rename columns, sort by step & fish
 pos_head <- cbind(new_x_300, new_y_300[, 3], new_heading[, 3])
 colnames(pos_head) <- c("step", "fish", "x", "y", "angle")
 pos_head <- pos_head[order(pos_head$step, pos_head$fish), ]
+
+# THERMOCLINE
+# Read in position data 
+x_coord_c <- read.csv(paste0(path, "heatmap_x_cline.csv"))
+y_coord_c <- read.csv(paste0(path, "heatmap_y_cline.csv"))
+# Remove first column (index of the pandas dataframe) & add step column
+x_coord_c <- cbind(step, x_coord_c[, -1])
+y_coord_c <- cbind(step, y_coord_c[, -1])
+# Reshape data from wide to long, with all x & y data in 1 column
+new_x_c <- melt(x_coord_c, id.vars = "step")
+new_y_c <- melt(y_coord_c, id.vars = "step")
+# Read in heading data
+heading_c <- read.csv(paste0(path, "headings_cline.csv"))
+heading_c <- cbind(step, heading_c[, -1])
+new_heading_c <- melt(heading_c, id.vars = "step")
+# Combine all data together, rename columns, sort by step & fish
+pos_head_c <- cbind(new_x_c, new_y_c[, 3], new_heading_c[, 3])
+colnames(pos_head_c) <- c("step", "fish", "x", "y", "angle")
+
+# SLOPE
+# Position data
+x_coord_slope <- read.csv(paste0(path, "heatmap_x_slope2.csv"))
+y_coord_slope <- read.csv(paste0(path, "heatmap_y_slope2.csv"))
+# Remove first column (index of the pandas dataframe) & add step column
+x_coord_slope <- cbind(step, x_coord_slope[, -1])
+y_coord_slope <- cbind(step, y_coord_slope[, -1])
+# Reshape data from wide to long, with all x & y data in 1 column
+new_x_slope <- melt(x_coord_slope, id.vars = "step")
+new_y_slope <- melt(y_coord_slope, id.vars = "step")
+# Read in heading data
+heading_slope <- read.csv(paste0(path, "headings_slope2.csv"))
+heading_slope <- cbind(step, heading_slope[, -1])
+new_heading_slope <- melt(heading_slope, id.vars = "step")
+# Combine all data together, rename columns, sort by step & fish
+pos_head_slope <- cbind(new_x_slope, new_y_slope[, 3], new_heading_slope[, 3])
+colnames(pos_head_slope) <- c("step", "fish", "x", "y", "angle")
 
 
 # Graph heading/angle for selected steps to show how angle changes ------------
@@ -52,14 +83,6 @@ sums <- cbind(step_sums_df, rep("no obstruction",
 colnames(sums) <- c("step", "sum", "model")
 
 # Model with thermocline
-# Add step column & reshape from wide to long to match position data
-heading_c <- read.csv(paste0(path, "headings_cline.csv"))
-heading_c <- cbind(step, heading_c[, -1])
-new_heading_c <- melt(heading_c, id.vars = "step")
-# Combine all data together, rename columns, sort by step & fish
-pos_head_c <- cbind(new_x_c, new_y_c[, 3], new_heading_c[, 3])
-colnames(pos_head_c) <- c("step", "fish", "x", "y", "angle")
-# Subseet & get angle sum
 steps_c <- subset(pos_head_c, step<301)
 step_sums_c <- tapply(steps_c$angle, steps_c$step, sum)
 step_subset_c <- c(1:300)
@@ -69,14 +92,6 @@ sums_c <- cbind(step_sums_df_c, rep("thermocline",
 colnames(sums_c) <- c("step", "sum", "model")
 
 # Model with slope
-# Add step column & reshape from wide to long to match position data
-heading_slope <- read.csv(paste0(path, "headings_slope2.csv"))
-heading_slope <- cbind(step, heading_slope[, -1])
-new_heading_slope <- melt(heading_slope, id.vars = "step")
-# Combine all data together, rename columns, sort by step & fish
-pos_head_slope <- cbind(new_x_slope, new_y_slope[, 3], new_heading_slope[, 3])
-colnames(pos_head_slope) <- c("step", "fish", "x", "y", "angle")
-# Subseet & get angle sum
 steps_slope <- subset(pos_head_slope, step<301)
 step_sums_slope <- tapply(steps_slope$angle, steps_slope$step, sum)
 step_subset_slope <- c(1:300)
@@ -153,7 +168,7 @@ ggsave(filename="~/Desktop/density_weighted.pdf", plot=density_weighted,
 # Non-weighted and weighted densities for steps across models -----------------
 wt_den <- read.csv(paste0(path, "weighted_densities.csv"))
 
-wt_den_steps <- ggplot(wt_den_steps, aes(fill = weighting, y = density, x = step)) +
+wt_den_plot <- ggplot(wt_den, aes(fill = weighting, y = density, x = step)) +
   geom_bar(position = "dodge", stat = "identity") +
   facet_wrap(~model) +
   ylab("density") +
@@ -161,5 +176,5 @@ wt_den_steps <- ggplot(wt_den_steps, aes(fill = weighting, y = density, x = step
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
-ggsave(filename="~/Desktop/wt_den_steps.pdf", wt_den_steps,
-       width=170, height=100, units="mm", dpi=300)
+ggsave(filename="~/Desktop/wt_den.pdf", wt_den_plot,
+       width=250, height=80, units="mm", dpi=300)
