@@ -1,14 +1,10 @@
-# Script for calculating density relative to tilt angle by creating a scaling
-# factor from the heading of each agent/fish for each step of a model run.
+# Script for visualizing the effects of heading/tilt angle on density. Density
+# calculations are performed in weighted_densities.R and then imported here.
 
 library(reshape2)
-library(MASS)
 library(viridis)
 library(Peacock.test)
 library(ggplot2)
-
-# TODO: only load if running the weighted density calculation! Interferes with ggplot.
-# library(ggtern)
 
 custom <- c("white", "#FDE725", "#B4DE2C", "#6DCD59", "#35B779", "#1F9E89",
             "#30688E", "#3D4A89", "#482879", "#440D54")
@@ -43,7 +39,7 @@ colnames(pos_head) <- c("step", "fish", "x", "y", "angle")
 pos_head <- pos_head[order(pos_head$step, pos_head$fish), ]
 
 
-# Graph heading/angle for selected steps to show weighting --------------------
+# Graph heading/angle for selected steps to show how angle changes ------------
 # Subset, find sum of heading for each step & make new dataframe
 
 # Normal model
@@ -63,7 +59,6 @@ new_heading_c <- melt(heading_c, id.vars = "step")
 # Combine all data together, rename columns, sort by step & fish
 pos_head_c <- cbind(new_x_c, new_y_c[, 3], new_heading_c[, 3])
 colnames(pos_head_c) <- c("step", "fish", "x", "y", "angle")
-pos_head <- pos_head[order(pos_head$step, pos_head$fish), ]
 # Subseet & get angle sum
 steps_c <- subset(pos_head_c, step<301)
 step_sums_c <- tapply(steps_c$angle, steps_c$step, sum)
@@ -81,7 +76,6 @@ new_heading_slope <- melt(heading_slope, id.vars = "step")
 # Combine all data together, rename columns, sort by step & fish
 pos_head_slope <- cbind(new_x_slope, new_y_slope[, 3], new_heading_slope[, 3])
 colnames(pos_head_slope) <- c("step", "fish", "x", "y", "angle")
-pos_head <- pos_head[order(pos_head$step, pos_head$fish), ]
 # Subseet & get angle sum
 steps_slope <- subset(pos_head_slope, step<301)
 step_sums_slope <- tapply(steps_slope$angle, steps_slope$step, sum)
@@ -100,7 +94,7 @@ pairwise.wilcox.test(all_sums$sum, all_sums$model, p.adjust.method = "holm")
 
 # Linegraph of sum of heading across the steps selected
 angles_graph <- ggplot(all_sums, aes(x = step, y = sum)) + 
-  geom_line(color = "#440D54", size = 0.8) +
+  geom_line(color = "#0d0887", size = 0.8) +  # color to match plasma 
   ylab("sum of headings/angles (radians)") + xlab("step") +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
@@ -131,7 +125,7 @@ colnames(stdev_slope) <- c("step", "stdev", "model")
 all_stdev <- rbind(stdev, stdev_c, stdev_slope)
 
 stdev_graph <- ggplot(all_stdev, aes(x = step, y = stdev)) + 
-  geom_line(color = "#31688e", size = 0.8) +
+  geom_line(color = "#7302a8", size = 0.8) +  # color to match plasma
   ylab("SD of headings/angles (radians)") + xlab("step") +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
@@ -142,26 +136,10 @@ ggsave(filename="~/Desktop/angles_stdev.pdf", plot=stdev_graph,
 
 
 # Calculate density and weighted density & show difference in a graph ---------
-step250 <- pos_head[which(pos_head$step==250), ]  # select a step
-density <- kde2d(x=step250$x, y=step250$y) # calculate density
-
-# Expand into dataframe & add column describing weighting
-density_df <- data.frame(expand.grid(x=density$x, y=density$y), 
-                         z=as.vector(density$z))
-density_df <- cbind(density_df, rep("(A) no weighting", length(density_df$x)))
-colnames(density_df) <- c("x", "y", "z", "weighting")
-
-# Calculate weighted density, expand, and add column describing weighting
-density_wt <- kde2d.weighted(x=step250$x, y=step250$y, w=step250$angle)
-density_wt_df <- data.frame(expand.grid(x=density_wt$x, y=density_wt$y), 
-                            z=as.vector(density_wt$z))
-density_wt_df <- cbind(density_wt_df, rep("(B) weighted by tilt angle", length(density_wt_df$x)))
-colnames(density_wt_df) <- c("x", "y", "z", "weighting")
-
 # Combine baseline & weighted data into one dataframe & plot
-density_all <- rbind(density_df, density_wt_df)
+density_step250 <- read.csv(paste0(path, "density_step250.csv"))
 
-density_weighted <- ggplot(density_all, aes(x = x, y = y, z = z)) + 
+density_weighted <- ggplot(density_step250, aes(x = x, y = y, z = z)) + 
   stat_contour(geom="polygon", aes(fill = ..level..), bins=30) + 
   scale_fill_viridis("Density", discrete = FALSE, option="plasma") +
   theme_bw() +
@@ -172,13 +150,16 @@ ggsave(filename="~/Desktop/density_weighted.pdf", plot=density_weighted,
        width=180, height=80, units="mm", dpi=300)
 
 
-# Compare z-values from the non-weighted & weighted densities -----------------
-# Calculate density for step 250
-peacock2(density$z, density_wt$z)  # p=0.08
+# Non-weighted and weighted densities for steps across models -----------------
+wt_den <- read.csv(paste0(path, "weighted_densities.csv"))
 
-# Calculate density for step 10
-step10 <- pos_head[which(pos_head$step==10), ]  # select step
-density_10 <- kde2d(x=step10$x, y=step10$y) # calculate density
-density_wt_10 <- kde2d.weighted(x=step10$x, y=step10$y, w=step10$angle)
+wt_den_steps <- ggplot(wt_den_steps, aes(fill = weighting, y = density, x = step)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  facet_wrap(~model) +
+  ylab("density") +
+  guides(fill=guide_legend(title=" ")) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
-peacock2(density_10$z, density_wt_10$z)
+ggsave(filename="~/Desktop/wt_den_steps.pdf", wt_den_steps,
+       width=170, height=100, units="mm", dpi=300)
