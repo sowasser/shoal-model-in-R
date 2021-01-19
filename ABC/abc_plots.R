@@ -31,22 +31,6 @@ dists <- rbind(priors, posts)  # Combine everything into one dataframe
 # Make sure all columns will be recongised appropriately for R/ggplot
 dists$value <- as.numeric(as.character(dists$value))
 
-# Plot distributions as boxplots
-dist_boxplot <- ggplot(dists, aes(x = parameter, y = value, fill = distribution)) +
-  geom_boxplot() + 
-  theme_bw() + 
-  scale_fill_manual(values = color2) +
-  xlab(" ") + ylab(" ") +  # axis labels
-  theme(axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank()) + 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-  facet_wrap(~parameter, scale="free")
-
-ggsave(filename= paste0("~/Desktop/dist_boxplot_", plot_date, ".pdf"), 
-       plot=dist_boxplot, width=180, height=150, units="in", dpi=300)
-
-
 # Plot distributions as density plots
 dist_density <- ggplot(dists, aes(x = value, fill = distribution, color = distribution)) +
   theme_bw() +
