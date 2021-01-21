@@ -99,8 +99,18 @@ means_s <- cbind(step_means_df_slope, rep("sloped bottom",
                                         length(step_means_df_slope$step_subset)))
 colnames(means_s) <- c("step", "mean", "model")
 
-# Combine all model angle means
+# Combine all model angle means, mins, and maxes
 all_means <- rbind(means, means_c, means_s)
+
+all_mins <- rbind(tapply(steps$angle, steps$step, min), 
+                  tapply(steps_c$angle, steps_c$step, min),
+                  tapply(steps_slope$angle, steps_slope$step, min))
+min(all_mins)
+
+all_maxs <- rbind(tapply(steps$angle, steps$step, max), 
+                  tapply(steps_c$angle, steps_c$step, max),
+                  tapply(steps_slope$angle, steps_slope$step, max))
+max(all_maxs)
 
 # Test to see if the models are statistically different - 
 kruskal.test(mean ~ model, data=all_means)
