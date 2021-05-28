@@ -8,6 +8,7 @@ library(viridis)
 library(treemapify)
 library(ggalluvial)
 library(ggrepel)
+library(stringr)
 
 path <- "~/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/Survey Data/"  # for laptop
 color2 <- c("#440154", "#31688e")  # Nicer subset of viridis colors
@@ -24,11 +25,10 @@ demo2$level <- factor(demo2$level,
                                  "experience in North Atlantic",
                                  "employed in commercial fisheries"))
 
-demo_alluvial <- ggplot(data = demo2,
-                        aes(axis1 = level, axis2 = expertise, y = count)) +
+demo_alluvial <- ggplot(data = demo2, aes(axis1 = level, axis2 = expertise, y = count)) +
   theme_classic() + 
   theme(axis.text.x=element_text(size=12)) +
-  scale_x_discrete(limits = c("experience", "self-identification"), expand = c(.05, .05)) +
+  scale_x_discrete(limits = c("experience", "self-identification"), expand = c(.05, .1)) +
   ylab("total count") +
   theme(legend.position = "none") +  # no legend
   geom_alluvium(aes(fill = level), width = 1/12) +
@@ -36,11 +36,13 @@ demo_alluvial <- ggplot(data = demo2,
   geom_stratum(width = 1/12, fill = "grey", color = "white") +
   geom_label_repel(stat = "stratum", 
                    aes(label = after_stat(stratum)), 
-                   label.padding = 0.2) +
+                   alpha = 0.8,
+                   label.padding = 0.2,
+                   size = 3) +
   scale_fill_viridis(discrete = TRUE)
 
 ggsave(filename="~/Desktop/demo_alluvial.pdf", demo_alluvial,
-       width=270, height=170, units="mm", dpi=300)
+       width=170, height=120, units="mm", dpi=300)
 
 
 # Plot of number of correct answers for experts & non-experts -----------------
@@ -54,10 +56,12 @@ correct_graph <- ggplot(data = freq_correct, aes(x = overall, y = freq, fill = e
   ylab("frequency") + xlab("number of correct identifications") +
   guides(fill=guide_legend(title=" ")) +
   theme_bw() +
+  theme(text = element_text(size = 8)) +  # reduce text size
+  theme(legend.key.size = unit(4, 'mm')) +  # reduce legend key size
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
   
 ggsave(filename="~/Desktop/correct_answers.pdf", correct_graph,
-       width=180, height=120, units="mm", dpi=300)
+       width=85, height=50, units="mm", dpi=300)
 
 
 # Plot of expert vs. non-expert identifications for each echogram -------------
@@ -107,10 +111,12 @@ con.over_graph <- ggplot(con.over, aes(fill = variable, y = value, x = confidenc
   guides(fill=guide_legend(title=" ")) +
   scale_fill_viridis(discrete = TRUE) +
   theme_bw() +
+  theme(text = element_text(size = 8)) +  # reduce text size
+  theme(legend.key.size = unit(4, 'mm')) +  # reduce legend key size
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 ggsave(filename="~/Desktop/overall_confidence.pdf", con.over_graph,
-       width=200, height=140, units="mm", dpi=300)
+       width=85, height=50, units="mm", dpi=300)
 
 
 # Plot of confidence for experts and non-experts for all echograms ------------
@@ -146,11 +152,13 @@ colnames(method) <- c("method", "expert", "non-expert")
 meth <- melt(method)  # Reshape by expertise for ggplot
 colnames(meth) <- c("method", "expertise", "value")
 
+meth$method <- str_replace(meth$method, "backscatter strength", "backscatter")
+
 # Set order of methods to match survey
 meth$method <- factor(meth$method, levels = c("school size", 
                                               "school shape", 
                                               "school depth", 
-                                              "backscatter strength"))
+                                              "backscatter"))
 
 meth_graph <- ggplot(meth, aes(fill = expertise, y = value, x = method)) +
   geom_bar(position = "dodge", stat = "identity") +
@@ -158,7 +166,10 @@ meth_graph <- ggplot(meth, aes(fill = expertise, y = value, x = method)) +
   guides(fill=guide_legend(title=" ")) +
   scale_fill_manual(values = color2) +
   theme_bw() +
+  theme(text = element_text(size = 8)) +  # reduce text size
+  theme(legend.key.size = unit(4, 'mm')) +  # reduce legend key size
+  theme(axis.text.x = element_text(angle = 15, hjust = 1.0)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 ggsave(filename="~/Desktop/method.pdf", meth_graph,
-       width=150, height=120, units="mm", dpi=300)
+       width=85, height=55, units="mm", dpi=300)
