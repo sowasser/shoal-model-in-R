@@ -49,14 +49,15 @@ freq_correct <- count(correct_answers, c("overall", "expertise"))
 
 correct_graph <- ggplot(data = freq_correct, aes(x = overall, y = freq, fill = expertise)) +
   geom_bar(stat = "identity") +
-  theme_classic() +
   scale_fill_manual(values = color2) +
   scale_x_discrete(limits = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")) +
   ylab("frequency") + xlab("number of correct identifications") +
-  guides(fill=guide_legend(title=" ")) 
+  guides(fill=guide_legend(title=" ")) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
   
 ggsave(filename="~/Desktop/correct_answers.pdf", correct_graph,
-       width=180, height=150, units="mm", dpi=300)
+       width=180, height=120, units="mm", dpi=300)
 
 
 # Plot of expert vs. non-expert identifications for each echogram -------------
