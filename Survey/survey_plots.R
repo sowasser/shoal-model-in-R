@@ -42,7 +42,7 @@ demo_alluvial <- ggplot(data = demo2, aes(axis1 = level, axis2 = expertise, y = 
   scale_fill_viridis(discrete = TRUE)
 
 ggsave(filename="~/Desktop/demo_alluvial.pdf", demo_alluvial,
-       width=170, height=120, units="mm", dpi=300)
+       width=170, height=120, units="mm", dpi=500)
 
 
 # Plot of number of correct answers for experts & non-experts -----------------
@@ -61,7 +61,7 @@ correct_graph <- ggplot(data = freq_correct, aes(x = overall, y = freq, fill = e
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
   
 ggsave(filename="~/Desktop/correct_answers.pdf", correct_graph,
-       width=85, height=50, units="mm", dpi=300)
+       width=85, height=50, units="mm", dpi=500)
 
 
 # Plot of expert vs. non-expert identifications for each echogram -------------
@@ -91,7 +91,7 @@ exp_graph <- ggplot(sub_exp, aes(fill = expertise, y = percent, x = species)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 ggsave(filename="~/Desktop/identification.pdf", exp_graph,
-       width=170, height=250, units="mm", dpi=300)
+       width=170, height=250, units="mm", dpi=500)
 
 
 # Plot of overall confidence --------------------------------------------------
@@ -116,7 +116,7 @@ con.over_graph <- ggplot(con.over, aes(fill = variable, y = value, x = confidenc
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 ggsave(filename="~/Desktop/overall_confidence.pdf", con.over_graph,
-       width=85, height=50, units="mm", dpi=300)
+       width=85, height=50, units="mm", dpi=500)
 
 
 # Plot of confidence for experts and non-experts for all echograms ------------
@@ -142,7 +142,7 @@ con_graph <- ggplot(con, aes(fill = expertise, y = value, x = confidence)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 ggsave(filename="~/Desktop/confidence.pdf", con_graph,
-       width=170, height=250, units="mm", dpi=300)
+       width=170, height=250, units="mm", dpi=500)
 
 
 # Plot of methods used for identification -------------------------------------
@@ -172,4 +172,4 @@ meth_graph <- ggplot(meth, aes(fill = expertise, y = value, x = method)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 ggsave(filename="~/Desktop/method.pdf", meth_graph,
-       width=85, height=55, units="mm", dpi=300)
+       width=85, height=55, units="mm", dpi=500)
