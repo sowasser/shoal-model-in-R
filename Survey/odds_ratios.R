@@ -9,62 +9,58 @@ library(questionr)
 correct <- read.csv(paste0(path, "raw_correct.csv"))
 
 # Odds ratio for expert/non-expert correct species ID -------------------------
-exp <- correct$expert.ratio
-nonexp <- correct$non.expert.ratio
+odds <- function(expert, nonexpert) {
+  # Remove #10 cause it's an invalid ratio - just 0
+  new_exp <- expert[-10]
+  new_non <- nonexpert[-10]
   
-exp_non.r1 <- odds.ratio(exp[1], nonexp[1])
-exp_non.r2 <- odds.ratio(exp[2], nonexp[2])
-exp_non.r3 <- odds.ratio(exp[3], nonexp[3])
-exp_non.r4 <- odds.ratio(exp[4], nonexp[4])
-exp_non.r5 <- odds.ratio(exp[5], nonexp[5])
-exp_non.r6 <- odds.ratio(exp[6], nonexp[6])
-exp_non.r7 <- odds.ratio(exp[7], nonexp[7])
-exp_non.r8 <- odds.ratio(exp[8], nonexp[8])
-exp_non.r9 <- odds.ratio(exp[9], nonexp[9])
-exp_non.r10 <- 0
-exp_non.r11 <- odds.ratio(exp[11], nonexp[11])
-exp_non.r12 <- odds.ratio(exp[12], nonexp[12])
-exp_non.r13 <- odds.ratio(exp[13], nonexp[13])
+  # Calculate odds ratio
+  ratio <- rep(0, length(expert))
+  for(i in 1:12){
+    ratio[i] <- odds.ratio(new_exp[i], new_non[i])
+  }
+  
+  # Add 0 in for #10
+  ratio <- c(ratio[1:9], 0, ratio[10:12])
+  return(ratio)
+}
 
-# Overall
-exp_non.ratios <- c(exp_non.r1, exp_non.r2, exp_non.r3, exp_non.r4, exp_non.r5, 
-                    exp_non.r6, exp_non.r7, exp_non.r8, exp_non.r9, exp_non.r10, 
-                    exp_non.r11, exp_non.r12, exp_non.r13)
+exp_non.r <- odds(correct$expert.ratio, correct$non.expert.ratio)
 
 # Run t-test with mean to test at 1 instead of 0
-wilcox.test(exp_non.ratios, mu = 1)# p = 0.09424, 
-mean(exp_non.ratios)  # 1.429627
+wilcox.test(exp_non.r, mu = 1)# p = 0.09424, 
+mean(exp_non.r)  # 1.429627
 
 # Run t-tests for species & difficulty, but I don't think these stats (other
 # than the means) are valid because of the really small sample sizes.
 
 # blue whiting
-exp_non.whb <- c(exp_non.r2, exp_non.r3, exp_non.r7)
+exp_non.whb <- c(exp_non.r[2], exp_non.r[3], exp_non.r[7])
 t.test(exp_non.whb, mu = 1)  # p = 0.01913, mean = 1.698624 ***
 
 # boarfish 
-exp_non.bof <- c(exp_non.r4, exp_non.r11)
+exp_non.bof <- c(exp_non.r[4], exp_non.r[11])
 t.test(exp_non.bof, mu = 1)  # p = 0.3268, mean = 1.677139
 
 # Herring 
-exp_non.her <- c(exp_non.r1, exp_non.r5, exp_non.r6, exp_non.r9)
+exp_non.her <- c(exp_non.r[1], exp_non.r[5], exp_non.r[6], exp_non.r[9])
 t.test(exp_non.her, mu = 1)  # p = 0.486, mean = 1.566292
 
 # Mackerel 
-exp_non.mac <- c(exp_non.r10, exp_non.r12)
+exp_non.mac <- c(exp_non.r[10], exp_non.r[12])
 t.test(exp_non.mac, mu = 1)  # p = 0.9097, mean = 0.875
 
 # Easy
-exp_non.easy <- c(exp_non.r1, exp_non.r2, exp_non.r9)
+exp_non.easy <- c(exp_non.r[1], exp_non.r[2], exp_non.r[9])
 t.test(exp_non.easy, mu = 1)  # p = 0.3737, mean = 2.011724
 
 # Medium
-exp_non.med <- c(exp_non.r3, exp_non.r4, 
-                 exp_non.r11, exp_non.r12, exp_non.r13)
+exp_non.med <- c(exp_non.r[3], exp_non.r[4], 
+                 exp_non.r[11], exp_non.r[12], exp_non.r[13])
 wilcox.test(exp_non.med, mu = 1)  # p = 0.02005, mean = 1.571573 ***
 
 # Hard
-exp_non.hard <- c(exp_non.r5, exp_non.r6, exp_non.r7, exp_non.r8)
+exp_non.hard <- c(exp_non.r[5], exp_non.r[6], exp_non.r[7], exp_non.r[8])
 t.test(exp_non.hard, mu = 1)  # p = 0.5308, mean = 1.173029
 
 
